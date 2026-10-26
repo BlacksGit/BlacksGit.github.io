@@ -1,0 +1,134 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>Elf on the Shelf planner: an idea for every night, with a supply list</title>
+<meta name=description content="Pick the night your elf arrives and how much effort you have. Get one easy idea for every night until Christmas Eve, a shopping list of what you need, and swap any idea you do not like. Free, printable, works on your phone.">
+<link rel=canonical href="https://blacksgit.github.io/elf-planner/">
+<style>
+:root{--a:#b3262e;--g:#14532d;--m:#5f6b63;--l:#e2e8e4;--s:#f2f8f4}
+*{box-sizing:border-box}body{font:17px/1.5 system-ui,Arial,sans-serif;margin:0;color:#2a221c}
+main{max-width:720px;margin:0 auto;padding:18px}h1{font-size:28px;line-height:1.2;color:var(--g);margin:6px 0}
+.lead{color:var(--m);margin:0 0 16px}h2{font-size:19px;color:var(--g);margin:26px 0 8px}
+.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.f label,.q{font-size:14px;color:var(--m);font-weight:600}
+.in{display:flex;align-items:center;border:2px solid var(--l);border-radius:10px;padding:2px 10px;margin-top:4px}.in:focus-within{border-color:var(--a)}
+.in input{border:0;font-size:20px;width:100%;padding:6px;outline:0;font-weight:700;min-width:0;background:none;font-family:inherit}
+.in input[type=date],.in input[type=time]{font-size:17px;padding:6px 0}
+.ch{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 12px}.ch button{border:2px solid var(--l);background:#fff;border-radius:20px;padding:7px 13px;font-size:15px;cursor:pointer;font-family:inherit}
+.ch button.on{border-color:var(--a);background:var(--s);font-weight:700}
+.big{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:6px}.big div{background:var(--s);border-radius:12px;padding:12px;text-align:center}
+.big b{display:block;font-size:26px;color:var(--a);line-height:1.2}.big small{color:var(--m);font-size:13px}
+table{width:100%;border-collapse:collapse;margin-top:8px}td{padding:8px 6px;border-bottom:1px solid var(--l);vertical-align:top}td:first-child{white-space:nowrap;font-weight:700;color:var(--a);width:1%}
+#buy td:first-child,#rc td:first-child{color:inherit;font-weight:400;white-space:normal;width:auto}#buy td:last-child{text-align:right;font-weight:700}
+input[type=checkbox]{width:18px;height:18px;vertical-align:-3px;margin-right:6px;accent-color:var(--a)}
+.note{color:var(--m);font-size:14px}.tip{background:#fff6dc;border-radius:10px;padding:10px 12px;margin-top:12px}
+.btns button,.cta{display:inline-block;border:0;background:var(--a);color:#fff;border-radius:8px;padding:12px 16px;font-size:16px;text-decoration:none;margin:6px 6px 6px 0;cursor:pointer;font-family:inherit}
+details{margin-top:12px}summary{cursor:pointer;color:var(--a);font-weight:600}
+footer{margin-top:30px;color:var(--m);font-size:14px}a{color:var(--a)}
+@media(max-width:480px){h1{font-size:23px}.big b{font-size:21px}}
+@media print{.btns,.cta,footer,.rel,details,#inputs,.buyp{display:none}body{font-size:14px}}
+.card{border:2px solid var(--l);border-radius:12px;padding:10px 14px;margin-top:12px}.card h3{margin:4px 0;color:var(--g);font-size:17px}.card ul{margin:4px 0;padding-left:20px}.card p{margin:6px 0}
+#tl td:first-child{width:1%}.sw{border:1px solid var(--l);background:#fff;border-radius:6px;padding:3px 8px;font-size:13px;cursor:pointer;margin-top:4px;font-family:inherit}tr.dn{opacity:.45}
+</style></head><body><main>
+<h1>Elf on the Shelf planner: an idea for every night</h1>
+<p class=lead>Pick when your elf arrives and how much time you have at night. You get one idea per night up to Christmas Eve, a list of what to grab at the store, and a Swap button for any idea you do not like. Tick each night off as you go. Your plan stays on this device.</p>
+<div id=inputs>
+<div class=f>
+<div><label for=st>Elf arrives</label><div class=in><input id=st type=date></div></div>
+<div><label for=en>Last night</label><div class=in><input id=en type=date></div></div>
+<div><label for=nm>Kid's name (optional)</label><div class=in><input id=nm type=text maxlength=30 placeholder="Mia"></div></div>
+</div>
+<p class=q style="margin:14px 0 0">Time you have at night</p><div class=ch data-k=ef><button data-v=1>2 minutes, every night</button><button data-v=2>Mostly quick</button><button data-v=3>I like going big</button></div>
+<p class=q style="margin:0">Mess</p><div class=ch data-k=ms><button data-v=0>No mess, please</button><button data-v=1>A little is fine</button></div>
+</div>
+<div class=big><div><small>Nights</small><b id=nn></b></div><div><small>2-minute nights</small><b id=nq></b></div><div><small>Things to buy</small><b id=ns></b></div></div>
+<p class=tip id=hint></p>
+<h2>Night by night</h2>
+<table id=tl></table>
+<div class=btns><button onclick="seed=Date.now()%1e6;SW={};calc()">New set of ideas</button><button onclick="print()">Print the plan</button></div>
+<h2>Shopping list</h2>
+<table id=buy></table>
+<h2 class=buyp>Plan the gifts too</h2>
+<p class=buyp>The <b>Christmas Gift Planner</b> spreadsheet (Excel and Google Sheets) keeps who you buy for, budget per person, what you bought and what is left in one place.</p>
+<a class=cta href="https://payhip.com/b/j9IsG">See the Gift Planner</a>
+<details><summary>Tips that save your evenings</summary><p class=note>Set a phone alarm for 9 pm so the elf never forgets to move. On busy nights, just move the elf to a funny new spot; that counts. Keep a "backup bag" with candy canes, sticky notes and string for nights you forgot. If the elf does forget, a quick note saves it: "I stayed to watch you, you were so kind yesterday!" Keep small items and candy out of reach of kids under 3.</p></details>
+<p class=rel style="margin-top:24px;font-size:15px">Related: <a href="../cookie-swap/">Cookie swap planner</a> &middot; <a href="../christmas-tree/">Christmas tree size calculator</a> &middot; <a href="../gift-budget/">Christmas gift budget</a></p>
+<footer>Made by Black. More free tools: <a href="https://blacksgit.github.io/">blacksgit.github.io</a> &middot; <a href="https://patreon.com/123black">patreon.com/123black</a></footer>
+</main>
+<script>
+const $=i=>document.getElementById(i);
+const I=[
+['Marshmallow bath','Elf sits in a bowl or mug full of mini marshmallows, with a toothpick back scrubber.','mini marshmallows, bowl',1,0],
+['Zip line','Tie string between two chairs or door handles and hang the elf from it with a binder clip.','string, binder clip',1,0],
+['Toilet paper snowball fight','Elf hides behind a pillow fort with a pile of rolled-up toilet paper snowballs.','toilet paper',1,1],
+['Fishing in the sink','Fill the sink with a little water and goldfish crackers; elf holds a pencil and string fishing rod.','goldfish crackers, pencil, string',1,0],
+['Wrapped the door','Cover the kids\' bedroom doorway in wrapping paper or streamers so they have to break through.','wrapping paper or streamers, tape',2,0],
+['Cereal box sled','Cut the front off a cereal box and the elf sleds down the stairs or the couch arm.','empty cereal box',1,0],
+['Hot cocoa bar','Set out mugs, cocoa packets and marshmallows with a note: "Breakfast treat from the North Pole."','cocoa packets, mugs',1,0],
+['Selfie spree','Elf "took" selfies on your phone overnight. Leave the phone next to the elf.','phone',1,0],
+['Snow angel in flour','Sprinkle flour on a tray or the counter and press the elf in to make a snow angel.','flour, baking tray',1,1],
+['Toy hostage','Line up stuffed animals tied with yarn; elf stands guard with a sign: "Ransom: one cookie."','yarn, paper',2,0],
+['Reading a bedtime story','Elf reads a Christmas book to a circle of stuffed animals.','a book',1,0],
+['Candy cane hunt','Hide 10 candy canes around the house and leave a clue note from the elf.','candy canes, paper',2,0],
+['Sticky note message','Spell a kid\'s name or "HI" with sticky notes on a wall or window.','sticky notes',2,0],
+['Doll makeover','Elf painted a doll\'s nails or gave the toy dinosaurs paper party hats.','paper, tape',1,0],
+['Kitchen baker','Elf in a measuring cup with flour, sprinkles and a little rolling pin made from a marker.','flour, sprinkles',1,1],
+['Bowling alley','Ten toilet paper rolls or water bottles set up as pins, elf holding a ball.','paper rolls or bottles, a ball',1,0],
+['Camping trip','Tent from a napkin over two forks, marshmallow on a toothpick, tiny "fire" of orange paper.','napkin, toothpicks, marshmallows',2,0],
+['Doughnut workout','Elf lifting a "barbell" of a straw with two mini doughnuts or cheerios.','straw, cheerios or mini doughnuts',1,0],
+['Tic-tac-toe with a toy','Draw a board on paper, elf and a stuffed animal playing with marshmallows and chocolate chips.','paper, marshmallows, chocolate chips',1,0],
+['Stuck in the cookie jar','Elf head-first in the cookie jar, legs sticking out, crumbs around.','cookies',1,0],
+['Snowflake factory','Paper snowflakes taped all over the window, elf holding scissors (safety scissors).','paper, scissors, tape',2,1],
+['Ornament swing','Elf hangs upside down from the tree, swinging from an ornament hook.','none',1,0],
+['Letter from Santa','Elf brings a short letter from Santa praising something real the kid did this week.','paper',2,0],
+['Movie night','Elf with a bowl of popcorn in front of the TV with a Christmas movie picked for tonight.','popcorn',1,0],
+['Ice fishing in the freezer','Elf in the freezer door with a toothpick rod over a bag of frozen peas.','none',1,0],
+['Building a snowman','Stack three marshmallows with a toothpick; pretzel arms, chocolate chip eyes.','marshmallows, pretzels, toothpick',1,0],
+['Mustache mischief','Draw mustaches on family photos using sticky notes or dry-erase marker on the glass.','dry-erase marker or paper',1,0],
+['Writing on the mirror','Bathroom mirror message in dry-erase marker: "Be kind today! - your elf".','dry-erase marker',1,0],
+['Hide and seek','Elf hides somewhere new and leaves a trail of paper footprints to find him.','paper',2,0],
+['Car ride','Elf in a toy car (or a shoe) with a stuffed animal passenger and a paper "North Pole" sign.','toy car or shoe',1,0],
+['Breakfast surprise','Green pancakes or milk with a drop of food coloring and a note "North Pole breakfast".','food coloring',2,0],
+['Spa day','Cucumber slices on the elf\'s eyes, cotton ball "robe", lying on a washcloth towel.','cucumber, washcloth',1,0],
+['Puppet show','Elf behind a box "stage" with sock puppets.','box, socks',2,0],
+['Art gallery','Elf hangs the kids\' drawings on the fridge with tiny paper "1st prize" ribbons.','paper, tape',1,0],
+['Tangled in lights','Elf wrapped in a strand of (unplugged) Christmas lights with a "help" sign.','unplugged lights',1,0],
+['Kindness challenge','Elf leaves a card with one kind thing to do today, like drawing a picture for a grandparent.','paper',1,0],
+['Building block tower','Elf at the top of a block or Lego tower, waving a flag.','blocks',1,0],
+['Smores station','Graham crackers, chocolate and marshmallows laid out with a note to make s\'mores after school.','graham crackers, chocolate, marshmallows',1,0],
+['Ice skating','Elf on a baking sheet or a mirror "rink" with foil skates.','foil, tray or mirror',1,0],
+['Gift wrapper','Elf wrapping a small treat or the TV remote in wrapping paper.','wrapping paper, tape',1,0],
+['Pajama gift','Elf brings new Christmas pajamas to wear tonight.','pajamas',2,0],
+['Countdown chain','Elf made a paper chain with one link per night left until Christmas.','paper, tape',2,0],
+['Goodbye note','Elf\'s last night: a goodbye letter and a small treat, "See you next year!"','paper, small treat',1,0]];
+
+const LAST=I.length-1,ARR=I.push(['The elf arrives','Elf sits somewhere easy to spot with a letter from Santa: the elf\'s name, the one rule (no touching, or the magic fades) and that it reports back every night.','paper',1,0])-1;
+const S={ef:2,ms:0};let seed=1,SW={},D={};
+const pad=n=>String(n).padStart(2,'0'),iso=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const wd=d=>d.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'});
+const rnd=s=>()=>(s=(s*16807)%2147483647)/2147483647;
+const esc=t=>t.replace(/[<>&]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;'})[c]);
+function calc(){
+ const a=new Date($('st').value+'T12:00'),b=new Date($('en').value+'T12:00'),nm=esc($('nm').value.trim());
+ if(isNaN(a)||isNaN(b)||b<a){$('tl').innerHTML='<tr><td></td><td>Pick an arrival day before the last night.</td></tr>';return}
+ const n=Math.min(60,Math.round((b-a)/864e5)+1),last=LAST;
+ // easy-only keeps the quick ideas; "mostly quick" allows at most 1 in 3 bigger nights
+ let pool=I.map((x,i)=>i).filter(i=>i<last&&(S.ms||!I[i][4])&&I[i][3]<=S.ef);
+ const r=rnd(seed*7919+n),o=pool.sort(()=>r()-0.5);
+ if(S.ef==2){const q=o.filter(i=>I[i][3]==1),h=o.filter(i=>I[i][3]>1);o.length=0;let k=0;while(q.length||h.length){o.push(...(k++%3==2&&h.length?h.splice(0,1):q.length?q.splice(0,1):h.splice(0,1)))}}
+ const P=[ARR];for(let i=1;i<n-1;i++)P.push(o[(i-1)%o.length]);if(n>1)P.push(last);
+ for(const k in SW)if(k<n)P[k]=SW[k];
+ const sup=new Set();let q=0;
+ $('tl').innerHTML=P.map((i,k)=>{const x=I[i],d=new Date(a);d.setDate(d.getDate()+k);if(x[3]==1)q++;x[2].split(', ').forEach(s=>s!='none'&&sup.add(s));
+  const how=x[1].replace(/the kids'|a kid's/g,nm?nm+"'s":'$&').replace('the kid ',nm?nm+' ':'the kid ');
+  return `<tr class="${D[iso(d)]?'dn':''}"><td><label><input type=checkbox data-d="${iso(d)}" ${D[iso(d)]?'checked':''}>${wd(d)}</label><br><button class=sw data-k=${k}>Swap</button></td><td><b>${x[0]}</b>${x[3]==1?' <small class=note>2 min</small>':''}<br>${how}<br><small class=note>Need: ${x[2]}</small></td></tr>`}).join('');
+ $('nn').textContent=n;$('nq').textContent=q;$('ns').textContent=sup.size;
+ $('hint').innerHTML=`${n} nights from ${wd(a)} to ${wd(b)}${nm?' for '+nm:''}. Night one the elf arrives with a letter from Santa, the last night it leaves a goodbye note. Most items below are already in your kitchen.`;
+ $('buy').innerHTML=[...sup].sort().map(s=>`<tr><td><label><input type=checkbox>${s}</label></td><td></td></tr>`).join('');
+ document.querySelectorAll('.sw').forEach(bt=>bt.onclick=()=>{const k=+bt.dataset.k;if(k==0||k==n-1)return;const used=new Set(P);const c=pool.filter(i=>!used.has(i));SW[k]=c.length?c[Math.floor(Math.random()*c.length)]:pool[Math.floor(Math.random()*pool.length)];calc()});
+ document.querySelectorAll('#tl input').forEach(c=>c.onchange=()=>{D[c.dataset.d]=c.checked;calc()});
+ try{localStorage.elfPlan=JSON.stringify({st:$('st').value,en:$('en').value,nm:$('nm').value,S,seed,SW,D})}catch(e){}}
+try{const s=JSON.parse(localStorage.elfPlan||'null');if(s){['st','en','nm'].forEach(i=>$(i).value=s[i]||'');Object.assign(S,s.S);seed=s.seed||1;SW=s.SW||{};D=s.D||{}}}catch(e){}
+if(!$('st').value){const t=new Date();let y=t.getFullYear();if(t>new Date(y,11,24))y++;const s=new Date(y,11,1);$('st').value=iso(s<t?t:s);$('en').value=iso(new Date(y,11,24))}
+document.querySelectorAll('.ch[data-k]').forEach(c=>{c.querySelectorAll('button').forEach(b=>{b.classList.toggle('on',+b.dataset.v==S[c.dataset.k]);
+ b.onclick=()=>{S[c.dataset.k]=+b.dataset.v;SW={};c.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x==b));calc()}})});
+['st','en'].forEach(i=>$(i).addEventListener('input',()=>{SW={};calc()}));$('nm').addEventListener('input',calc);calc();
+</script></body></html>
