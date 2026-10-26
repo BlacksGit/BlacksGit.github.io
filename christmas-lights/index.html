@@ -1,0 +1,91 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>Christmas lights calculator: how many strands, outlets and cost to run</title>
+<meta name=description content="Pick your tree height and what you light outside. Get how many light strands to buy, how many circuits you need so nothing trips, and the cost to run them all season, LED vs old-style. Free, works on your phone.">
+<link rel=canonical href="https://blacksgit.github.io/christmas-lights/">
+<style>
+:root{--a:#b3262e;--g:#14532d;--m:#5f6b63;--l:#e2e8e4;--s:#f2f8f4}
+*{box-sizing:border-box}body{font:17px/1.5 system-ui,Arial,sans-serif;margin:0;color:#2a221c}
+main{max-width:720px;margin:0 auto;padding:18px}h1{font-size:28px;line-height:1.2;color:var(--g);margin:6px 0}
+.lead{color:var(--m);margin:0 0 16px}h2{font-size:19px;color:var(--g);margin:26px 0 8px}
+.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.f label,.q{font-size:14px;color:var(--m);font-weight:600}
+.in{display:flex;align-items:center;border:2px solid var(--l);border-radius:10px;padding:2px 10px;margin-top:4px}.in:focus-within{border-color:var(--a)}
+.in input{border:0;font-size:20px;width:100%;padding:6px;outline:0;font-weight:700;min-width:0;background:none;font-family:inherit}
+.in input[type=date],.in input[type=time]{font-size:17px;padding:6px 0}
+.ch{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 12px}.ch button{border:2px solid var(--l);background:#fff;border-radius:20px;padding:7px 13px;font-size:15px;cursor:pointer;font-family:inherit}
+.ch button.on{border-color:var(--a);background:var(--s);font-weight:700}
+.big{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:6px}.big div{background:var(--s);border-radius:12px;padding:12px;text-align:center}
+.big b{display:block;font-size:26px;color:var(--a);line-height:1.2}.big small{color:var(--m);font-size:13px}
+table{width:100%;border-collapse:collapse;margin-top:8px}td{padding:8px 6px;border-bottom:1px solid var(--l);vertical-align:top}td:first-child{white-space:nowrap;font-weight:700;color:var(--a);width:1%}
+#buy td:first-child{color:inherit;font-weight:400;white-space:normal;width:auto}#buy td:last-child{text-align:right;font-weight:700;white-space:nowrap}
+input[type=checkbox]{width:18px;height:18px;vertical-align:-3px;margin-right:6px;accent-color:var(--a)}
+.note{color:var(--m);font-size:14px}.tip{background:#fff6dc;border-radius:10px;padding:10px 12px;margin-top:12px}
+.btns button,.cta{display:inline-block;border:0;background:var(--a);color:#fff;border-radius:8px;padding:12px 16px;font-size:16px;text-decoration:none;margin:6px 6px 6px 0;cursor:pointer;font-family:inherit}
+details{margin-top:12px}summary{cursor:pointer;color:var(--a);font-weight:600}
+footer{margin-top:30px;color:var(--m);font-size:14px}a{color:var(--a)}
+@media(max-width:480px){h1{font-size:23px}.big b{font-size:21px}}
+@media print{.btns,.cta,footer,.rel,details,#inputs,.buyp{display:none}body{font-size:14px}}
+</style></head><body><main>
+<h1>Christmas lights calculator</h1>
+<p class=lead>Pick your tree and what you want lit outside. You get how many light strands to buy, how many outlets you need so nothing trips, and what it all costs to run for the season. Your numbers stay on this device.</p>
+<div id=inputs>
+<p class=q style="margin:0">Tree height</p><div class=ch data-k=tree><button data-v=0>No tree</button><button data-v=4>4 ft</button><button data-v=6>6 ft</button><button data-v=7.5>7.5 ft</button><button data-v=9>9 ft</button><button data-v=12>12 ft</button></div>
+<p class=q style="margin:0">How bright on the tree</p><div class=ch data-k=look><button data-v=50>Soft glow</button><button data-v=100>Classic</button><button data-v=180>Really bright</button></div>
+<p class=q style="margin:0">Bulbs</p><div class=ch data-k=led><button data-v=1>LED</button><button data-v=0>Old-style (incandescent)</button></div>
+<div class=f>
+<div><label for=roof>Roofline to light (feet)</label><div class=in><input id=roof type=number inputmode=numeric min=0 value=40></div></div>
+<div><label for=bush>Bushes</label><div class=in><input id=bush type=number inputmode=numeric min=0 value=2></div></div>
+<div><label for=win>Windows to outline</label><div class=in><input id=win type=number inputmode=numeric min=0 value=2></div></div>
+</div>
+<p class=q style="margin:14px 0 0">Roofline style</p><div class=ch data-k=rs><button data-v=0>Big bulbs (C9)</button><button data-v=1>Mini lights</button><button data-v=2>Icicle lights</button></div>
+<details><summary>Hours, days and power price</summary><div class=f style="margin-top:8px">
+<div><label for=hrs>Hours on each night</label><div class=in><input id=hrs type=number inputmode=decimal min=0 value=6></div></div>
+<div><label for=days>Days up</label><div class=in><input id=days type=number inputmode=numeric min=0 value=40></div></div>
+<div><label for=kwh>Power price ($ per kWh)</label><div class=in><input id=kwh type=number inputmode=decimal min=0 step=0.01 value=0.17></div></div>
+</div><p class=note>US average is about 17 cents. Your bill shows your price per kWh.</p></details>
+</div>
+<div class=big><div><small>Strands to buy</small><b id=st></b></div><div><small>Circuits needed</small><b id=oc></b></div><div><small>Cost for the season</small><b id=co></b></div></div>
+<p class=tip id=hint></p>
+<h2>Shopping list</h2>
+<table id=buy></table>
+<h2>Plug it in safely</h2>
+<table id=safe></table>
+<div class=btns><button onclick="print()">Print the list</button></div>
+<h2 class=buyp>Lights done? Plan the gifts</h2>
+<p class=buyp>The <b>Christmas Gift Planner</b> spreadsheet (Excel and Google Sheets) keeps every person, gift idea, price and budget in one place and shows what is left to spend.</p>
+<a class=cta href="https://payhip.com/b/j9IsG">See the Gift Planner</a>
+<details><summary>How it counts</summary><p class=note>Tree: 50, 100 or 180 mini lights per foot of height. Strands are 100-light sets. Roofline: C9 bulbs 1 per foot in 25-foot strings, mini lights 100 per 22 feet, icicle 150 per 7.5 feet. Bushes: 150 lights each. Windows: about 15 feet of mini lights each. Power: LED mini 0.07 W, old-style mini 0.4 W, LED C9 0.6 W, old-style C9 7 W per bulb. Circuits: 15 amp at 120 V, loaded to 80% (1440 W).</p></details>
+<p class=rel style="margin-top:24px;font-size:15px">Related: <a href="../gift-budget/">Christmas gift budget</a> &middot; <a href="../thanksgiving/">Thanksgiving dinner planner</a> &middot; <a href="../budget-503020/">50/30/20 check</a></p>
+<footer>Made by Black. More free tools: <a href="https://blacksgit.github.io/">blacksgit.github.io</a> &middot; <a href="https://patreon.com/123black">patreon.com/123black</a></footer>
+</main>
+<script>
+const $=i=>document.getElementById(i),S={tree:7.5,look:100,led:1,rs:0};
+const usd=v=>'$'+(v<10?v.toFixed(2):Math.round(v).toLocaleString());
+function calc(){
+ const n=i=>Math.max(0,+$(i).value||0),led=S.led,mw=led?0.07:0.4,cw=led?0.6:7;
+ const rows=[];let watts=0;
+ const add=(what,lights,per,w,unit)=>{if(!lights)return;const s=Math.ceil(lights/per);rows.push([what,s,unit,lights,lights*w]);watts+=lights*w};
+ add('Tree',Math.round(S.tree*S.look),100,mw,'strands of 100 mini lights');
+ const r=n('roof');
+ if(S.rs==0)add('Roofline',Math.ceil(r),25,cw,'C9 strings of 25 bulbs (25 ft)');
+ else if(S.rs==1)add('Roofline',Math.ceil(r/22)*100,100,mw,'strands of 100 mini lights (22 ft)');
+ else add('Roofline',Math.ceil(r/7.5)*150,150,mw,'icicle sets of 150 (7.5 ft)');
+ add('Bushes',n('bush')*150,100,mw,'strands of 100 mini lights');
+ add('Windows',Math.ceil(n('win')*15/22)*100,100,mw,'strands of 100 mini lights');
+ const strands=rows.reduce((a,x)=>a+x[1],0),circ=Math.max(1,Math.ceil(watts/1440));
+ const kwh=watts/1000*n('hrs')*n('days'),cost=kwh*n('kwh');
+ $('st').textContent=strands;$('oc').textContent=watts?circ:0;$('co').textContent=usd(cost);
+ $('buy').innerHTML=rows.map(x=>`<tr><td><label><input type=checkbox>${x[0]}: ${x[1]} ${x[2]}</label></td><td>${Math.round(x[4])} W</td></tr>`).join('')+
+  (rows.length?`<tr><td><label><input type=checkbox>Extension cords: one per area, outdoor-rated outside</label></td><td></td></tr><tr><td><label><input type=checkbox>Outdoor timer</label></td><td></td></tr>`:'');
+ const maxEnd=led?'about 40 LED mini strands':'only 3 to 5 old-style mini strands';
+ $('safe').innerHTML=`<tr><td>${Math.round(watts)} W</td><td>Everything on at once. One normal house circuit safely carries 1440 W, so plan on <b>${circ} separate circuit${circ>1?'s':''}</b>${circ>1?' (outlets on different breakers)':''}.</td></tr>`+
+  `<tr><td>End to end</td><td>Connect ${maxEnd} in a row. The exact limit is printed on the box or tag; never go over it.</td></tr>`+
+  `<tr><td>Outside</td><td>Plug into a GFCI outlet (the one with Test/Reset buttons) and keep plugs off the ground.</td></tr>`;
+ const other=S.led?watts/0.07*0.4:watts/0.4*0.07,oc=other/1000*n('hrs')*n('days')*n('kwh');
+ $('hint').innerHTML=!watts?'Pick a tree or add something outside.':S.led?`LED was the right call: the same lights old-style would cost about <b>${usd(oc)}</b> this season and get hot.`:`Switching to LED would cost about <b>${usd(oc)}</b> instead of ${usd(cost)} this season, and LEDs stay cool on the tree.`;
+ try{localStorage.clPlan=JSON.stringify({roof:$('roof').value,bush:$('bush').value,win:$('win').value,hrs:$('hrs').value,days:$('days').value,kwh:$('kwh').value,S})}catch(e){}}
+try{const s=JSON.parse(localStorage.clPlan||'null');if(s){['roof','bush','win','hrs','days','kwh'].forEach(i=>$(i).value=s[i]);Object.assign(S,s.S)}}catch(e){}
+document.querySelectorAll('.ch').forEach(c=>{c.querySelectorAll('button').forEach(b=>{b.classList.toggle('on',+b.dataset.v==S[c.dataset.k]);
+ b.onclick=()=>{S[c.dataset.k]=+b.dataset.v;c.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x==b));calc()}})});
+['roof','bush','win','hrs','days','kwh'].forEach(i=>$(i).addEventListener('input',calc));calc();
+</script></body></html>
