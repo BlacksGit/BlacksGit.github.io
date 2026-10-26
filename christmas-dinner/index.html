@@ -1,0 +1,112 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>Christmas dinner planner: prime rib or ham size, cooking times and timeline</title>
+<meta name=description content="Prime rib or ham for Christmas? Type how many are eating and when. Get how many pounds to order, when it comes out of the fridge, when it goes in the oven and a cooking timeline that ends at dinner. Free, printable, works on your phone.">
+<link rel=canonical href="https://blacksgit.github.io/christmas-dinner/">
+<style>
+:root{--a:#b3262e;--g:#14532d;--m:#5f6b63;--l:#e2e8e4;--s:#f2f8f4}
+*{box-sizing:border-box}body{font:17px/1.5 system-ui,Arial,sans-serif;margin:0;color:#2a221c}
+main{max-width:720px;margin:0 auto;padding:18px}h1{font-size:28px;line-height:1.2;color:var(--g);margin:6px 0}
+.lead{color:var(--m);margin:0 0 16px}h2{font-size:19px;color:var(--g);margin:26px 0 8px}
+.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.f label,.q{font-size:14px;color:var(--m);font-weight:600}
+.in{display:flex;align-items:center;border:2px solid var(--l);border-radius:10px;padding:2px 10px;margin-top:4px}.in:focus-within{border-color:var(--a)}
+.in input{border:0;font-size:20px;width:100%;padding:6px;outline:0;font-weight:700;min-width:0;background:none;font-family:inherit}
+.in input[type=date],.in input[type=time]{font-size:17px;padding:6px 0}
+.ch{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 12px}.ch button{border:2px solid var(--l);background:#fff;border-radius:20px;padding:7px 13px;font-size:15px;cursor:pointer;font-family:inherit}
+.ch button.on{border-color:var(--a);background:var(--s);font-weight:700}
+.big{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:6px}.big div{background:var(--s);border-radius:12px;padding:12px;text-align:center}
+.big b{display:block;font-size:26px;color:var(--a);line-height:1.2}.big small{color:var(--m);font-size:13px}
+table{width:100%;border-collapse:collapse;margin-top:8px}td{padding:8px 6px;border-bottom:1px solid var(--l);vertical-align:top}td:first-child{white-space:nowrap;font-weight:700;color:var(--a);width:1%}
+#buy td:first-child{color:inherit;font-weight:400;white-space:normal;width:auto}#buy td:last-child{text-align:right;font-weight:700;white-space:nowrap}
+input[type=checkbox]{width:18px;height:18px;vertical-align:-3px;margin-right:6px;accent-color:var(--a)}
+.note{color:var(--m);font-size:14px}.tip{background:#fff6dc;border-radius:10px;padding:10px 12px;margin-top:12px}
+.btns button,.cta{display:inline-block;border:0;background:var(--a);color:#fff;border-radius:8px;padding:12px 16px;font-size:16px;text-decoration:none;margin:6px 6px 6px 0;cursor:pointer;font-family:inherit}
+details{margin-top:12px}summary{cursor:pointer;color:var(--a);font-weight:600}
+footer{margin-top:30px;color:var(--m);font-size:14px}a{color:var(--a)}
+@media(max-width:480px){h1{font-size:23px}.big b{font-size:21px}}
+@media print{.btns,.cta,footer,.rel,details,#inputs,.buyp{display:none}body{font-size:14px}}
+</style></head><body><main>
+<h1>Christmas dinner planner: prime rib or ham</h1>
+<p class=lead>Pick the roast, how many are eating and when you sit down. You get how much meat to order, when it comes out of the fridge, when it goes in the oven and a cooking plan that ends right at dinner. Your numbers stay on this device.</p>
+<div id=inputs>
+<p class=q style="margin:0">Main dish</p><div class=ch data-k=main><button data-v=0>Prime rib</button><button data-v=1>Ham</button></div>
+<div class=f>
+<div><label for=ad>Adults and teens</label><div class=in><input id=ad type=number inputmode=numeric min=0 value=8></div></div>
+<div><label for=kid>Kids under 12</label><div class=in><input id=kid type=number inputmode=numeric min=0 value=2></div></div>
+<div><label for=day>Dinner day</label><div class=in><input id=day type=date></div></div>
+<div><label for=at>Dinner time</label><div class=in><input id=at type=time value="17:00"></div></div>
+</div>
+<div id=pr>
+<p class=q style="margin:14px 0 0">Cut</p><div class=ch data-k=bone><button data-v=1>Bone-in (standing rib roast)</button><button data-v=0>Boneless</button></div>
+<p class=q style="margin:0">How done</p><div class=ch data-k=don><button data-v=0>Rare</button><button data-v=1>Medium rare</button><button data-v=2>Medium</button></div>
+</div>
+<div id=hm>
+<p class=q style="margin:14px 0 0">Ham</p><div class=ch data-k=spiral><button data-v=1>Spiral-cut, fully cooked</button><button data-v=0>Whole, fully cooked</button></div>
+</div>
+<p class=q style="margin:0">Leftovers</p><div class=ch data-k=left><button data-v=0>None</button><button data-v=1>Some</button><button data-v=2>Lots</button></div>
+</div>
+<div class=big><div><small>Order</small><b id=lb></b></div><div><small>Out of the fridge</small><b id=out></b></div><div><small>Into the oven</small><b id=tin></b></div></div>
+<p class=tip id=hint></p>
+<h2>Your cooking day</h2>
+<table id=tl></table>
+<h2>How much to buy and make</h2>
+<table id=buy></table>
+<div class=btns><button onclick="print()">Print the plan</button></div>
+<h2 class=buyp>Plan the whole holiday week</h2>
+<p class=buyp>Family staying over? The <b>Meal Planner + Grocery List</b> spreadsheet (Excel and Google Sheets) turns the meals you pick into one shopping list sorted by store aisle, minus what you already have.</p>
+<a class=cta href="https://payhip.com/b/GDO0m">See the Meal Planner</a>
+<details><summary>How it is worked out</summary><p class=note>Prime rib: about 0.75 lb per adult bone-in (one rib feeds two) or 0.5 lb boneless, half that for kids. Reverse sear: oven at 225&deg;F, roughly 30-40 minutes per lb until the thermometer reads 10&deg;F under the target, rest 30 minutes, then 500&deg;F for 8-10 minutes to brown. Pull at 115&deg;F rare, 120&deg;F medium rare, 130&deg;F medium. Ham: 0.5 lb per adult bone-in plus extra for leftovers, heated at 325&deg;F about 10-14 minutes per lb to 140&deg;F (USDA for fully cooked ham). Times vary with the oven and the roast shape, so cook to temperature, not to the clock.</p></details>
+<p class=rel style="margin-top:24px;font-size:15px">Related: <a href="../thanksgiving/">Thanksgiving dinner planner</a> &middot; <a href="../christmas-lights/">Christmas lights calculator</a> &middot; <a href="../gift-budget/">Christmas gift budget</a></p>
+<footer>Made by Black. More free tools: <a href="https://blacksgit.github.io/">blacksgit.github.io</a> &middot; <a href="https://patreon.com/123black">patreon.com/123black</a></footer>
+</main>
+<script>
+const $=id=>document.getElementById(id),v=id=>Math.max(0,+$(id).value||0),S={main:0,bone:1,don:1,spiral:1,left:1};
+function xmas(){const n=new Date(),y=n.getFullYear(),d=new Date(y,11,25);return d<new Date(n.toDateString())?new Date(y+1,11,25):d}
+const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const wd=d=>d.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'}),hm=d=>d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'});
+const add=(d,m)=>new Date(d.getTime()+m*60000),r5=d=>new Date(Math.round(d.getTime()/9e5)*9e5);
+const q=(x,u,dp)=>(Math.ceil(x*dp)/dp)+' '+u;
+function calc(){
+ $('pr').style.display=S.main?'none':'';$('hm').style.display=S.main?'':'none';
+ const a=v('ad'),k=v('kid'),n=a+k,sv=a+k*0.5;
+ const p=$('day').value.split('-'),t=($('at').value||'17:00').split(':');
+ const eat=new Date(+p[0],+p[1]-1,+p[2],+t[0],+t[1]);
+ let lb,T,hint,B;
+ if(!S.main){
+  lb=Math.max(2,Math.ceil((sv*(S.bone?0.75:0.5)+S.left*0.2*n)*2)/2);
+  const ribs=Math.max(2,Math.ceil(lb/2)),pull=[115,120,130][S.don],fin=pull+10;
+  const lo=lb*30,hi=lb*40,rest=30;
+  const tin=r5(add(eat,-(hi+rest+15+15))),out=add(tin,-120);
+  $('lb').textContent=lb+' lb';$('out').textContent=hm(out);$('tin').textContent=hm(tin);
+  hint=`That is about a ${S.bone?ribs+'-rib ':''}${lb} lb ${S.bone?'standing rib roast':'boneless rib roast'}. Order it from the butcher by ${wd(add(eat,-7*1440))}. Salt it all over and leave it uncovered in the fridge the day before for a crisp crust.`;
+  T=[[add(tin,-120),'Roast out of the fridge. Pat dry, rub with oil, pepper and garlic.'],
+   [add(tin,-15),'Oven to 225&deg;F. Put a probe thermometer in the thickest part.'],
+   [tin,`Roast in, fat side up${S.bone?', bones down as a rack':''}. Slow roast ${(lo/60).toFixed(1)}-${(hi/60).toFixed(1)} hours.`],
+   [add(tin,lo),`Start checking. Pull it out at <b>${pull}&deg;F</b>. Cover loosely with foil and rest at least 30 minutes (it climbs to about ${fin}&deg;F).`],
+   [add(eat,-75),'Potatoes on to boil for mashing. Mix the horseradish sauce (horseradish + sour cream).'],
+   [add(eat,-25),'Oven up to 500&deg;F. Green beans and rolls ready to go.'],
+   [add(eat,-15),'Roast back in for 8-10 minutes to brown the crust. Rolls in the oven.'],
+   [add(eat,-5),'Slice against the grain'+(S.bone?', cutting along the bones first':'')+'.'],[eat,'<b>Dinner.</b> Leftovers in the fridge within 2 hours.']];
+  B=[[(S.bone?ribs+'-rib bone-in':'Boneless')+' rib roast',lb+' lb'],['Potatoes',q(sv*0.5,'lb',1)],['Green beans',q(sv*0.25,'lb',2)],['Horseradish (prepared)',Math.ceil(n/12)+' jar'],['Sour cream',Math.ceil(n/10)+' tub (16 oz)']];
+ }else{
+  lb=Math.max(3,Math.ceil(sv*0.5+S.left*0.25*n));
+  const hi=lb*14,tin=r5(add(eat,-(hi+20))),out=add(tin,-60);
+  $('lb').textContent=lb+' lb';$('out').textContent=hm(out);$('tin').textContent=hm(tin);
+  hint=`A ${lb} lb bone-in ${S.spiral?'spiral-cut':'whole'} ham. It is already cooked, so you are only warming it to 140&deg;F; going hotter dries it out.`;
+  T=[[out,'Ham out of the fridge, still wrapped.'],[add(tin,-15),'Oven to 325&deg;F. Ham cut side down in a pan with half a cup of water, wrapped tight in foil.'],
+   [tin,`Ham in. Warm ${(lb*10/60).toFixed(1)}-${(hi/60).toFixed(1)} hours.`],[add(tin,lb*10),'Start checking: 140&deg;F in the thickest part, away from the bone.'],
+   [add(eat,-45),'Foil off, brush on the glaze. Back in at 400&deg;F for 10-15 minutes until sticky.'],[add(eat,-75),'Potatoes on. Assemble casseroles.'],
+   [add(eat,-20),'Ham out to rest under foil. Sides and rolls into the oven.'],[eat,'<b>Dinner.</b> Leftovers in the fridge within 2 hours.']];
+  B=[[(S.spiral?'Spiral-cut':'Whole')+' bone-in ham',lb+' lb'],['Brown sugar + honey for glaze','1 cup + 1/2 cup'],['Potatoes',q(sv*0.5,'lb',1)],['Green beans',q(sv*0.25,'lb',2)]];
+ }
+ $('hint').innerHTML=hint;
+ $('tl').innerHTML=T.sort((x,y)=>x[0]-y[0]).map(t=>`<tr><td>${hm(t[0])}</td><td>${t[1]}</td></tr>`).join('');
+ B=B.concat([['Dinner rolls',Math.ceil(a*2+k)+' rolls'],['Butter',q(n/10,'lb',2)],['Pies or dessert (8 slices each)',Math.ceil(sv*1.2/8)+' pies']]);
+ $('buy').innerHTML=B.map(b=>`<tr><td><label><input type=checkbox>${b[0]}</label></td><td>${b[1]}</td></tr>`).join('');
+ try{localStorage.cdPlan=JSON.stringify({ad:$('ad').value,kid:$('kid').value,day:$('day').value,at:$('at').value,S})}catch(e){}}
+try{const s=JSON.parse(localStorage.cdPlan||'null');if(s){['ad','kid','day','at'].forEach(i=>$(i).value=s[i]);Object.assign(S,s.S)}}catch(e){}
+if(!$('day').value)$('day').value=iso(xmas());
+document.querySelectorAll('.ch').forEach(c=>{c.querySelectorAll('button').forEach(b=>{b.classList.toggle('on',+b.dataset.v==S[c.dataset.k]);
+ b.onclick=()=>{S[c.dataset.k]=+b.dataset.v;c.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x==b));calc()}})});
+['ad','kid','day','at'].forEach(i=>$(i).addEventListener('input',calc));calc();
+</script></body></html>
