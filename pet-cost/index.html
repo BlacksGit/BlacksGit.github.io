@@ -1,0 +1,55 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>Pet cost calculator: what a dog or cat really costs per month and per year</title>
+<meta name=description content="Pick dog or cat, size and how you will handle care. See the first-year cost, the yearly cost after that, the monthly amount and an emergency fund target. Free, works on your phone.">
+<link rel=canonical href="https://blacksgit.github.io/pet-cost/">
+<style>
+:root{--a:#c06a2b;--g:#2c2219;--m:#766b61;--l:#ede4db;--s:#fbf3ea}
+*{box-sizing:border-box}body{font:17px/1.5 system-ui,Arial,sans-serif;margin:0;color:#2a2119}
+main{max-width:720px;margin:0 auto;padding:18px}h1{font-size:28px;line-height:1.2;color:var(--g);margin:6px 0}
+.lead{color:var(--m);margin:0 0 16px}h2{font-size:19px;color:var(--g);margin:22px 0 8px}
+.q>b{display:block;font-size:15px;color:var(--g);margin:12px 0 6px}
+.seg{display:flex;flex-wrap:wrap;gap:8px}.seg label{border:2px solid var(--l);border-radius:22px;padding:7px 14px;cursor:pointer;font-size:15px;background:#fff}
+.seg input{position:absolute;opacity:0}.seg label:has(input:checked){border-color:var(--a);background:var(--s);font-weight:600}.seg label:has(input:focus-visible){outline:2px solid var(--a)}
+.big{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:18px}.big div{background:var(--s);border-radius:12px;padding:12px 4px;text-align:center}
+.big b{display:block;font-size:24px;color:var(--a)}.big small{color:var(--m);font-size:12px}
+table{width:100%;border-collapse:collapse;margin-top:14px}th{font-size:12px;color:var(--m);font-weight:600;text-align:right;padding:4px 6px}th:first-child{text-align:left}
+td{padding:8px 6px;border-bottom:1px solid var(--l)}td+td{text-align:right;font-weight:700;white-space:nowrap}tr.t td{background:var(--s)}
+#tip{margin-top:14px;padding:12px;border-radius:10px;background:#fff8e6}
+.note{color:var(--m);font-size:14px}.cta{display:inline-block;background:var(--a);color:#fff;border-radius:8px;padding:12px 16px;text-decoration:none;margin:6px 0}
+details{margin-top:12px}summary{cursor:pointer;color:var(--a);font-weight:600}
+footer{margin-top:30px;color:var(--m);font-size:14px}a{color:var(--a)}
+@media(max-width:480px){h1{font-size:23px}.big b{font-size:20px}}
+</style></head><body><main>
+<h1>What will this pet really cost?</h1>
+<p class=lead>Tap your answers. You get the first-year cost, the yearly cost after that, a monthly number to budget and an emergency fund to keep ready. Your answers stay on this device.</p>
+<div id=qs></div>
+<div class=big><div><b id=y1></b><small>first year</small></div><div><b id=yn></b><small>each year after</small></div><div><b id=pm></b><small>a month after year one</small></div></div>
+<table id=t></table>
+<div id=tip></div>
+<h2>Keep their records in one place</h2>
+<p>The <b>Pet Care Log and Expense Tracker</b> (printable PDF) has a pet profile with emergency info, vet visits, vaccines and preventives, a medication log, a feeding routine and a monthly pet cost page.</p>
+<a class=cta href="https://payhip.com/b/h3avA">See the Pet Care Log</a>
+<details><summary>Where the numbers come from</summary><p class=note>Middle-of-the-road US prices for 2026. Food scales with size; premium food roughly doubles it. Routine vet covers a yearly exam and vaccines; preventives are flea, tick and heartworm for dogs, flea and tick for cats. The first year adds adoption or purchase, spay or neuter, first vaccines and starter supplies. Insurance is a typical accident-and-illness plan for a young pet. The emergency fund target is what one surprise vet visit often costs. Your area and your pet's breed can move these a lot.</p></details>
+<footer>Made by Black. More free tools: <a href="https://blacksgit.github.io/">blacksgit.github.io</a> &middot; <a href="https://patreon.com/123black">patreon.com/123black</a></footer>
+</main>
+<script>
+const Q=[['pet','Pet',['Dog','Cat']],['size','Size (dogs)',['Small, under 25 lb','Medium, 25 to 60 lb','Large, over 60 lb']],['get','Getting them',['Shelter adoption','Breeder']],
+['food','Food',['Regular','Premium']],['ins','Pet insurance',['No','Yes']],['groom','Grooming',['At home','Professional']],['away','When you travel or work long days',['Family or friends','Boarding or a walker']]];
+const $=id=>document.getElementById(id),m=x=>'$'+Math.round(x).toLocaleString();
+let P={pet:0,size:1,get:0,food:0,ins:0,groom:0,away:0};
+$('qs').innerHTML=Q.map(q=>`<div class=q id=q_${q[0]}><b>${q[1]}</b><div class=seg>${q[2].map((o,i)=>`<label><input type=radio name=${q[0]} value=${i}>${o}</label>`).join('')}</div></div>`).join('');
+try{const s=JSON.parse(localStorage.petCost||'null');if(s)P=Object.assign(P,s)}catch(e){}
+function calc(){
+ Q.forEach(q=>document.querySelector(`input[name=${q[0]}][value="${P[q[0]]}"]`).checked=true);$('q_size').style.display=P.pet?'none':'';
+ const dog=!P.pet,sz=dog?[.7,1,1.45][P.size]:.6,f=P.food?2:1;
+ const yr=[['Food',(dog?540:420)*sz/(dog?1:.6)*f],['Routine vet and vaccines',dog?350:260],['Flea, tick, heartworm prevention',dog?320*sz:160],['Litter',dog?0:240],
+  ['Treats, toys, chews',dog?180:100],['Grooming',P.groom?(dog?65*sz*6:60*3):(dog?40:20)],['Insurance',P.ins?(dog?52:30)*12*(dog?sz:1):0],['Boarding or walker',P.away?(dog?900:450):0],['License and misc.',dog?60:30]].filter(r=>r[1]>0);
+ const first=[['Adoption or purchase',P.get?(dog?2000:1200):(dog?250:120)],['Spay or neuter, first vaccines, microchip',P.get?(dog?650:450):(dog?150:80)],['Starter supplies',dog?300*sz:200]];
+ const yn=yr.reduce((s,r)=>s+r[1],0),y1=yn+first.reduce((s,r)=>s+r[1],0),fund=dog?2500:1800;
+ $('y1').textContent=m(y1);$('yn').textContent=m(yn);$('pm').textContent=m(yn/12);
+ $('t').innerHTML='<tr><th>Item</th><th>Per year</th></tr>'+[...first.map(r=>['One-time: '+r[0][0].toLowerCase()+r[0].slice(1),r[1]]),...yr,['Every year after the first',yn]].map(r=>`<tr class="${r[0].startsWith('Every')?'t':''}"><td>${r[0]}</td><td>${m(r[1])}</td></tr>`).join('');
+ const life=dog?[14,12,10][P.size]:15;
+ $('tip').innerHTML=`<b>Keep about ${m(fund)} ready</b> for one surprise vet visit${P.ins?', or your insurance deductible plus the first bill until the claim pays out':''}. Over a typical ${life}-year life, this pet costs about ${m(y1+yn*(life-1))}.`;
+ try{localStorage.petCost=JSON.stringify(P)}catch(e){}}
+document.addEventListener('change',e=>{if(e.target.name in P){P[e.target.name]=+e.target.value;calc()}});calc();
+</script></body></html>
