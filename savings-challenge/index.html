@@ -1,0 +1,72 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>Savings challenge maker: a 52-week style plan for any goal and date</title>
+<meta name=description content="Type your savings goal and date. Get a week-by-week challenge that adds up to exactly your goal: same amount each week, growing like the 52-week challenge, or reverse. Tick off each week as you save. Free, works on your phone.">
+<link rel=canonical href="https://blacksgit.github.io/savings-challenge/">
+<style>
+:root{--a:#1f9d8a;--g:#1d2b29;--m:#677370;--l:#e0e9e7;--s:#ecf8f6}
+*{box-sizing:border-box}body{font:17px/1.5 system-ui,Arial,sans-serif;margin:0;color:#1f2928}
+main{max-width:720px;margin:0 auto;padding:18px}h1{font-size:28px;line-height:1.2;color:var(--g);margin:6px 0}
+.lead{color:var(--m);margin:0 0 16px}h2{font-size:19px;color:var(--g);margin:22px 0 8px}
+.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}.f>div{display:flex;flex-direction:column;justify-content:flex-end}
+.f label{font-size:14px;color:var(--m);font-weight:600}
+.in{display:flex;align-items:center;border:2px solid var(--l);border-radius:10px;padding:2px 10px;margin-top:4px;background:#fff}.in:focus-within{border-color:var(--a)}
+.in span{font-size:17px;color:var(--m)}.in input{border:0;font-size:21px;width:100%;padding:6px;outline:0;font-weight:700;min-width:0;background:none}.in input[type=date]{font-size:15px;padding:6px 0}
+.seg{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.seg label{border:2px solid var(--l);border-radius:22px;padding:7px 14px;cursor:pointer;font-size:15px;background:#fff}
+.seg input{position:absolute;opacity:0}.seg label:has(input:checked){border-color:var(--a);background:var(--s);font-weight:600}.seg label:has(input:focus-visible){outline:2px solid var(--a)}
+#sum{margin-top:14px;font-size:18px}
+.prog{height:14px;background:#eef1f0;border-radius:7px;overflow:hidden;margin-top:8px}.prog div{height:100%;background:var(--a);transition:width .2s}
+.wk{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:6px;margin-top:12px}
+.wk label{border:1px solid var(--l);border-radius:8px;padding:6px 4px;text-align:center;cursor:pointer;font-size:13px;color:var(--m);user-select:none}
+.wk label b{display:block;font-size:16px;color:var(--g)}.wk input{position:absolute;opacity:0}
+.wk label:has(input:checked){background:var(--a);border-color:var(--a);color:#dff}.wk label:has(input:checked) b{color:#fff;text-decoration:line-through}
+.wk label:has(input:focus-visible){outline:2px solid var(--a)}
+.note{color:var(--m);font-size:14px}.cta{display:inline-block;background:var(--a);color:#fff;border-radius:8px;padding:12px 16px;text-decoration:none;margin:6px 0}
+.btn{border:1px solid var(--l);background:#fff;border-radius:8px;padding:6px 12px;font-size:14px;color:var(--m);cursor:pointer;margin-top:10px}
+footer{margin-top:30px;color:var(--m);font-size:14px}a{color:var(--a)}
+@media(max-width:480px){h1{font-size:23px}}
+@media print{.f,.seg,.cta,footer,.btn,.lead,h2,.note{display:none}.wk label{border:1px solid #999}}
+</style></head><body><main>
+<h1>Make a savings challenge for your goal</h1>
+<p class=lead>The classic 52-week challenge always ends at $1,378. Type your own goal and date to get a week-by-week plan that adds up to exactly that. Tap a week when you have saved it. Your progress stays on this device.</p>
+<div class=f>
+<div><label for=goal>Savings goal</label><div class=in><span>$</span><input id=goal type=number inputmode=decimal min=1 step=50 value=2000></div></div>
+<div><label for=start>Start</label><div class=in><input id=start type=date></div></div>
+<div><label for=end>Reach it by</label><div class=in><input id=end type=date></div></div>
+</div>
+<div class=seg id=mode></div>
+<div id=sum></div>
+<div class=prog><div id=bar></div></div>
+<div class=wk id=wk></div>
+<button class=btn id=pr>Print this plan</button> <button class=btn id=clr>Clear ticks</button>
+<h2>Prefer paper?</h2>
+<p>The <b>Savings Challenge Tracker</b> (printable PDF) has the 52-week challenge, the reverse 52-week challenge, a $1,000 goal tracker, the $5 bill challenge and a no-spend days page to color in.</p>
+<a class=cta href="https://payhip.com/b/3oEAU">See the Savings Challenge Tracker</a>
+<p class=note>Growing: the first week is small and each week adds the same step, like the classic challenge. Reverse: the big weeks come first, which helps if the end of your plan lands near the holidays. Amounts are rounded to whole dollars and the last week takes up the difference so the total is exact.</p>
+<footer>Made by Black. More free tools: <a href="https://blacksgit.github.io/">blacksgit.github.io</a> &middot; <a href="https://patreon.com/123black">patreon.com/123black</a></footer>
+</main>
+<script>
+const M=[['Same each week'],['Growing (52-week style)'],['Reverse (big weeks first)']],$=id=>document.getElementById(id),m=x=>'$'+Math.round(x).toLocaleString();
+const iso=d=>new Date(d.getTime()-d.getTimezoneOffset()*6e4).toISOString().slice(0,10);
+let mode=1,ticks=[];
+$('mode').innerHTML=M.map((x,i)=>`<label><input type=radio name=mode value=${i}>${x[0]}</label>`).join('');
+const t0=new Date(),t1=new Date();t1.setDate(t1.getDate()+364);$('start').value=iso(t0);$('end').value=iso(t1);
+try{const s=JSON.parse(localStorage.saveChal||'null');if(s){$('goal').value=s.g;$('start').value=s.s;$('end').value=s.e;mode=s.m;ticks=s.t||[]}}catch(e){}
+function plan(){
+ const g=Math.max(1,+$('goal').value||0),a=new Date($('start').value+'T00:00'),b=new Date($('end').value+'T00:00');
+ const n=Math.max(1,Math.min(260,Math.round((b-a)/6048e5)||52));let w;
+ if(mode==0)w=Array(n).fill(g/n);else{const step=g*2/(n*(n+1));w=[...Array(n)].map((_,i)=>step*(i+1));if(mode==2)w.reverse()}
+ w=w.map(x=>Math.round(x));const diff=g-w.reduce((s,x)=>s+x,0);w[mode==2?0:n-1]+=diff;
+ return{w,a,n,g}}
+function draw(){
+ document.querySelector(`input[name=mode][value="${mode}"]`).checked=true;
+ const{w,a}=plan();ticks=ticks.slice(0,w.length);
+ $('wk').innerHTML=w.map((x,i)=>{const d=new Date(a);d.setDate(d.getDate()+7*i);return`<label><input type=checkbox data-i=${i} ${ticks[i]?'checked':''}><b>${m(x)}</b>${d.toLocaleDateString('en-US',{month:'short',day:'numeric'})}</label>`}).join('');sum()}
+function sum(){
+ const{w,n,g}=plan(),saved=w.reduce((s,x,i)=>s+(ticks[i]?x:0),0),now=Math.floor((new Date()-new Date($('start').value+'T00:00'))/6048e5),due=w.slice(0,Math.max(0,Math.min(n,now))).reduce((s,x)=>s+x,0);
+ $('sum').innerHTML=`<b>${n} weeks</b>, ${mode==0?m(w[0])+' a week':`${m(Math.min(...w))} to ${m(Math.max(...w))} a week`} (about ${m(g/n*52/12)} a month). Saved <b>${m(saved)}</b> of ${m(g)}`+(saved<due&&now>=0?`, ${m(due-saved)} behind plan.`:saved>=g?'. Done!':', on track.');
+ $('bar').style.width=Math.min(100,saved/g*100)+'%';
+ try{localStorage.saveChal=JSON.stringify({g:$('goal').value,s:$('start').value,e:$('end').value,m:mode,t:ticks})}catch(e){}}
+document.addEventListener('change',e=>{if(e.target.name=='mode'){mode=+e.target.value;draw()}else if(e.target.dataset.i){ticks[+e.target.dataset.i]=e.target.checked?1:0;sum()}});
+['goal','start','end'].forEach(i=>$(i).addEventListener('input',draw));
+$('pr').onclick=()=>print();$('clr').onclick=()=>{if(confirm('Clear all ticked weeks?')){ticks=[];draw()}};draw();
+</script></body></html>
