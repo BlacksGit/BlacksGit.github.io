@@ -1,0 +1,74 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>Recipe cost calculator: cost per serving from your grocery prices</title>
+<meta name=description content="Type what you paid for each package and how much the recipe uses. Get the cost of the whole recipe, the cost per serving, and what cooking it saves you over takeout. Converts grams, ounces, pounds, cups and spoons. Free.">
+<link rel=canonical href="https://blacksgit.github.io/recipe-cost/">
+<style>
+:root{--a:#4f8a3c;--g:#25301f;--m:#6d7568;--l:#e3e8df;--s:#f1f7ed;--r:#c8414b}
+*{box-sizing:border-box}body{font:17px/1.5 system-ui,Arial,sans-serif;margin:0;color:#22281f}
+main{max-width:720px;margin:0 auto;padding:18px}h1{font-size:28px;line-height:1.2;color:var(--g);margin:6px 0}
+.lead{color:var(--m);margin:0 0 16px}h2{font-size:19px;color:var(--g);margin:22px 0 8px}
+input,select{font:inherit}
+.top{display:grid;grid-template-columns:1fr 1fr;gap:10px}.top>div{display:flex;flex-direction:column;justify-content:flex-end}.top label{font-size:14px;color:var(--m);font-weight:600}
+.top input{width:100%;border:2px solid var(--l);border-radius:10px;padding:8px 10px;font-size:19px;font-weight:700;margin-top:4px}
+.ing{border:1px solid var(--l);border-radius:12px;padding:10px;margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:8px;position:relative}
+.ing .nm{grid-column:1/-1;padding-right:40px}.ing small{display:block;font-size:12px;color:var(--m);font-weight:600}
+.ing input,.ing select{width:100%;border:2px solid var(--l);border-radius:8px;padding:6px 8px;font-size:17px;min-width:0;background:#fff}
+.ing input:focus,.ing select:focus,.top input:focus{outline:0;border-color:var(--a)}
+.pair{display:flex;gap:6px}.pair input{flex:1}.pair select{flex:0 0 74px;padding:6px 2px}
+input[type=number]{-moz-appearance:textfield}input::-webkit-inner-spin-button,input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.ing .x{position:absolute;right:8px;top:8px;border:0;background:none;font-size:22px;color:var(--m);cursor:pointer;padding:4px 8px}
+.ing .c{grid-column:1/-1;text-align:right;font-weight:700;color:var(--a)}.ing .c.bad{color:var(--r);font-weight:600}
+.add{margin-top:10px;border:2px dashed var(--l);background:#fff;border-radius:10px;padding:10px;width:100%;font-size:16px;color:var(--a);font-weight:600;cursor:pointer}
+.big{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:18px}.big div{background:var(--s);border-radius:12px;padding:12px 4px;text-align:center}
+.big b{display:block;font-size:24px;color:var(--g)}.big small{color:var(--m);font-size:12px}
+#tip{margin-top:14px;padding:12px;border-radius:10px;background:#fff8e6}
+.note{color:var(--m);font-size:14px}.cta{display:inline-block;background:var(--a);color:#fff;border-radius:8px;padding:12px 16px;text-decoration:none;margin:6px 0}
+details{margin-top:12px}summary{cursor:pointer;color:var(--a);font-weight:600}
+footer{margin-top:30px;color:var(--m);font-size:14px}a{color:var(--a)}
+@media(min-width:620px){.ing{grid-template-columns:1.6fr 1fr 1.5fr 1.5fr}.ing .nm{grid-column:auto;padding-right:0}.ing .c{grid-column:1/-1}.ing{padding-right:44px}}
+@media(max-width:480px){h1{font-size:23px}.big b{font-size:20px}}
+</style></head><body><main>
+<h1>What does this recipe cost per serving?</h1>
+<p class=lead>For each ingredient, type what the package cost, how big it was and how much the recipe uses. Units are converted for you. Your recipe stays on this device.</p>
+<div class=top>
+<div><label for=srv>Servings</label><input id=srv type=number inputmode=decimal min=1 value=6></div>
+<div><label for=out>Takeout per serving</label><input id=out type=number inputmode=decimal min=0 step=0.5 value=14></div>
+</div>
+<div id=list></div>
+<button class=add id=add>+ Add ingredient</button>
+<div class=big><div><b id=tot></b><small>whole recipe</small></div><div><b id=per></b><small>per serving</small></div><div><b id=yr></b><small>saved a year, cooked weekly</small></div></div>
+<div id=tip></div>
+<h2>Plan the whole week</h2>
+<p>The <b>Meal Planner</b> spreadsheet (Excel and Google Sheets) works out cost per serving for every recipe you add, builds the grocery list from your week plan and keeps your food spending on budget.</p>
+<a class=cta href="https://payhip.com/b/GDO0m">See the Meal Planner</a>
+<details><summary>How units work</summary><p class=note>Weights convert to each other (g, kg, oz, lb) and volumes convert to each other (ml, l, tsp, tbsp, cup, fl oz). Use "each" for things you count, like eggs or onions. A weight cannot be turned into a volume without knowing the food, so if the package is in pounds and the recipe says cups, weigh it once or use the package's serving info. US cups are used (1 cup = 237 ml).</p></details>
+<footer>Made by Black. More free tools: <a href="https://blacksgit.github.io/">blacksgit.github.io</a> &middot; <a href="https://patreon.com/123black">patreon.com/123black</a></footer>
+</main>
+<script>
+const U={g:['w',1],kg:['w',1000],oz:['w',28.3495],lb:['w',453.592],ml:['v',1],l:['v',1000],tsp:['v',4.929],tbsp:['v',14.787],cup:['v',236.6],'fl oz':['v',29.574],each:['e',1]};
+const opts=Object.keys(U).map(u=>`<option>${u}</option>`).join(''),$=id=>document.getElementById(id);
+const m=x=>'$'+(x<100?x.toFixed(2):Math.round(x).toLocaleString());
+// [name, package price, package size, unit, amount used, unit]
+let R=[['Ground beef',6.49,1,'lb',1,'lb'],['Kidney beans (can)',1.09,15.5,'oz',31,'oz'],['Crushed tomatoes (can)',1.89,28,'oz',28,'oz'],['Onion',0.89,1,'each',1,'each'],['Chili powder',3.49,2.5,'oz',0.8,'oz'],['Shredded cheese',3.99,8,'oz',4,'oz']];
+try{const s=JSON.parse(localStorage.recipeCost||'null');if(s){R=s.r;$('srv').value=s.srv;$('out').value=s.out}}catch(e){}
+function row(r,i){return`<div class=ing data-i=${i}><div class=nm><small>Ingredient</small><input data-k=0 value="${String(r[0]).replace(/"/g,'&quot;')}" placeholder="e.g. Rice"></div>
+<div><small>Package price</small><input data-k=1 type=number inputmode=decimal min=0 step=0.01 value=${r[1]}></div>
+<div><small>Package size</small><div class=pair><input data-k=2 type=number inputmode=decimal min=0 value=${r[2]}><select data-k=3>${opts}</select></div></div>
+<div><small>Recipe uses</small><div class=pair><input data-k=4 type=number inputmode=decimal min=0 value=${r[4]}><select data-k=5>${opts}</select></div></div>
+<div class=c></div><button class=x aria-label="Remove">&times;</button></div>`}
+function draw(){$('list').innerHTML=R.map(row).join('');document.querySelectorAll('.ing').forEach(el=>{const r=R[el.dataset.i];el.querySelector('[data-k="3"]').value=r[3];el.querySelector('[data-k="5"]').value=r[5]});calc()}
+function cost(r){const a=U[r[3]],b=U[r[5]];if(a[0]!=b[0])return null;const size=r[2]*a[1];return size?r[1]*r[4]*b[1]/size:0}
+function calc(){
+ let tot=0,bad=0,top=null;
+ document.querySelectorAll('.ing').forEach(el=>{const r=R[el.dataset.i],c=cost(r),o=el.querySelector('.c');
+  if(c==null){bad++;o.className='c bad';o.textContent=`Package is ${U[r[3]][0]=='w'?'a weight':U[r[3]][0]=='v'?'a volume':'a count'}, recipe is ${U[r[5]][0]=='w'?'a weight':U[r[5]][0]=='v'?'a volume':'a count'}. Use the same kind.`}
+  else{tot+=c;o.className='c';o.textContent=m(c);if(!top||c>top[1])top=[r[0],c]}});
+ const s=Math.max(1,+$('srv').value||1),per=tot/s,out=Math.max(0,+$('out').value||0),save=(out-per)*s*52;
+ $('tot').textContent=m(tot);$('per').textContent=m(per);$('yr').textContent=save>0?m(save):'$0';
+ $('tip').innerHTML=!R.length?'Add an ingredient to start.':(bad?`<b>${bad} ingredient${bad>1?'s':''} not counted yet.</b> `:'')+(top&&tot?`<b>${top[0]||'One ingredient'}</b> is ${Math.round(top[1]/tot*100)}% of the cost. `:'')+(out>per?`Each serving costs ${m(out-per)} less than takeout.`:`This costs as much as takeout per serving.`);
+ try{localStorage.recipeCost=JSON.stringify({r:R,srv:$('srv').value,out:$('out').value})}catch(e){}}
+$('list').addEventListener('input',e=>{const k=e.target.dataset.k;if(k==null)return;const i=e.target.closest('.ing').dataset.i;R[i][k]=k==0||k==3||k==5?e.target.value:+e.target.value||0;calc()});
+$('list').addEventListener('click',e=>{if(e.target.classList.contains('x')){R.splice(e.target.closest('.ing').dataset.i,1);draw()}});
+$('add').onclick=()=>{R.push(['',0,1,'lb',0,'oz']);draw();const n=document.querySelectorAll('.ing .nm input');n[n.length-1].focus()};
+['srv','out'].forEach(i=>$(i).addEventListener('input',calc));draw();
+</script></body></html>
