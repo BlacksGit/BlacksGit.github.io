@@ -1,0 +1,76 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>Debt snowball vs avalanche calculator: your debt-free date</title>
+<meta name=description content="List your debts and what extra you can pay each month. See your debt-free date, total interest and payoff order with the snowball and the avalanche method side by side. Free, works on your phone.">
+<link rel=canonical href="https://blacksgit.github.io/debt-payoff/">
+<style>
+:root{--a:#2d8f6f;--b:#5a63c9;--g:#1e2b27;--m:#67736f;--l:#e1e8e5;--s:#eef7f3}
+*{box-sizing:border-box}body{font:17px/1.5 system-ui,Arial,sans-serif;margin:0;color:#1f2925}
+main{max-width:720px;margin:0 auto;padding:18px}h1{font-size:28px;line-height:1.2;color:var(--g);margin:6px 0}
+.lead{color:var(--m);margin:0 0 16px}h2{font-size:19px;color:var(--g);margin:22px 0 8px}
+input{font:inherit}
+.d{border:1px solid var(--l);border-radius:12px;padding:10px 44px 10px 10px;margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:8px;position:relative}
+.d .nm{grid-column:1/-1}.d small{display:block;font-size:12px;color:var(--m);font-weight:600}
+.d input{width:100%;border:2px solid var(--l);border-radius:8px;padding:6px 8px;font-size:17px;min-width:0}.d input:focus,.x2 input:focus{outline:0;border-color:var(--a)}
+input[type=number]{-moz-appearance:textfield}input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.d .x{position:absolute;right:6px;top:6px;border:0;background:none;font-size:22px;color:var(--m);cursor:pointer;padding:4px 8px}
+.add{margin-top:10px;border:2px dashed var(--l);background:#fff;border-radius:10px;padding:10px;width:100%;font-size:16px;color:var(--a);font-weight:600;cursor:pointer}
+.x2{margin-top:14px}.x2 label{font-size:14px;color:var(--m);font-weight:600}.x2 input{width:100%;border:2px solid var(--l);border-radius:10px;padding:8px 10px;font-size:24px;font-weight:700;margin-top:4px}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}.cmp>div{border:2px solid var(--l);border-radius:12px;padding:12px;position:relative}
+.cmp>div.best{border-color:var(--a);background:var(--s)}.cmp h3{margin:0 0 4px;font-size:17px}.cmp p{margin:2px 0;font-size:14px;color:var(--m)}
+.cmp b.big{display:block;font-size:22px;color:var(--g)}.cmp ol{margin:6px 0 0;padding-left:20px;font-size:14px}
+.cmp i{position:absolute;top:-11px;left:12px;background:var(--a);color:#fff;font-size:11px;font-style:normal;border-radius:10px;padding:1px 8px}
+#tip{margin-top:14px;padding:12px;border-radius:10px;background:#fff8e6}
+.note{color:var(--m);font-size:14px}.cta{display:inline-block;background:var(--a);color:#fff;border-radius:8px;padding:12px 16px;text-decoration:none;margin:6px 0}
+details{margin-top:12px}summary{cursor:pointer;color:var(--a);font-weight:600}
+footer{margin-top:30px;color:var(--m);font-size:14px}a{color:var(--a)}
+@media(min-width:620px){.d{grid-template-columns:2fr 1fr 1fr 1fr}.d .nm{grid-column:auto}}
+@media(max-width:480px){h1{font-size:23px}.cmp{grid-template-columns:1fr}}
+</style></head><body><main>
+<h1>When will I be debt-free?</h1>
+<p class=lead>List your debts and what extra you can pay each month. See your debt-free date and the interest you pay with the snowball and the avalanche method, side by side. Your numbers stay on this device.</p>
+<div id=list></div>
+<button class=add id=add>+ Add a debt</button>
+<div class=x2><label for=extra>Extra I can pay each month, on top of the minimums</label><input id=extra type=number inputmode=decimal min=0 step=25 value=200></div>
+<div class=cmp id=cmp></div>
+<div id=tip></div>
+<h2>Keep it on the fridge</h2>
+<p>The <b>Monthly Budget and Debt Payoff Planner</b> (printable PDF) has a monthly budget, a bill calendar, a debt list, a month-by-month payoff tracker with milestones to tick off, and savings goals.</p>
+<a class=cta href="https://payhip.com/b/4Ys7A">See the Debt Payoff Planner</a>
+<details><summary>Snowball or avalanche?</summary><p class=note>Both pay every minimum and put all extra money on one debt. When it is paid off, its whole payment rolls to the next one. Snowball goes smallest balance first, so you clear debts sooner and stay motivated. Avalanche goes highest interest rate first, which always costs the same or less interest. If the gap shown above is small, pick the one you will stick with. Interest is worked out monthly at APR / 12. Fees, promo rates and changing rates are not included.</p></details>
+<footer>Made by Black. More free tools: <a href="https://blacksgit.github.io/">blacksgit.github.io</a> &middot; <a href="https://patreon.com/123black">patreon.com/123black</a></footer>
+</main>
+<script>
+// [name, balance, APR %, minimum payment]
+let D=[['Credit card',4200,24.9,120],['Store card',900,29.9,35],['Car loan',11500,7.5,310],['Personal loan',3000,13,110]];
+const $=id=>document.getElementById(id),m=x=>'$'+Math.round(x).toLocaleString();
+try{const s=JSON.parse(localStorage.debtPay||'null');if(s){D=s.d;$('extra').value=s.x}}catch(e){}
+function draw(){$('list').innerHTML=D.map((d,i)=>`<div class=d data-i=${i}><div class=nm><small>Debt</small><input data-k=0 value="${String(d[0]).replace(/"/g,'&quot;')}" placeholder="e.g. Visa"></div>
+<div><small>Balance $</small><input data-k=1 type=number inputmode=decimal min=0 value=${d[1]}></div><div><small>APR %</small><input data-k=2 type=number inputmode=decimal min=0 step=0.1 value=${d[2]}></div>
+<div><small>Minimum $</small><input data-k=3 type=number inputmode=decimal min=0 value=${d[3]}></div><button class=x aria-label="Remove">&times;</button></div>`).join('');calc()}
+function sim(order,extra){
+ const b=D.map(d=>Math.max(0,+d[1]||0)),r=D.map(d=>Math.max(0,+d[2]||0)/1200),mn=D.map(d=>Math.max(0,+d[3]||0));
+ const budget=mn.reduce((a,x)=>a+x,0)+extra;let mo=0,int=0;const done=[];
+ while(b.some(x=>x>.005)&&mo<600){mo++;let left=budget;
+  b.forEach((x,i)=>{if(x>0){const k=x*r[i];b[i]+=k;int+=k}});
+  b.forEach((x,i)=>{if(x>0){const p=Math.min(x,mn[i],left);b[i]-=p;left-=p}});
+  for(const i of order){if(left<=0)break;if(b[i]>0){const p=Math.min(b[i],left);b[i]-=p;left-=p}}
+  b.forEach((x,i)=>{if(x<=.005&&!done.some(d=>d[0]==i)&&(+D[i][1]||0)>0)done.push([i,mo])})}
+ return{mo,int,done,stuck:mo>=600}}
+function when(mo){const d=new Date();d.setMonth(d.getMonth()+mo);return d.toLocaleDateString('en-US',{month:'short',year:'numeric'})}
+function calc(){
+ const idx=D.map((_,i)=>i).filter(i=>(+D[i][1]||0)>0),x=Math.max(0,+$('extra').value||0),avo=[...idx].sort((a,b)=>D[b][2]-D[a][2]||D[a][1]-D[b][1]);
+ const sb=sim([...idx].sort((a,b)=>D[a][1]-D[b][1]),x),av=sim(avo,x);
+ const card=(n,s,best)=>`<div class="${best?'best':''}">${best?'<i>Less interest</i>':''}<h3>${n}</h3>${s.stuck?'<p>Payments do not cover the interest. Raise the extra amount.</p>':`<b class=big>${when(s.mo)}</b><p>${s.mo} months, ${m(s.int)} interest</p><ol>${s.done.map(d=>`<li>${D[d[0]][0]||'Debt'}: ${when(d[1])}</li>`).join('')}</ol>`}</div>`;
+ const aBest=!av.stuck&&av.int<sb.int-1;
+ $('cmp').innerHTML=idx.length?card('Snowball: smallest first',sb,!aBest&&!sb.stuck&&sb.int<av.int-1)+card('Avalanche: highest rate first',av,aBest):'';
+ const mins=D.reduce((a,d)=>a+(+d[3]||0),0),tot=D.reduce((a,d)=>a+(+d[1]||0),0),gap=Math.abs(sb.int-av.int);
+ let t='';if(!idx.length)t='Add a debt to start.';else if(sb.stuck&&av.stuck)t=`<b>${m(mins)} a month in minimums does not pay down ${m(tot)}.</b> Add an extra amount to get a date.`;
+ else{t=gap<1?'<b>Both methods cost the same here.</b> ':`<b>Avalanche saves ${m(gap)}</b> over snowball${gap<100?', which is small: pick the one that keeps you going':''}. `;
+  if(x>0){const no=sim(avo,0);t+=no.stuck?`Without the extra ${m(x)}, minimums alone would never clear it.`:`Without the extra ${m(x)} a month you would pay ${m(no.int-av.int)} more interest and finish ${no.mo-av.mo} months later.`}}
+ $('tip').innerHTML=t;
+ try{localStorage.debtPay=JSON.stringify({d:D,x:$('extra').value})}catch(e){}}
+$('list').addEventListener('input',e=>{const k=e.target.dataset.k;if(k==null)return;D[e.target.closest('.d').dataset.i][k]=k==0?e.target.value:+e.target.value||0;calc()});
+$('list').addEventListener('click',e=>{if(e.target.classList.contains('x')){D.splice(e.target.closest('.d').dataset.i,1);draw()}});
+$('add').onclick=()=>{D.push(['',0,0,0]);draw();const n=document.querySelectorAll('.d .nm input');n[n.length-1].focus()};
+$('extra').addEventListener('input',calc);draw();
+</script></body></html>
