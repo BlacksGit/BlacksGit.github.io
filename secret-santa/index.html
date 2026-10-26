@@ -1,0 +1,118 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>Secret Santa generator: draw names, private links, no sign-up</title>
+<meta name=description content="Free Secret Santa name drawer. Type the names, block couples from drawing each other, set a budget and date. Everyone gets a private link that shows only their own match, so the organizer can play too. No email, no sign-up, or print fold-over slips.">
+<link rel=canonical href="https://blacksgit.github.io/secret-santa/">
+<style>
+:root{--a:#b3262e;--g:#14532d;--m:#5f6b63;--l:#e2e8e4;--s:#f2f8f4}
+*{box-sizing:border-box}body{font:17px/1.5 system-ui,Arial,sans-serif;margin:0;color:#2a221c}
+main{max-width:720px;margin:0 auto;padding:18px}h1{font-size:28px;line-height:1.2;color:var(--g);margin:6px 0}
+.lead{color:var(--m);margin:0 0 16px}h2{font-size:19px;color:var(--g);margin:26px 0 8px}
+.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.f label,.q{font-size:14px;color:var(--m);font-weight:600}
+.in{display:flex;align-items:center;border:2px solid var(--l);border-radius:10px;padding:2px 10px;margin-top:4px}.in:focus-within{border-color:var(--a)}
+.in input,.in textarea,.in select{border:0;font-size:18px;width:100%;padding:6px;outline:0;min-width:0;background:none;font-family:inherit}
+.in input[type=date]{font-size:17px;padding:6px 0}textarea{resize:vertical;line-height:1.5}
+.pr{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}.pr span{background:var(--s);border-radius:20px;padding:5px 6px 5px 12px;font-size:15px}
+.pr span button{border:0;background:none;color:var(--a);font-size:17px;cursor:pointer;padding:0 6px}
+.rw{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.rw .in{flex:1;min-width:120px}
+.btns button,.cta,.sb{display:inline-block;border:0;background:var(--a);color:#fff;border-radius:8px;padding:12px 16px;font-size:16px;text-decoration:none;margin:6px 6px 6px 0;cursor:pointer;font-family:inherit}
+.sb{padding:8px 12px;font-size:15px;margin:2px}.sb.o{background:#fff;color:var(--a);border:2px solid var(--a);padding:6px 10px}
+table{width:100%;border-collapse:collapse;margin-top:8px}td{padding:8px 6px;border-bottom:1px solid var(--l);vertical-align:middle}td:first-child{font-weight:700}td:last-child{text-align:right}
+.ok{color:var(--g);font-size:14px}.note{color:var(--m);font-size:14px}.tip{background:#fff6dc;border-radius:10px;padding:10px 12px;margin-top:12px}.err{background:#fde8e8}
+details{margin-top:12px}summary{cursor:pointer;color:var(--a);font-weight:600}
+footer{margin-top:30px;color:var(--m);font-size:14px}a{color:var(--a)}
+#rv{text-align:center;padding-top:30px}#rv .gift{font-size:70px;line-height:1}#rv h1{font-size:30px}
+#box{margin:24px auto;max-width:360px;background:var(--a);color:#fff;border-radius:18px;padding:34px 18px;font-size:20px;cursor:pointer;user-select:none}
+#box b{display:block;font-size:38px;line-height:1.2;margin:8px 0;word-break:break-word}
+.slips{display:none}
+@media(max-width:480px){h1{font-size:23px}}
+@media print{#app>*:not(.slips),footer,.rel{display:none!important}.slips{display:block!important}main{padding:0}
+.slip{border:1px dashed #999;height:2.4in;display:grid;grid-template-rows:1fr 1fr;page-break-inside:avoid;margin-bottom:.15in;font-size:15px}
+.slip div{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:6px}
+.slip div:first-child{border-bottom:1px dashed #bbb;transform:rotate(180deg)}.slip b{font-size:24px;color:var(--a)}}
+</style></head><body><main>
+<div id=app>
+<h1>Secret Santa name drawer</h1>
+<p class=lead>Type the names, block anyone who should not draw each other, and draw. Everyone gets a private link that shows only who they buy for, so the organizer can join in too. No email, no sign-up, nothing leaves this device until you send a link.</p>
+<div class=f>
+<div><label for=grp>Group name</label><div class=in><input id=grp placeholder="Family Christmas"></div></div>
+<div><label for=bud>Budget ($)</label><div class=in><input id=bud type=number inputmode=numeric min=0 value=25></div></div>
+<div><label for=day>Gift swap day</label><div class=in><input id=day type=date></div></div>
+</div>
+<p class=q style="margin:14px 0 0"><label for=nm>Names, one per line (3 or more)</label></p>
+<div class=in><textarea id=nm rows=6 placeholder="Sam&#10;Alex&#10;Jordan&#10;Riley"></textarea></div>
+<p class=q style="margin:14px 0 0">Never draw each other (couples, roommates)</p>
+<div class=rw><div class=in><select id=r1></select></div><span>and</span><div class=in><select id=r2></select></div><button class=sb onclick="addRule()">Add</button></div>
+<div class=pr id=rules></div>
+<div class=btns><button onclick="draw()">Draw names</button></div>
+<p class=tip id=hint style="display:none"></p>
+<div id=res style="display:none">
+<h2>Send each person their link</h2>
+<p class=note>Each link only opens that one person's match. Tap Send to text it or share it in a chat, or Copy to paste it anywhere. The matches stay hidden from you.</p>
+<table id=lk></table>
+<div class=btns><button onclick="print()">Print fold-over slips instead</button><button onclick="if(confirm('Draw again? Links you already sent will be wrong.'))draw()" style="background:#fff;color:var(--a);border:2px solid var(--a)">Draw again</button></div>
+<details><summary>Show all matches (spoils it for you)</summary><table id=all></table></details>
+</div>
+<details><summary>How it works</summary><p class=note>The draw shuffles everyone so nobody gets themselves and nobody gets a name you blocked. With 4 or more people it also avoids two people drawing each other, so every gift is a surprise. The match is scrambled into each link, so there is no server and no account, but it is not real encryption: it keeps an honest group honest, not a hacker out. Your list is saved on this device only, so you can come back and resend a link.</p></details>
+<h2>Gift ideas for the swap</h2>
+<p>Stuck on what to buy for your name? The <b>Christmas Gift Planner</b> spreadsheet (Excel and Google Sheets) keeps who you buy for, budget per person, gift ideas and what you spent in one place.</p>
+<a class=cta href="https://payhip.com/b/j9IsG">See the Gift Planner</a>
+<p class=rel style="margin-top:24px;font-size:15px">Related: <a href="../gift-budget/">Christmas gift budget</a> &middot; <a href="../cookie-swap/">Cookie swap planner</a> &middot; <a href="../elf-planner/">Elf on the Shelf planner</a> &middot; <a href="../christmas-dinner/">Christmas dinner planner</a> &middot; <a href="../black-friday/">Black Friday deal checker</a></p>
+<div class=slips id=slips></div>
+</div>
+<div id=rv style="display:none">
+<div class=gift>&#127873;</div>
+<h1 id=hi></h1>
+<p class=lead id=gn></p>
+<div id=box onclick="reveal()">Tap to see who you are buying for</div>
+<p id=det></p>
+<p class=note>Keep it secret! Screenshot this so you do not forget.</p>
+<p><a href="./">Run your own Secret Santa</a></p>
+</div>
+<footer>Made by Black. More free tools: <a href="https://blacksgit.github.io/">blacksgit.github.io</a> &middot; <a href="https://patreon.com/123black">patreon.com/123black</a></footer>
+</main>
+<script>
+const $=i=>document.getElementById(i),K='blacksanta';
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let R=[],M=null;
+// scramble so a glance at the link does not spoil the match
+function enc(o){const b=new TextEncoder().encode(JSON.stringify(o));let s='';b.forEach((x,i)=>s+=String.fromCharCode(x^K.charCodeAt(i%K.length)));return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
+function dec(t){const s=atob(t.replace(/-/g,'+').replace(/_/g,'/'));return JSON.parse(new TextDecoder().decode(Uint8Array.from(s,(c,i)=>c.charCodeAt(0)^K.charCodeAt(i%K.length))))}
+const names=()=>{const seen=new Set();return $('nm').value.split('\n').map(s=>s.trim()).filter(s=>s&&!seen.has(s.toLowerCase())&&seen.add(s.toLowerCase()))};
+const blocked=(a,b)=>R.some(r=>(r[0]==a&&r[1]==b)||(r[0]==b&&r[1]==a));
+function opts(){const n=names(),o=n.map(x=>`<option>${esc(x)}</option>`).join('');[$('r1'),$('r2')].forEach((s,i)=>{const v=s.value;s.innerHTML=o;s.value=n.includes(v)?v:n[i]||''});
+ R=R.filter(r=>n.includes(r[0])&&n.includes(r[1]));
+ $('rules').innerHTML=R.map((r,i)=>`<span>${esc(r[0])} &amp; ${esc(r[1])}<button onclick="R.splice(${i},1);opts();save()" aria-label=Remove>&times;</button></span>`).join('')}
+function addRule(){const a=$('r1').value,b=$('r2').value;if(a&&b&&a!=b&&!blocked(a,b))R.push([a,b]);opts();save()}
+function tryDraw(n,mutual){for(let t=0;t<3000;t++){const p=n.slice();for(let i=p.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[p[i],p[j]]=[p[j],p[i]]}
+ const m={};let ok=true;n.forEach((g,i)=>{const r=p[i];if(r==g||blocked(g,r))ok=false;m[g]=r});
+ if(ok&&!mutual&&n.some(g=>m[m[g]]==g))ok=false;if(ok)return m}return null}
+function draw(){const n=names(),h=$('hint');h.style.display='';h.classList.remove('err');
+ if(n.length<3){h.classList.add('err');h.textContent='Add at least 3 names, one per line.';return}
+ M=(n.length>=4&&tryDraw(n,false))||tryDraw(n,true);
+ if(!M){h.classList.add('err');h.textContent='No draw works with these rules. Remove a "never draw each other" pair or add more people.';$('res').style.display='none';return}
+ h.textContent=`Done! ${n.length} names drawn${R.length?', '+R.length+' blocked pair'+(R.length>1?'s':'')+' kept apart':''}. Now send everyone their own link.`;
+ save();show()}
+function link(g){const d={g,r:M[g],n:$('grp').value.trim(),b:$('bud').value,d:$('day').value};return location.href.split('#')[0]+'#s='+enc(d)}
+function show(){if(!M)return;const n=Object.keys(M);$('res').style.display='';
+ $('lk').innerHTML=n.map((g,i)=>`<tr><td>${esc(g)}<br><span class=ok id=k${i}></span></td><td><button class=sb onclick="send(${i})">Send</button><button class="sb o" onclick="cp(${i})">Copy</button></td></tr>`).join('');
+ $('all').innerHTML=n.map(g=>`<tr><td>${esc(g)}</td><td>buys for ${esc(M[g])}</td></tr>`).join('');
+ const bd=$('bud').value?'Budget $'+esc($('bud').value):'',dy=$('day').value?new Date($('day').value+'T12:00').toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'}):'';
+ $('slips').innerHTML=n.map(g=>`<div class=slip><div>You are buying for<b>${esc(M[g])}</b>${[bd,dy].filter(Boolean).join(' &middot; ')}</div><div>Secret Santa${$('grp').value?' &middot; '+esc($('grp').value):''}<b>${esc(g)}</b>Fold on the line. Open in private!</div></div>`).join('')}
+const msg=g=>`${g}, your Secret Santa match is ready${$('grp').value?' for '+$('grp').value.trim():''}. Open this link (only you): `;
+function mark(i,t){$('k'+i).textContent=t}
+function cp(i){const g=Object.keys(M)[i],u=link(g);(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(()=>mark(i,'Link copied'),()=>prompt('Copy this link for '+g,u))}
+function send(i){const g=Object.keys(M)[i],u=link(g);if(navigator.share)navigator.share({title:'Secret Santa',text:msg(g),url:u}).then(()=>mark(i,'Sent'),()=>{});else cp(i)}
+function save(){try{localStorage.ssDraw=JSON.stringify({grp:$('grp').value,bud:$('bud').value,day:$('day').value,nm:$('nm').value,R,M})}catch(e){}}
+let V=null;
+function reveal(){$('box').innerHTML=`You are buying for<b>${esc(V.r)}</b>`;$('box').style.cursor='default'}
+const h=location.hash.match(/^#s=(.+)/);
+if(h){try{V=dec(h[1]);$('app').style.display='none';$('rv').style.display='';$('hi').textContent='Hi '+V.g+'!';
+ $('gn').textContent=(V.n||'Your')+' Secret Santa';document.title='Secret Santa for '+V.g;
+ $('det').innerHTML=[V.b?'Budget: <b>$'+esc(String(V.b))+'</b>':'',V.d?'Gift swap: <b>'+new Date(V.d+'T12:00').toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'})+'</b>':''].filter(Boolean).join('<br>')}
+ catch(e){$('hint').style.display='';$('hint').textContent='That link looks broken. Ask the organizer to copy it again.'}}
+try{const s=JSON.parse(localStorage.ssDraw||'null');if(s){['grp','bud','day','nm'].forEach(i=>$(i).value=s[i]||'');R=s.R||[];M=s.M||null}}catch(e){}
+if(!$('day').value){const t=new Date(),d=new Date(t.getFullYear(),11,20);if(d<t)d.setFullYear(d.getFullYear()+1);$('day').value=d.toISOString().slice(0,10)}
+$('nm').addEventListener('input',()=>{opts();const n=names();if(M&&(Object.keys(M).length!=n.length||!Object.keys(M).every(g=>n.includes(g)))){M=null;$('res').style.display='none'}save()});['grp','bud','day'].forEach(i=>$(i).addEventListener('input',()=>{save();show()}));
+opts();if(M&&Object.keys(M).every(g=>names().includes(g)))show();else M=null;
+</script></body></html>
