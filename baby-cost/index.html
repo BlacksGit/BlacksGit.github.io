@@ -1,0 +1,80 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>Baby first-year cost calculator: what the first 12 months really cost</title>
+<meta name=description content="Pick how you will feed, diaper and care for your baby. See the first-year cost month by month, what you need before the birth, and how much to save each month until your due date. Free, works on your phone.">
+<link rel=canonical href="https://blacksgit.github.io/baby-cost/">
+<style>
+:root{--a:#5a7fc4;--g:#28304a;--m:#6d7385;--l:#e3e6ef;--s:#eff3fb;--p:#d77a9a}
+*{box-sizing:border-box}body{font:17px/1.5 system-ui,Arial,sans-serif;margin:0;color:#22283a}
+main{max-width:720px;margin:0 auto;padding:18px}h1{font-size:28px;line-height:1.2;color:var(--g);margin:6px 0}
+.lead{color:var(--m);margin:0 0 16px}h2{font-size:19px;color:var(--g);margin:22px 0 8px}
+.q{margin:12px 0}.q>b{display:block;font-size:15px;color:var(--g);margin-bottom:6px}
+.seg{display:flex;flex-wrap:wrap;gap:8px}.seg label{border:2px solid var(--l);border-radius:22px;padding:7px 14px;cursor:pointer;font-size:15px;background:#fff}
+.seg input{position:absolute;opacity:0}.seg label:has(input:checked){border-color:var(--a);background:var(--s);color:var(--g);font-weight:600}
+.seg label:has(input:focus-visible){outline:2px solid var(--a)}
+.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}.f>div{display:flex;flex-direction:column;justify-content:flex-end}
+.f label{font-size:14px;color:var(--m);font-weight:600}
+.in{display:flex;align-items:center;border:2px solid var(--l);border-radius:10px;padding:2px 10px;margin-top:4px;background:#fff}.in:focus-within{border-color:var(--a)}
+.in input[type=date]{font-size:17px}.in span{font-size:16px;color:var(--m)}.in input{border:0;font-size:20px;width:100%;padding:6px;outline:0;font-weight:700;min-width:0;background:none}
+.big{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:18px}.big div{background:var(--s);border-radius:12px;padding:12px 4px;text-align:center}
+.big b{display:block;font-size:24px;color:var(--g)}.big small{color:var(--m);font-size:12px}
+.months{display:flex;align-items:flex-end;gap:4px;height:130px;margin-top:16px;border-bottom:1px solid var(--l)}
+.months div{flex:1;background:var(--a);border-radius:4px 4px 0 0;opacity:.75;min-height:2px}.months div.up{background:var(--p)}
+.ml{display:flex;gap:4px;font-size:11px;color:var(--m)}.ml span{flex:1;text-align:center}
+table{width:100%;border-collapse:collapse;margin-top:14px}td{padding:8px 6px;border-bottom:1px solid var(--l)}td:last-child{text-align:right;font-weight:700;white-space:nowrap}
+#plan{margin-top:14px;padding:12px;border-radius:10px;background:#fff8e6}
+.note{color:var(--m);font-size:14px}.cta{display:inline-block;background:var(--a);color:#fff;border-radius:8px;padding:12px 16px;text-decoration:none;margin:6px 0}
+details{margin-top:12px}summary{cursor:pointer;color:var(--a);font-weight:600}
+footer{margin-top:30px;color:var(--m);font-size:14px}a{color:var(--a)}
+@media(max-width:480px){h1{font-size:23px}.big b{font-size:19px}}
+</style></head><body><main>
+<h1>What will our baby's first year cost?</h1>
+<p class=lead>Tap your plans. You get the first-year cost month by month, what to have ready before the birth, and what to save each month until the due date. Your answers stay on this device.</p>
+<div id=qs></div>
+<div class=f>
+<div><label for=due>Due date</label><div class=in><input id=due type=date></div></div>
+<div><label for=birth>Birth bill you expect to pay</label><div class=in><span>$</span><input id=birth type=number inputmode=decimal min=0 step=100 value=3000></div></div>
+<div><label for=prem>Extra insurance per month</label><div class=in><span>$</span><input id=prem type=number inputmode=decimal min=0 step=10 value=150></div></div>
+<div id=ccw><label for=cc>Childcare per month</label><div class=in><span>$</span><input id=cc type=number inputmode=decimal min=0 step=50 value=0></div></div>
+</div>
+<div class=big><div><b id=yr></b><small>first year</small></div><div><b id=pm></b><small>a month after the start</small></div><div><b id=pre></b><small>before the birth</small></div></div>
+<div class=months id=mo></div><div class=ml id=ml></div>
+<div id=plan></div>
+<table id=t></table>
+<h2>Plan it on paper</h2>
+<p>The <b>First-Year Baby Budget Planner</b> (printable PDF) has cost ranges for each item, a savings goal tracker, a monthly baby budget and a hospital bill checklist so you can check every charge.</p>
+<a class=cta href="https://payhip.com/b/vVl2c">See the Baby Budget Planner</a>
+<details><summary>Where the numbers come from</summary><p class=note>Typical US prices in 2026 for a middle-of-the-road budget. Formula about $200 a month; breastfeeding about $20 (pads, bags, bottles). Disposable diapers and wipes about $85 a month; cloth about $400 up front then $25 a month for washing. Solid food from month 6 about $50 a month. Childcare varies the most: about $900 to $2,000 a month for full-time care depending on state and type, so type your own quote. The birth bill depends on your plan; people with insurance often pay close to $3,000 out of pocket, so check your deductible and out-of-pocket maximum. Many plans cover a breast pump for free. Edit any number to match your quotes. A planning estimate, not financial advice.</p></details>
+<footer>Made by Black. More free tools: <a href="https://blacksgit.github.io/">blacksgit.github.io</a> &middot; <a href="https://patreon.com/123black">patreon.com/123black</a></footer>
+</main>
+<script>
+// [id, question, [[label, up-front $, monthly $, childcare default]]]
+const Q=[['feed','Feeding',[['Formula',60,200],['Breastfeeding',80,20],['Both',80,110]]],
+['dia','Diapers',[['Disposable',0,85],['Cloth',400,25]]],
+['gear','Crib, stroller, car seat, nursery',[['Mostly new',1400,0],['Mix of new and used',800,0],['Mostly used or gifted',350,0]]],
+['clo','Clothes',[['Mostly new',0,50],['Hand-me-downs',0,15]]],
+['care','Childcare',[['Parent or family at home',0,0,0],['In-home daycare',0,0,1000],['Daycare center',0,0,1400],['Nanny or nanny share',0,0,2200]]],
+['start','Childcare starts after',[['3 months',0,0],['4 months',0,0],['6 months',0,0],['12 months',0,0]]]];
+const SOL=50,MISC=40,$=id=>document.getElementById(id),m=x=>'$'+Math.round(x).toLocaleString();
+let pick={feed:0,dia:0,gear:1,clo:1,care:0,start:0};
+$('qs').innerHTML=Q.map(q=>`<div class=q id=q_${q[0]}><b>${q[1]}</b><div class=seg>${q[2].map((o,i)=>`<label><input type=radio name=${q[0]} value=${i}>${o[0]}</label>`).join('')}</div></div>`).join('');
+const d=new Date();d.setMonth(d.getMonth()+5);$('due').value=d.toISOString().slice(0,10);
+try{const s=JSON.parse(localStorage.babyCost||'null');if(s){pick=s.p;['due','birth','prem','cc'].forEach(i=>{if(s[i]!=null)$(i).value=s[i]})}}catch(e){}
+function sync(){Q.forEach(q=>document.querySelector(`input[name=${q[0]}][value="${pick[q[0]]}"]`).checked=true);$('q_start').style.display=$('ccw').style.display=pick.care?'':'none'}
+function calc(){
+ const o=k=>Q.find(q=>q[0]==k)[2][pick[k]],up=['feed','dia','gear','clo'].reduce((s,k)=>s+o(k)[1],0)+v('birth');
+ const st=[3,4,6,12][pick.start],cc=pick.care?v('cc'):0,base=o('feed')[2]+o('dia')[2]+o('clo')[2]+v('prem')+MISC;
+ const mo=[...Array(12)].map((_,i)=>base+(i>=6?SOL:0)+(i>=st?cc:0)),yr=up+mo.reduce((a,b)=>a+b,0);
+ $('yr').textContent=m(yr);$('pm').textContent=m(mo[0])+(mo[11]>mo[0]+1?'+':'');$('pre').textContent=m(up);
+ const all=[up,...mo],mx=Math.max(...all);
+ $('mo').innerHTML=all.map((x,i)=>`<div class="${i?'':'up'}" style="height:${x/mx*100}%" title="${m(x)}"></div>`).join('');
+ $('ml').innerHTML='<span>Birth</span>'+mo.map((_,i)=>`<span>${i+1}</span>`).join('');
+ const due=new Date($('due').value),left=Math.max(0,(due-new Date())/2629800000);
+ $('plan').innerHTML=isNaN(left)?'Pick a due date to get a savings plan.':left<.5?`<b>Have ${m(up)} ready now</b> for the birth bill and the things you buy before baby comes. After that, plan on ${m(mo[0])} a month${mo[11]>mo[0]+1?`, rising to ${m(mo[11])} by month 12`:''}.`:
+  `<b>Save ${m(up/left)} a month</b> for the next ${left.toFixed(1)} months to have ${m(up)} ready by the due date. After the birth, plan on ${m(mo[0])} a month${mo[11]>mo[0]+1?`, rising to ${m(mo[11])} by month 12`:''}.`;
+ $('t').innerHTML=[['Birth bill',v('birth')],['Gear, nursery and supplies',up-v('birth')],['Feeding, 12 months',o('feed')[2]*12],['Solid food, months 7 to 12',SOL*6],['Diapers and wipes, 12 months',o('dia')[2]*12],['Clothes, 12 months',o('clo')[2]*12],['Extra insurance, 12 months',v('prem')*12],['Medicine, bath, toiletries',MISC*12],['Childcare',cc*Math.max(0,12-st)],['First year',yr]]
+  .map(r=>`<tr><td>${r[0]==='First year'?'<b>First year</b>':r[0]}</td><td>${m(r[1])}</td></tr>`).join('');
+ try{localStorage.babyCost=JSON.stringify({p:pick,due:$('due').value,birth:$('birth').value,prem:$('prem').value,cc:$('cc').value})}catch(e){}}
+function v(id){return Math.max(0,+$(id).value||0)}
+document.addEventListener('change',e=>{const n=e.target.name;if(n in pick){pick[n]=+e.target.value;if(n=='care')$('cc').value=Q[4][2][pick.care][3];sync();calc()}});
+['due','birth','prem','cc'].forEach(i=>$(i).addEventListener('input',calc));sync();calc();
+</script></body></html>
