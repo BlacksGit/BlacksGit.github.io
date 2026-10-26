@@ -1,0 +1,85 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>3D print price calculator: drop your G-code, get a price</title>
+<meta name=description content="Drop a G-code file from OrcaSlicer, PrusaSlicer, Bambu Studio or Cura and get the real cost of the print (filament, power, printer wear, failures, your time) and a price to charge. Free, runs in your browser, nothing is uploaded.">
+<link rel=canonical href="https://blacksgit.github.io/print-price/">
+<style>
+:root{--a:#e2672b;--g:#23272e;--m:#6b7380;--l:#e6e2de;--s:#fdf3ec}
+*{box-sizing:border-box}body{font:17px/1.5 system-ui,Arial,sans-serif;margin:0;color:#20262e}
+main{max-width:720px;margin:0 auto;padding:18px}h1{font-size:28px;line-height:1.2;color:var(--g);margin:6px 0}
+.lead{color:var(--m);margin:0 0 16px}h2{font-size:19px;color:var(--g);margin:24px 0 8px}
+#drop{display:block;border:3px dashed var(--l);border-radius:14px;padding:22px;text-align:center;cursor:pointer;background:#fff}#drop.on{border-color:var(--a);background:var(--s)}
+#drop b{display:block;font-size:19px;color:var(--g)}#drop small{color:var(--m)}#drop input{display:none}
+#got{color:var(--a);font-weight:700;margin-top:8px;min-height:1.4em}
+.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.f label{font-size:14px;color:var(--m);font-weight:600}
+.in{display:flex;align-items:center;border:2px solid var(--l);border-radius:10px;padding:2px 10px;margin-top:4px}.in:focus-within{border-color:var(--a)}
+.in span{font-size:16px;color:var(--m);white-space:nowrap}.in input{border:0;font-size:21px;width:100%;padding:6px;outline:0;font-weight:700;min-width:0}
+.big{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:18px}.big div{background:var(--s);border-radius:12px;padding:14px;text-align:center}
+.big b{display:block;font-size:30px;color:var(--g)}.big .r b{color:var(--a)}.big small{color:var(--m);font-size:13px}
+table{width:100%;border-collapse:collapse;margin-top:14px}td{padding:9px 6px;border-bottom:1px solid var(--l)}td:last-child{text-align:right;font-weight:700}tr.t td{background:#fff8e6}
+.note{color:var(--m);font-size:14px}.cta{display:inline-block;background:var(--a);color:#fff;border-radius:8px;padding:12px 16px;text-decoration:none;margin:6px 0}
+details{margin-top:12px}summary{cursor:pointer;color:var(--a);font-weight:600}
+footer{margin-top:30px;color:var(--m);font-size:14px}a{color:var(--a)}
+@media(max-width:480px){h1{font-size:23px}.big b{font-size:25px}}
+</style></head><body><main>
+<h1>How much should I charge for this 3D print?</h1>
+<p class=lead>Drop the sliced G-code file, or type the grams and hours your slicer shows. You get what the print really costs you and a fair price to charge. The file never leaves your computer.</p>
+<label id=drop><input id=file type=file accept=".gcode,.gco,.g,.txt"><b>Drop a .gcode file here</b><small>or tap to pick one. OrcaSlicer, PrusaSlicer, Bambu Studio, Cura.</small></label>
+<div id=got></div>
+<div class=f>
+<div><label for=g>Filament</label><div class=in><input id=g type=number inputmode=decimal min=0 value=85><span>g</span></div></div>
+<div><label for=h>Print time</label><div class=in><input id=h type=number inputmode=decimal min=0 step=0.1 value=5.5><span>hours</span></div></div>
+<div><label for=lab>Your hands-on time</label><div class=in><input id=lab type=number inputmode=decimal min=0 value=15><span>min</span></div></div>
+</div>
+<details><summary>My printer and prices</summary>
+<div class=f style="margin-top:10px">
+<div><label for=spool>Spool price (1 kg)</label><div class=in><span>$</span><input id=spool type=number inputmode=decimal min=0 value=20></div></div>
+<div><label for=w>Printer power draw</label><div class=in><input id=w type=number inputmode=decimal min=0 value=120><span>W</span></div></div>
+<div><label for=kwh>Electricity</label><div class=in><span>$</span><input id=kwh type=number inputmode=decimal min=0 step=0.01 value=0.17><span>/kWh</span></div></div>
+<div><label for=pc>Printer cost</label><div class=in><span>$</span><input id=pc type=number inputmode=decimal min=0 value=350></div></div>
+<div><label for=life>Printer life</label><div class=in><input id=life type=number inputmode=decimal min=1 value=3000><span>hours</span></div></div>
+<div><label for=fail>Failed print buffer</label><div class=in><input id=fail type=number inputmode=decimal min=0 value=10><span>%</span></div></div>
+<div><label for=rate>Your hourly rate</label><div class=in><span>$</span><input id=rate type=number inputmode=decimal min=0 value=20></div></div>
+<div><label for=mk>Profit markup</label><div class=in><input id=mk type=number inputmode=decimal min=0 value=50><span>%</span></div></div>
+<div><label for=fee>Selling fee <small>(Etsy about 9.5%)</small></label><div class=in><input id=fee type=number inputmode=decimal min=0 max=50 value=9.5><span>%</span></div></div>
+</div></details>
+<div class=big><div><small>The print costs you</small><b id=cost></b></div><div class=r><small>Charge</small><b id=price></b></div></div>
+<table id=t></table>
+<p class=note id=hint></p>
+<h2>Run your print shop from one sheet</h2>
+<p>The <b>3D Print Shop Tracker</b> (Excel and Google Sheets) does this quote for every job, logs each order, tracks spools as you use them, shows when your printer has paid for itself and what you really made each month.</p>
+<a class=cta href="https://payhip.com/b/Dy4Pq">See the 3D Print Shop Tracker</a>
+<details><summary>How it is worked out</summary><p class=note>Filament = grams / 1000 x spool price. Power = watts x hours / 1000 x price per kWh. Printer wear = printer cost / life hours x print hours (covers nozzles, belts and the day it dies). The failure buffer is added to filament, power and wear. Your time is hands-on minutes at your rate, not print time. Price = cost x (1 + markup), then grossed up so the selling fee comes out of the buyer's price, not your profit.</p></details>
+<footer>Made by Black. More free tools: <a href="https://blacksgit.github.io/">blacksgit.github.io</a> &middot; <a href="https://patreon.com/123black">patreon.com/123black</a></footer>
+</main>
+<script>
+const IDS=['g','h','lab','spool','w','kwh','pc','life','fail','rate','mk','fee'],$=id=>document.getElementById(id),v=id=>Math.max(0,+$(id).value||0),m=x=>'$'+x.toFixed(2);
+function calc(){
+ const fil=v('g')/1000*v('spool'),pow=v('w')*v('h')/1000*v('kwh'),wear=v('pc')/Math.max(1,v('life'))*v('h'),buf=(fil+pow+wear)*v('fail')/100,lab=v('lab')/60*v('rate');
+ const cost=fil+pow+wear+buf+lab,price=Math.ceil(cost*(1+v('mk')/100)/(1-Math.min(.5,v('fee')/100))*2)/2;
+ $('cost').textContent=m(cost);$('price').textContent=m(price);
+ $('t').innerHTML=[['Filament',fil],['Electricity',pow],['Printer wear',wear],['Failed print buffer',buf],['Your time',lab],['Cost',cost],['Selling fee',price*v('fee')/100],['Profit',price-price*v('fee')/100-cost]]
+  .map(r=>`<tr class="${r[0]=='Cost'||r[0]=='Profit'?'t':''}"><td>${r[0]}</td><td>${m(r[1])}</td></tr>`).join('');
+ $('hint').textContent=v('h')?`Machine time costs ${m((pow+wear)/v('h'))} an hour on this printer. Filament is ${Math.round(fil/cost*100||0)}% of the cost.`:'';
+ try{localStorage.printPrice=JSON.stringify(IDS.slice(3).map(i=>$(i).value))}catch(e){}}
+try{const s=JSON.parse(localStorage.printPrice||'null');if(s)IDS.slice(3).forEach((i,k)=>$(i).value=s[k])}catch(e){}
+function hms(s){let t=0;for(const x of s.matchAll(/(\d+)\s*([dhms])/g))t+=+x[1]*{d:86400,h:3600,m:60,s:1}[x[2]];return t}
+function read(text){
+ let g=null,secs=null,mm=null,x;
+ if(x=text.match(/;\s*(?:total )?filament (?:used|weight) \[g\]\s*[=:]\s*([\d.,]+)/i))g=x[1].split(',').filter(Boolean).reduce((a,b)=>a+ +b,0);
+ if(x=text.match(/;\s*filament used \[mm\]\s*=\s*([\d.,]+)/i))mm=x[1].split(',').filter(Boolean).reduce((a,b)=>a+ +b,0);
+ if(x=text.match(/;\s*(?:total estimated time|estimated printing time[^=\n]*)\s*[=:]\s*([0-9dhms ]+)/i))secs=hms(x[1]);
+ if(secs==null&&(x=text.match(/;\s*TIME:\s*(\d+)/)))secs=+x[1];
+ if(g==null&&mm==null&&(x=text.match(/;\s*Filament used:\s*([\d.]+)\s*m/)))mm=+x[1]*1000;
+ if(g==null&&mm!=null)g=Math.PI*.0875*.0875*(mm/10)*1.24;
+ return[g,secs]}
+async function load(f){
+ const head=await f.slice(0,60000).text(),tail=await f.slice(Math.max(0,f.size-80000)).text(),[g,s]=read(head+'\n'+tail);
+ if(g!=null)$('g').value=Math.round(g*10)/10;if(s!=null)$('h').value=Math.round(s/360)/10;
+ $('got').textContent=g==null&&s==null?`Could not find filament or time in ${f.name}. Type them in below.`:`Read from ${f.name}: ${g!=null?Math.round(g)+' g':'grams not found'}, ${s!=null?(s/3600).toFixed(1)+' h':'time not found'}.`;calc()}
+const d=$('drop');$('file').onchange=e=>e.target.files[0]&&load(e.target.files[0]);
+['dragenter','dragover'].forEach(k=>d.addEventListener(k,e=>{e.preventDefault();d.classList.add('on')}));
+['dragleave','drop'].forEach(k=>d.addEventListener(k,e=>{e.preventDefault();d.classList.remove('on')}));
+d.addEventListener('drop',e=>e.dataTransfer.files[0]&&load(e.dataTransfer.files[0]));
+IDS.forEach(i=>$(i).addEventListener('input',calc));calc();
+</script></body></html>
