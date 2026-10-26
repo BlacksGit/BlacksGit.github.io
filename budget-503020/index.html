@@ -1,0 +1,65 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>50/30/20 budget calculator: check your real spending against the rule</title>
+<meta name=description content="Type your take-home pay and what you really spend. See your needs, wants and savings split next to 50/30/20, how far off each one is, and where the money to fix it can come from. Free, works on your phone.">
+<link rel=canonical href="https://blacksgit.github.io/budget-503020/">
+<style>
+:root{--a:#3b6fd8;--n:#3b6fd8;--w:#e0883a;--s:#2e9e6a;--g:#1f2733;--m:#6b7380;--l:#e3e6ec}
+*{box-sizing:border-box}body{font:17px/1.5 system-ui,Arial,sans-serif;margin:0;color:#20262e}
+main{max-width:720px;margin:0 auto;padding:18px}h1{font-size:28px;line-height:1.2;color:var(--g);margin:6px 0}
+.lead{color:var(--m);margin:0 0 16px}h2{font-size:19px;color:var(--g);margin:22px 0 8px}
+.in{display:flex;align-items:center;border:2px solid var(--l);border-radius:10px;padding:2px 10px;margin-top:4px;background:#fff}.in:focus-within{border-color:var(--a)}
+.in span{font-size:17px;color:var(--m)}.in input{border:0;font-size:20px;width:100%;padding:6px;outline:0;font-weight:700;min-width:0}
+.hero .in input{font-size:28px}.hero label,.row label{font-size:14px;color:var(--m);font-weight:600}
+.rows{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}.row{display:flex;flex-direction:column;justify-content:flex-end}
+.row label i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}
+.bar{display:flex;height:34px;border-radius:10px;overflow:hidden;margin-top:6px;background:#eef0f4}.bar div{transition:width .2s}
+.lbl{position:relative;height:18px;font-size:13px;color:var(--m)}.lbl span{position:absolute;transform:translateX(-50%)}.lbl span:first-child{transform:none}.lbl span:last-child{transform:translateX(-100%)}
+.cmp{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}.cmp div{border-radius:12px;padding:10px 4px;text-align:center;background:#f6f7f9}
+.cmp b{display:block;font-size:24px}.cmp small{display:block;color:var(--m);font-size:12px}.cmp em{font-style:normal;font-size:13px;font-weight:700}
+#fix{margin-top:14px;padding:12px;border-radius:10px;background:#fff8e6}
+.note{color:var(--m);font-size:14px}.cta{display:inline-block;background:var(--a);color:#fff;border-radius:8px;padding:12px 16px;text-decoration:none;margin:6px 0}
+details{margin-top:12px}summary{cursor:pointer;color:var(--a);font-weight:600}
+footer{margin-top:30px;color:var(--m);font-size:14px}a{color:var(--a)}
+@media(max-width:480px){h1{font-size:23px}.cmp b{font-size:20px}}
+</style></head><body><main>
+<h1>Does my spending fit 50/30/20?</h1>
+<p class=lead>Type your monthly take-home pay and what you really spend. See your split next to the rule and where the money to fix it can come from. Your numbers stay on this device.</p>
+<div class=hero><label for=pay>Take-home pay per month</label><div class=in><span>$</span><input id=pay type=number inputmode=decimal min=0 step=100 value=4200></div></div>
+<h2>What you spend per month</h2>
+<div class=rows id=rows></div>
+<h2>Your split</h2>
+<div class=bar id=bar></div>
+<div class=lbl><span style="left:0">0%</span><span style="left:50%">50%</span><span style="left:80%">80%</span><span style="left:100%">100%</span></div>
+<div class=cmp id=cmp></div>
+<div id=fix></div>
+<h2>Run the whole budget in one file</h2>
+<p>The <b>Budget Dashboard 2027</b> (Excel and Google Sheets) sorts your bank export into needs, wants, savings and debt, then runs this 50/30/20 check for any month you pick, with budget vs actual and charts.</p>
+<a class=cta href="https://payhip.com/b/CrujX">See the Budget Dashboard</a>
+<details><summary>What counts as what</summary><p class=note>Needs: what you must pay to live and work: rent or mortgage, utilities, groceries, insurance, car and transport, minimum debt payments. Wants: eating out, shopping, subscriptions, trips, hobbies. Savings: emergency fund, retirement, extra debt payments above the minimum, investing. Use take-home pay (after tax). The rule is a starting point; in a high-rent city 60/20/20 is common and still healthy if savings hold.</p></details>
+<footer>Made by Black. More free tools: <a href="https://blacksgit.github.io/">blacksgit.github.io</a> &middot; <a href="https://patreon.com/123black">patreon.com/123black</a></footer>
+</main>
+<script>
+// [label, bucket n/w/s, default]
+const R=[['Rent or mortgage','n',1450],['Utilities and phone','n',260],['Groceries','n',520],['Car, gas, transport','n',430],['Insurance','n',180],['Minimum debt payments','n',150],
+['Eating out','w',310],['Shopping','w',250],['Subscriptions','w',65],['Fun, trips, hobbies','w',200],['Savings and investing','s',300],['Extra debt payments','s',0]];
+const T={n:[.5,'Needs','var(--n)'],w:[.3,'Wants','var(--w)'],s:[.2,'Savings','var(--s)']},$=id=>document.getElementById(id),m=x=>'$'+Math.round(x).toLocaleString();
+$('rows').innerHTML=R.map((r,i)=>`<div class=row><label for=r${i}><i style="background:${T[r[1]][2]}"></i>${r[0]}</label><div class=in><span>$</span><input id=r${i} type=number inputmode=decimal min=0 value=${r[2]}></div></div>`).join('');
+const IDS=['pay',...R.map((r,i)=>'r'+i)];
+try{const s=JSON.parse(localStorage.b503020||'null');if(s)IDS.forEach((i,k)=>$(i).value=s[k])}catch(e){}
+function calc(){
+ const pay=Math.max(0,+$('pay').value||0),t={n:0,w:0,s:0};R.forEach((r,i)=>t[r[1]]+=Math.max(0,+$('r'+i).value||0));
+ const spent=t.n+t.w+t.s,left=pay-spent;
+ t.s+=Math.max(0,left);
+ const tot=Math.max(pay,spent)||1;
+ $('bar').innerHTML=['n','w','s'].map(k=>`<div style="width:${t[k]/tot*100}%;background:${T[k][2]}"></div>`).join('');
+ $('cmp').innerHTML=['n','w','s'].map(k=>{const p=pay?t[k]/pay:0,d=t[k]-pay*T[k][0],bad=k=='s'?d<-1:d>1;
+  return`<div><small>${T[k][1]}</small><b style="color:${T[k][2]}">${Math.round(p*100)}%</b><small>goal ${T[k][0]*100}% = ${m(pay*T[k][0])}</small><em style="color:${bad?'#c8414b':'#2e9e6a'}">${Math.abs(d)<1?'on target':(d>0?m(d)+' over':m(-d)+' under')}</em></div>`}).join('');
+ const want=t.w-pay*.3,need=t.n-pay*.5,save=pay*.2-t.s;let f;
+ if(left<0)f=`<b>You spend ${m(-left)} more than you take home.</b> Cut that first, starting with the biggest want.`;
+ else if(save<=1)f=`<b>Savings are on track at ${m(t.s)} a month.</b> ${need>1?`Needs run ${m(need)} over, which is fine while savings hold.`:'Nothing to fix.'}`;
+ else{const big=R.map((r,i)=>[r[0],r[1],+$('r'+i).value||0]).filter(r=>r[1]=='w').sort((a,b)=>b[2]-a[2])[0];
+  f=`<b>Savings are ${m(save)} a month short of 20%.</b> `+(want>1?`Wants run ${m(want)} over; ${big[0].toLowerCase()} is the biggest at ${m(big[2])}. Moving ${m(Math.min(save,want))} from wants closes ${Math.round(Math.min(save,want)/save*100)}% of the gap.`:`Wants are already lean, so the money has to come from needs (rent, car, insurance quotes) or more income.`)+(left>0?` Unspent ${m(left)} is counted as savings; move it on payday so it stays there.`:'')}
+ $('fix').innerHTML=f;
+ try{localStorage.b503020=JSON.stringify(IDS.map(i=>$(i).value))}catch(e){}}
+IDS.forEach(i=>$(i).addEventListener('input',calc));calc();
+</script></body></html>
