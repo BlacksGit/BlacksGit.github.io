@@ -1,0 +1,65 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>Home maintenance budget calculator: how much to save each month for repairs</title>
+<meta name=description content="Type your home value and how old the roof, furnace, AC, water heater and appliances are. See what to set aside each month for upkeep and replacements, and which big bills are coming in the next five years. Free.">
+<link rel=canonical href="https://blacksgit.github.io/home-repair-fund/">
+<style>
+:root{--a:#9a6a2f;--g:#2c241b;--m:#746b61;--l:#ece5dc;--s:#faf4ec;--r:#c8414b}
+*{box-sizing:border-box}body{font:17px/1.5 system-ui,Arial,sans-serif;margin:0;color:#29221b}
+main{max-width:720px;margin:0 auto;padding:18px}h1{font-size:28px;line-height:1.2;color:var(--g);margin:6px 0}
+.lead{color:var(--m);margin:0 0 16px}h2{font-size:19px;color:var(--g);margin:22px 0 8px}
+.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}.f>div{display:flex;flex-direction:column;justify-content:flex-end}
+.f label{font-size:14px;color:var(--m);font-weight:600}
+.in{display:flex;align-items:center;border:2px solid var(--l);border-radius:10px;padding:2px 10px;margin-top:4px;background:#fff}.in:focus-within{border-color:var(--a)}
+.in span{font-size:16px;color:var(--m);white-space:nowrap}.in input{border:0;font-size:20px;width:100%;padding:6px;outline:0;font-weight:700;min-width:0;background:none}
+input[type=number]{-moz-appearance:textfield}input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.big{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:18px}.big div{background:var(--s);border-radius:12px;padding:12px 4px;text-align:center}
+.big b{display:block;font-size:24px;color:var(--a)}.big small{color:var(--m);font-size:12px}
+table{width:100%;border-collapse:collapse;margin-top:8px;font-size:15px}th{font-size:12px;color:var(--m);text-align:left;font-weight:600;padding:4px}td{padding:5px 4px;border-bottom:1px solid var(--l)}
+td input{width:58px;border:2px solid var(--l);border-radius:6px;padding:4px;font-size:16px;font-weight:700;text-align:center}td input.c{width:84px}td input:focus{outline:0;border-color:var(--a)}
+td:last-child,th:last-child{text-align:right;white-space:nowrap}.due{color:var(--r);font-weight:700}td small{display:block;font-size:12px;color:var(--m)}
+#tip{margin-top:14px;padding:12px;border-radius:10px;background:#fff8e6}
+.note{color:var(--m);font-size:14px}.cta{display:inline-block;background:var(--a);color:#fff;border-radius:8px;padding:12px 16px;text-decoration:none;margin:6px 0}
+details{margin-top:12px}summary{cursor:pointer;color:var(--a);font-weight:600}
+footer{margin-top:30px;color:var(--m);font-size:14px}a{color:var(--a)}
+@media(max-width:480px){h1{font-size:23px}.big b{font-size:19px}td input.c{width:70px}td,th{padding:5px 2px}}
+</style></head><body><main>
+<h1>How much should I save for home repairs?</h1>
+<p class=lead>Small fixes come every year. Big ones, like a roof or a furnace, come on a schedule you can see coming. Type a few numbers and get one monthly amount that covers both. Your numbers stay on this device.</p>
+<div class=f>
+<div><label for=val>Home value</label><div class=in><span>$</span><input id=val type=number inputmode=decimal min=0 step=5000 value=320000></div></div>
+<div><label for=pct>Routine upkeep per year</label><div class=in><input id=pct type=number inputmode=decimal min=0 max=5 step=0.25 value=1><span>% of value</span></div></div>
+<div><label for=age>Home age</label><div class=in><input id=age type=number inputmode=decimal min=0 value=18><span>years</span></div></div>
+</div>
+<h2>Big items: age now and cost to replace</h2>
+<p class=note>Ages are guessed from the home age. Change any you know.</p>
+<table><thead><tr><th>Item</th><th>Age (yr)</th><th>Cost ($)</th><th>Save / mo</th></tr></thead><tbody id=t></tbody></table>
+<div class=big><div><b id=mo></b><small>to save each month</small></div><div><b id=up></b><small>routine upkeep a month</small></div><div><b id=five></b><small>big bills in 5 years</small></div></div>
+<div id=tip></div>
+<h2>Keep the house on a schedule</h2>
+<p>The <b>Home Maintenance Checklist Planner</b> (printable PDF) has a yearly repair fund page, monthly checks, a season-by-season checklist, a repair and project log and an appliance and filter record.</p>
+<a class=cta href="https://payhip.com/b/0LVFG">See the Home Maintenance Planner</a>
+<details><summary>Where the numbers come from</summary><p class=note>Lifespans and costs are typical US figures for a mid-size home: asphalt roof about 25 years, furnace 18, central AC or heat pump 15, tank water heater 11, exterior paint 10, fridge 13, washer 11, dryer 13, dishwasher 10. Costs vary a lot by region and size, so use a quote if you have one. Each item is saved for over the years it has left. An item past its typical life is shown as due now and saved for over the next 12 months. Routine upkeep (gutters, caulk, small plumbing and electrical, service calls) uses the common 1% of home value rule.</p></details>
+<footer>Made by Black. More free tools: <a href="https://blacksgit.github.io/">blacksgit.github.io</a> &middot; <a href="https://patreon.com/123black">patreon.com/123black</a></footer>
+</main>
+<script>
+// [item, lifespan years, replace cost]
+const I=[['Roof',25,12000],['Furnace',18,5500],['AC or heat pump',15,7000],['Water heater',11,1800],['Exterior paint',10,5000],['Fridge',13,1500],['Washer',11,900],['Dryer',13,800],['Dishwasher',10,800]];
+const $=id=>document.getElementById(id),v=id=>Math.max(0,+$(id).value||0),m=x=>'$'+Math.round(x).toLocaleString();
+let A=null,C=I.map(x=>x[2]);
+try{const s=JSON.parse(localStorage.homeFund||'null');if(s){$('val').value=s.v;$('pct').value=s.p;$('age').value=s.a;A=s.A;C=s.C}}catch(e){}
+function guess(){const h=v('age');A=I.map(x=>h%x[1])}
+if(!A)guess();
+function draw(){$('t').innerHTML=I.map((x,i)=>`<tr><td>${x[0]}<small>lasts about ${x[1]} yr</small></td><td><input data-a=${i} type=number inputmode=decimal min=0 value=${A[i]}></td><td><input class=c data-c=${i} type=number inputmode=decimal min=0 step=100 value=${C[i]}></td><td id=s${i}></td></tr>`).join('');calc()}
+function calc(){
+ let big=0,five=0;const soon=[];
+ I.forEach((x,i)=>{const left=x[1]-A[i],yrs=Math.max(1,left),s=C[i]/yrs/12;big+=s;
+  $('s'+i).innerHTML=left<=0?`<span class=due>${m(s)}</span>`:m(s);
+  if(left<=5){five+=C[i];soon.push([x[0],Math.max(0,left),C[i]])}});
+ const up=v('val')*v('pct')/100/12;
+ $('mo').textContent=m(big+up);$('up').textContent=m(up);$('five').textContent=m(five);
+ soon.sort((a,b)=>a[1]-b[1]);
+ $('tip').innerHTML=soon.length?`<b>Coming up:</b> `+soon.map(s=>`${s[0]} ${s[1]?'in about '+s[1]+' yr':'<span class=due>due now</span>'} (${m(s[2])})`).join(', ')+`. Saving ${m(big+up)} a month in a separate account turns these from emergencies into planned spending.`:`Nothing big is due in the next five years. Saving ${m(big+up)} a month keeps it that way.`;
+ try{localStorage.homeFund=JSON.stringify({v:$('val').value,p:$('pct').value,a:$('age').value,A,C})}catch(e){}}
+$('t').addEventListener('input',e=>{const d=e.target.dataset;if(d.a!=null)A[+d.a]=Math.max(0,+e.target.value||0);if(d.c!=null)C[+d.c]=Math.max(0,+e.target.value||0);calc()});
+$('age').addEventListener('input',()=>{guess();draw()});['val','pct'].forEach(i=>$(i).addEventListener('input',calc));draw();
+</script></body></html>
