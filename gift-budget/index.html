@@ -1,0 +1,99 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>How much to spend on Christmas gifts per person: free budget splitter</title>
+<meta name=description content="Type your holiday budget and who you buy for. Get a fair amount per person, money set aside for food, decorations and travel, and how much to save each week until Christmas. Free, no sign-up.">
+<link rel=canonical href="https://blacksgit.github.io/gift-budget/">
+<style>
+:root{--r:#b3263a;--g:#1f3b2d;--m:#6b7380;--l:#e7e3e5;--s:#fbf4f5}
+*{box-sizing:border-box}body{font:17px/1.5 system-ui,Arial,sans-serif;margin:0;color:#20262e;background:#fff}
+main{max-width:720px;margin:0 auto;padding:18px}h1{font-size:28px;line-height:1.2;color:var(--g);margin:6px 0}
+.lead{color:var(--m);margin:0 0 18px}h2{font-size:19px;color:var(--g);margin:26px 0 8px}
+.step{display:inline-block;background:var(--r);color:#fff;border-radius:50%;width:28px;height:28px;text-align:center;line-height:28px;font-size:15px;margin-right:6px}
+.money{display:flex;align-items:center;border:2px solid var(--l);border-radius:10px;padding:4px 12px;max-width:260px}.money:focus-within{border-color:var(--r)}
+.money span{font-size:24px;color:var(--m)}.money input{border:0;font-size:26px;width:100%;padding:6px;outline:0;font-weight:700}
+.row{display:grid;grid-template-columns:1fr auto;gap:6px 10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--l)}
+.row b{display:block}.row small{color:var(--m)}.cnt{display:flex;align-items:center;gap:6px}
+.cnt button{width:44px;height:44px;border-radius:50%;border:2px solid var(--l);background:#fff;font-size:22px;cursor:pointer;color:var(--g)}
+.cnt button:active{background:var(--s)}.cnt output{min-width:28px;text-align:center;font-size:20px;font-weight:700}
+.size{grid-column:1/3;display:flex;gap:6px;flex-wrap:wrap}.size label{font-size:13px;border:1px solid var(--l);border-radius:20px;padding:4px 10px;cursor:pointer;color:var(--m)}
+.size input{display:none}.size input:checked+span{color:var(--r);font-weight:700}.size label:has(input:checked){border-color:var(--r);background:var(--s)}
+.off .size{display:none}.off b{color:var(--m)}
+input[type=range]{width:100%;accent-color:var(--r)}
+#res{background:var(--s);border-radius:14px;padding:16px;margin-top:22px}
+.big{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}.big div{background:#fff;border-radius:10px;padding:10px 4px}
+.big b{display:block;font-size:24px;color:var(--g)}.big small{color:var(--m);font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+table{width:100%;border-collapse:collapse;margin-top:14px;background:#fff;border-radius:10px;overflow:hidden}td,th{padding:9px 10px;text-align:left;border-bottom:1px solid var(--l)}
+th{background:var(--g);color:#fff;font-size:14px}td.n,th.n{text-align:right}tr.t td{font-weight:700;background:#fff8e6}
+.each{font-size:20px;font-weight:800;color:var(--r)}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.btns button,.cta{border:0;border-radius:8px;padding:12px 16px;font-size:16px;cursor:pointer;background:var(--g);color:#fff;text-decoration:none;display:inline-block}
+.btns button.alt{background:#fff;color:var(--g);border:2px solid var(--g)}
+.note{color:var(--m);font-size:14px}.cta{background:var(--r);margin:6px 0}
+footer{margin-top:30px;color:var(--m);font-size:14px}a{color:var(--r)}
+@media(max-width:480px){h1{font-size:23px}#res{padding:10px}td,th{padding:8px 5px;font-size:15px}.each{font-size:17px}.big b{font-size:19px}}
+@media print{.btns,.cta,footer,.size,.cnt button,#inputs h2+p{display:none}#res{background:#fff}}
+</style></head><body><main>
+<h1>How much should I spend on each Christmas gift?</h1>
+<p class=lead>Type what you can spend and who you buy for. You get a fair amount for each person, money kept aside for the rest of the season, and what to save each week. Nothing to sign up for. Your numbers stay on this device.</p>
+<div id=inputs>
+<h2><span class=step>1</span>Your total holiday budget</h2>
+<label class=money><span>$</span><input id=total type=number inputmode=decimal min=0 step=10 value=1000 aria-label="Total holiday budget"></label>
+<h2><span class=step>2</span>Who do you buy for?</h2>
+<p class=note>Tap + and &minus;. Pick a gift size for each group if the default does not fit.</p>
+<div id=groups></div>
+<h2><span class=step>3</span>Keep some for food, decorations, wrapping and travel</h2>
+<input id=extra type=range min=0 max=50 step=5 value=25 aria-label="Percent kept for other holiday costs">
+<p class=note><b id=extraTxt></b> of the budget is kept for everything that is not a gift. A quarter is a good starting point.</p>
+<h2><span class=step>4</span>Already saved? <small class=note>(optional)</small></h2>
+<label class=money><span>$</span><input id=saved type=number inputmode=decimal min=0 step=10 value=0 aria-label="Already saved"></label>
+</div>
+<section id=res aria-live=polite></section>
+<div class=btns><button id=copy>Copy my list</button><button class=alt onclick="print()">Print</button><button class=alt id=reset>Start over</button></div>
+<h2>Keep track while you shop</h2>
+<p>A budget only works if you check it before each purchase. The <b>Christmas Gift Planner</b> spreadsheet (Excel and Google Sheets, works on a phone) takes these amounts per person and tracks every gift from idea to wrapped, warns you when a package is late and adds up what you saved on deals.</p>
+<a class=cta id=ctaX href="https://payhip.com/b/KUdnC">Get the gift planner</a>
+<p class=note>Prefer paper? <a href="https://payhip.com/b/KUdnC">Printable Holiday Gift List &amp; Budget Planner (PDF, $5)</a>. Free tips: <a href="https://github.com/BlacksGit/holiday-gift-budget-free">holiday budget worksheet and countdown</a>.</p>
+<h2>How the split works</h2>
+<p>Each group gets a gift size: Biggest (5 shares), Big (3), Medium (2), Small (1) or Token (0.5). The gift money is divided by the total number of shares, so a kid on "Big" gets three times what a coworker on "Small" gets. Amounts are rounded down to whole dollars ($5 steps above $20) and the rounding leftover goes into a buffer for the gift you forgot.</p>
+<footer>Made by Black. More free tools and planners: <a href="https://blacksgit.github.io/">blacksgit.github.io</a> &middot; <a href="https://patreon.com/123black">patreon.com/123black</a></footer>
+</main>
+<script>
+const SIZES=[['Token',.5],['Small',1],['Medium',2],['Big',3],['Biggest',5]];
+const DEF=[['Partner or spouse','',1,4],['Kids','your own',2,3],['Parents','and in-laws',2,2],['Brothers and sisters','',2,2],['Nieces, nephews, grandkids','',0,1],
+['Other family','aunts, cousins, grandparents',0,1],['Friends','',2,1],['Coworkers and teachers','Secret Santa too',1,0],['Thank-yous','mail carrier, babysitter, sitter',1,0]];
+const $=id=>document.getElementById(id),fmt=v=>'$'+Math.round(v).toLocaleString();
+let st=load();
+function load(){try{const s=JSON.parse(localStorage.giftBudget||'');if(s&&s.g&&s.g.length==DEF.length)return s}catch(e){}return{t:1000,x:25,s:0,g:DEF.map(d=>[d[2],d[3]])}}
+function save(){try{localStorage.giftBudget=JSON.stringify(st)}catch(e){}}
+function build(){$('groups').innerHTML=DEF.map((d,i)=>`<div class=row id=r${i}><div><b>${d[0]}</b><small>${d[1]}</small></div>
+<div class=cnt><button aria-label="One less" data-i=${i} data-d=-1>&minus;</button><output id=n${i}></output><button aria-label="One more" data-i=${i} data-d=1>+</button></div>
+<div class=size>${SIZES.map((s,k)=>`<label><input type=radio name=s${i} value=${k}><span>${s[0]}</span></label>`).join('')}</div></div>`).join('');
+$('total').value=st.t;$('extra').value=st.x;$('saved').value=st.s;
+DEF.forEach((d,i)=>{document.querySelector(`input[name=s${i}][value="${st.g[i][1]}"]`).checked=true})}
+function round(v){return v>=20?Math.floor(v/5)*5:Math.floor(v)}
+function calc(){
+ st.t=Math.max(0,+$('total').value||0);st.x=+$('extra').value;st.s=Math.max(0,+$('saved').value||0);
+ DEF.forEach((d,i)=>{$('n'+i).textContent=st.g[i][0];$('r'+i).classList.toggle('off',!st.g[i][0])});
+ $('extraTxt').textContent=st.x+'% ('+fmt(st.t*st.x/100)+')';
+ const pot=st.t*(1-st.x/100);let shares=0;st.g.forEach(([n,k])=>shares+=n*SIZES[k][1]);
+ const rows=[];let used=0,people=0;
+ st.g.forEach(([n,k],i)=>{if(!n)return;const e=shares?round(pot/shares*SIZES[k][1]):0;used+=e*n;people+=n;rows.push([DEF[i][0],n,e])});
+ const buffer=pot-used,extras=st.t-pot;
+ const now=new Date(),xmas=new Date(now.getFullYear(),11,25);if(now>xmas)xmas.setFullYear(xmas.getFullYear()+1);
+ const days=Math.ceil((xmas-now)/864e5),weeks=Math.max(1,Math.ceil(days/7)),need=Math.max(0,st.t-st.s);
+ save();
+ if(!people){$('res').innerHTML='<p>Add at least one person in step 2 to see your split.</p>';return}
+ $('res').innerHTML=`<div class=big><div><b>${days}</b><small>days to Christmas</small></div><div><b>${fmt(pot)}</b><small>for ${people} ${people==1?'person':'people'}</small></div><div><b>${fmt(need/weeks)}</b><small>to save per week</small></div></div>
+<table><tr><th>Who</th><th class=n>People</th><th class=n>Each</th><th class=n>Total</th></tr>
+${rows.map(r=>`<tr><td>${r[0]}</td><td class=n>${r[1]}</td><td class="n each">${fmt(r[2])}</td><td class=n>${fmt(r[1]*r[2])}</td></tr>`).join('')}
+<tr><td>Buffer for the gift you forgot</td><td></td><td></td><td class=n>${fmt(buffer)}</td></tr>
+<tr><td>Food, decorations, wrapping, travel</td><td></td><td></td><td class=n>${fmt(extras)}</td></tr>
+<tr class=t><td>Total</td><td class=n>${people}</td><td></td><td class=n>${fmt(st.t)}</td></tr></table>
+<p class=note>${need?`Save ${fmt(need/weeks)} a week for ${weeks} week${weeks>1?'s':''} to have it all by December 25.`:'You have already saved the whole budget.'}${rows.some(r=>r[2]<5)?' Some amounts are under $5: try a smaller gift size for big groups, a name draw, or homemade gifts.':''}</p>`;
+ st.rows=rows;st.buffer=buffer;st.extras=extras}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-d]');if(!b)return;const i=+b.dataset.i;st.g[i][0]=Math.max(0,Math.min(40,st.g[i][0]+ +b.dataset.d));calc()});
+document.addEventListener('change',e=>{const m=/^s(\d+)$/.exec(e.target.name||'');if(m){st.g[+m[1]][1]=+e.target.value;calc()}});
+['total','extra','saved'].forEach(id=>$(id).addEventListener('input',calc));
+$('copy').onclick=()=>{const t='My Christmas budget: '+fmt(st.t)+'\n'+st.rows.map(r=>`${r[0]}: ${fmt(r[2])} each x ${r[1]}`).join('\n')+`\nBuffer: ${fmt(st.buffer)}\nFood, decorations, wrapping, travel: ${fmt(st.extras)}\n(blacksgit.github.io/gift-budget)`;
+ (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>{$('copy').textContent='Copied!';setTimeout(()=>$('copy').textContent='Copy my list',1500)},()=>prompt('Copy this:',t))};
+$('reset').onclick=()=>{localStorage.removeItem('giftBudget');st=load();build();calc()};
+build();calc();
+</script></body></html>
