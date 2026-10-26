@@ -1,6 +1,6 @@
 <!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
 <title>Secret Santa generator: draw names, private links, no sign-up</title>
-<meta name=description content="Free Secret Santa name drawer. Type the names, block couples from drawing each other, set a budget and date. Everyone gets a private link that shows only their own match, so the organizer can play too. No email, no sign-up, or print fold-over slips.">
+<meta name=description content="Free Secret Santa name drawer. Type the names with optional wish hints, block couples from drawing each other, set a budget and date. Everyone gets a private link that shows only their own match, so the organizer can play too. No email, no sign-up, or print fold-over slips.">
 <link rel=canonical href="https://blacksgit.github.io/secret-santa/">
 <style>
 :root{--a:#b3262e;--g:#14532d;--m:#5f6b63;--l:#e2e8e4;--s:#f2f8f4}
@@ -23,7 +23,7 @@ details{margin-top:12px}summary{cursor:pointer;color:var(--a);font-weight:600}
 footer{margin-top:30px;color:var(--m);font-size:14px}a{color:var(--a)}
 #rv{text-align:center;padding-top:30px}#rv .gift{font-size:70px;line-height:1}#rv h1{font-size:30px}
 #box{margin:24px auto;max-width:360px;background:var(--a);color:#fff;border-radius:18px;padding:34px 18px;font-size:20px;cursor:pointer;user-select:none}
-#box b{display:block;font-size:38px;line-height:1.2;margin:8px 0;word-break:break-word}
+#box b{display:block;font-size:38px;line-height:1.2;margin:8px 0;word-break:break-word}#box small{display:block;font-size:17px;opacity:.9}
 .slips{display:none}
 @media(max-width:480px){h1{font-size:23px}}
 @media print{#app>*:not(.slips),footer,.rel{display:none!important}.slips{display:block!important}main{padding:0}
@@ -39,8 +39,8 @@ footer{margin-top:30px;color:var(--m);font-size:14px}a{color:var(--a)}
 <div><label for=bud>Budget ($)</label><div class=in><input id=bud type=number inputmode=numeric min=0 value=25></div></div>
 <div><label for=day>Gift swap day</label><div class=in><input id=day type=date></div></div>
 </div>
-<p class=q style="margin:14px 0 0"><label for=nm>Names, one per line (3 or more)</label></p>
-<div class=in><textarea id=nm rows=6 placeholder="Sam&#10;Alex&#10;Jordan&#10;Riley"></textarea></div>
+<p class=q style="margin:14px 0 0"><label for=nm>Names, one per line (3 or more). Add wish hints after a colon</label></p>
+<div class=in><textarea id=nm rows=6 placeholder="Sam: coffee, size M&#10;Alex: books, no candles&#10;Jordan&#10;Riley"></textarea></div>
 <p class=q style="margin:14px 0 0">Never draw each other (couples, roommates)</p>
 <div class=rw><div class=in><select id=r1></select></div><span>and</span><div class=in><select id=r2></select></div><button class=sb onclick="addRule()">Add</button></div>
 <div class=pr id=rules></div>
@@ -53,7 +53,7 @@ footer{margin-top:30px;color:var(--m);font-size:14px}a{color:var(--a)}
 <div class=btns><button onclick="print()">Print fold-over slips instead</button><button onclick="if(confirm('Draw again? Links you already sent will be wrong.'))draw()" style="background:#fff;color:var(--a);border:2px solid var(--a)">Draw again</button></div>
 <details><summary>Show all matches (spoils it for you)</summary><table id=all></table></details>
 </div>
-<details><summary>How it works</summary><p class=note>The draw shuffles everyone so nobody gets themselves and nobody gets a name you blocked. With 4 or more people it also avoids two people drawing each other, so every gift is a surprise. The match is scrambled into each link, so there is no server and no account, but it is not real encryption: it keeps an honest group honest, not a hacker out. Your list is saved on this device only, so you can come back and resend a link.</p></details>
+<details><summary>How it works</summary><p class=note>The draw shuffles everyone so nobody gets themselves and nobody gets a name you blocked. With 4 or more people it also avoids two people drawing each other, so every gift is a surprise. The match is scrambled into each link, so there is no server and no account, but it is not real encryption: it keeps an honest group honest, not a hacker out. Anything after a colon on a name line (like "Sam: coffee, size M") shows up as wish hints in the link of whoever draws Sam. Your list is saved on this device only, so you can come back and resend a link.</p></details>
 <h2>Gift ideas for the swap</h2>
 <p>Stuck on what to buy for your name? The <b>Christmas Gift Planner</b> spreadsheet (Excel and Google Sheets) keeps who you buy for, budget per person, gift ideas and what you spent in one place.</p>
 <a class=cta href="https://payhip.com/b/j9IsG">See the Gift Planner</a>
@@ -78,7 +78,8 @@ let R=[],M=null;
 // scramble so a glance at the link does not spoil the match
 function enc(o){const b=new TextEncoder().encode(JSON.stringify(o));let s='';b.forEach((x,i)=>s+=String.fromCharCode(x^K.charCodeAt(i%K.length)));return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
 function dec(t){const s=atob(t.replace(/-/g,'+').replace(/_/g,'/'));return JSON.parse(new TextDecoder().decode(Uint8Array.from(s,(c,i)=>c.charCodeAt(0)^K.charCodeAt(i%K.length))))}
-const names=()=>{const seen=new Set();return $('nm').value.split('\n').map(s=>s.trim()).filter(s=>s&&!seen.has(s.toLowerCase())&&seen.add(s.toLowerCase()))};
+let W={};
+const names=()=>{const seen=new Set();W={};return $('nm').value.split('\n').map(s=>{const i=s.indexOf(':'),n=(i<0?s:s.slice(0,i)).trim();if(n&&i>=0)W[n]=s.slice(i+1).trim();return n}).filter(s=>s&&!seen.has(s.toLowerCase())&&seen.add(s.toLowerCase()))};
 const blocked=(a,b)=>R.some(r=>(r[0]==a&&r[1]==b)||(r[0]==b&&r[1]==a));
 function opts(){const n=names(),o=n.map(x=>`<option>${esc(x)}</option>`).join('');[$('r1'),$('r2')].forEach((s,i)=>{const v=s.value;s.innerHTML=o;s.value=n.includes(v)?v:n[i]||''});
  R=R.filter(r=>n.includes(r[0])&&n.includes(r[1]));
@@ -93,19 +94,19 @@ function draw(){const n=names(),h=$('hint');h.style.display='';h.classList.remov
  if(!M){h.classList.add('err');h.textContent='No draw works with these rules. Remove a "never draw each other" pair or add more people.';$('res').style.display='none';return}
  h.textContent=`Done! ${n.length} names drawn${R.length?', '+R.length+' blocked pair'+(R.length>1?'s':'')+' kept apart':''}. Now send everyone their own link.`;
  save();show()}
-function link(g){const d={g,r:M[g],n:$('grp').value.trim(),b:$('bud').value,d:$('day').value};return location.href.split('#')[0]+'#s='+enc(d)}
+function link(g){names();const d={g,r:M[g],w:W[M[g]]||'',n:$('grp').value.trim(),b:$('bud').value,d:$('day').value};return location.href.split('#')[0]+'#s='+enc(d)}
 function show(){if(!M)return;const n=Object.keys(M);$('res').style.display='';
  $('lk').innerHTML=n.map((g,i)=>`<tr><td>${esc(g)}<br><span class=ok id=k${i}></span></td><td><button class=sb onclick="send(${i})">Send</button><button class="sb o" onclick="cp(${i})">Copy</button></td></tr>`).join('');
  $('all').innerHTML=n.map(g=>`<tr><td>${esc(g)}</td><td>buys for ${esc(M[g])}</td></tr>`).join('');
  const bd=$('bud').value?'Budget $'+esc($('bud').value):'',dy=$('day').value?new Date($('day').value+'T12:00').toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'}):'';
- $('slips').innerHTML=n.map(g=>`<div class=slip><div>You are buying for<b>${esc(M[g])}</b>${[bd,dy].filter(Boolean).join(' &middot; ')}</div><div>Secret Santa${$('grp').value?' &middot; '+esc($('grp').value):''}<b>${esc(g)}</b>Fold on the line. Open in private!</div></div>`).join('')}
+ $('slips').innerHTML=n.map(g=>`<div class=slip><div>You are buying for<b>${esc(M[g])}</b>${W[M[g]]?'Wish hints: '+esc(W[M[g]])+'<br>':''}${[bd,dy].filter(Boolean).join(' &middot; ')}</div><div>Secret Santa${$('grp').value?' &middot; '+esc($('grp').value):''}<b>${esc(g)}</b>Fold on the line. Open in private!</div></div>`).join('')}
 const msg=g=>`${g}, your Secret Santa match is ready${$('grp').value?' for '+$('grp').value.trim():''}. Open this link (only you): `;
 function mark(i,t){$('k'+i).textContent=t}
 function cp(i){const g=Object.keys(M)[i],u=link(g);(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(()=>mark(i,'Link copied'),()=>prompt('Copy this link for '+g,u))}
 function send(i){const g=Object.keys(M)[i],u=link(g);if(navigator.share)navigator.share({title:'Secret Santa',text:msg(g),url:u}).then(()=>mark(i,'Sent'),()=>{});else cp(i)}
 function save(){try{localStorage.ssDraw=JSON.stringify({grp:$('grp').value,bud:$('bud').value,day:$('day').value,nm:$('nm').value,R,M})}catch(e){}}
 let V=null;
-function reveal(){$('box').innerHTML=`You are buying for<b>${esc(V.r)}</b>`;$('box').style.cursor='default'}
+function reveal(){$('box').innerHTML=`You are buying for<b>${esc(V.r)}</b>`+(V.w?`<small>Wish hints: ${esc(String(V.w))}</small>`:'');$('box').style.cursor='default'}
 const h=location.hash.match(/^#s=(.+)/);
 if(h){try{V=dec(h[1]);$('app').style.display='none';$('rv').style.display='';$('hi').textContent='Hi '+V.g+'!';
  $('gn').textContent=(V.n||'Your')+' Secret Santa';document.title='Secret Santa for '+V.g;
@@ -113,6 +114,6 @@ if(h){try{V=dec(h[1]);$('app').style.display='none';$('rv').style.display='';$('
  catch(e){$('hint').style.display='';$('hint').textContent='That link looks broken. Ask the organizer to copy it again.'}}
 try{const s=JSON.parse(localStorage.ssDraw||'null');if(s){['grp','bud','day','nm'].forEach(i=>$(i).value=s[i]||'');R=s.R||[];M=s.M||null}}catch(e){}
 if(!$('day').value){const t=new Date(),d=new Date(t.getFullYear(),11,20);if(d<t)d.setFullYear(d.getFullYear()+1);$('day').value=d.toISOString().slice(0,10)}
-$('nm').addEventListener('input',()=>{opts();const n=names();if(M&&(Object.keys(M).length!=n.length||!Object.keys(M).every(g=>n.includes(g)))){M=null;$('res').style.display='none'}save()});['grp','bud','day'].forEach(i=>$(i).addEventListener('input',()=>{save();show()}));
+$('nm').addEventListener('input',()=>{opts();const n=names();if(M)show();if(M&&(Object.keys(M).length!=n.length||!Object.keys(M).every(g=>n.includes(g)))){M=null;$('res').style.display='none'}save()});['grp','bud','day'].forEach(i=>$(i).addEventListener('input',()=>{save();show()}));
 opts();if(M&&Object.keys(M).every(g=>names().includes(g)))show();else M=null;
 </script></body></html>
