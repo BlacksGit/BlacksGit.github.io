@@ -1,0 +1,128 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>Cookie swap planner: how many cookies to bake, batches and shopping list</title>
+<meta name=description content="Hosting or joining a Christmas cookie swap? Type how many people and pick your cookies. Get how many to bake, how many batches, a shopping list in store sizes, oven time and a baking plan. Free, printable, works on your phone.">
+<link rel=canonical href="https://blacksgit.github.io/cookie-swap/">
+<style>
+:root{--a:#b3262e;--g:#14532d;--m:#5f6b63;--l:#e2e8e4;--s:#f2f8f4}
+*{box-sizing:border-box}body{font:17px/1.5 system-ui,Arial,sans-serif;margin:0;color:#2a221c}
+main{max-width:720px;margin:0 auto;padding:18px}h1{font-size:28px;line-height:1.2;color:var(--g);margin:6px 0}
+.lead{color:var(--m);margin:0 0 16px}h2{font-size:19px;color:var(--g);margin:26px 0 8px}
+.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.f label,.q{font-size:14px;color:var(--m);font-weight:600}
+.in{display:flex;align-items:center;border:2px solid var(--l);border-radius:10px;padding:2px 10px;margin-top:4px}.in:focus-within{border-color:var(--a)}
+.in input{border:0;font-size:20px;width:100%;padding:6px;outline:0;font-weight:700;min-width:0;background:none;font-family:inherit}
+.in input[type=date],.in input[type=time]{font-size:17px;padding:6px 0}
+.ch{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 12px}.ch button{border:2px solid var(--l);background:#fff;border-radius:20px;padding:7px 13px;font-size:15px;cursor:pointer;font-family:inherit}
+.ch button.on{border-color:var(--a);background:var(--s);font-weight:700}
+.big{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:6px}.big div{background:var(--s);border-radius:12px;padding:12px;text-align:center}
+.big b{display:block;font-size:26px;color:var(--a);line-height:1.2}.big small{color:var(--m);font-size:13px}
+table{width:100%;border-collapse:collapse;margin-top:8px}td{padding:8px 6px;border-bottom:1px solid var(--l);vertical-align:top}td:first-child{white-space:nowrap;font-weight:700;color:var(--a);width:1%}
+#buy td:first-child,#rc td:first-child{color:inherit;font-weight:400;white-space:normal;width:auto}#buy td:last-child{text-align:right;font-weight:700}
+input[type=checkbox]{width:18px;height:18px;vertical-align:-3px;margin-right:6px;accent-color:var(--a)}
+.note{color:var(--m);font-size:14px}.tip{background:#fff6dc;border-radius:10px;padding:10px 12px;margin-top:12px}
+.btns button,.cta{display:inline-block;border:0;background:var(--a);color:#fff;border-radius:8px;padding:12px 16px;font-size:16px;text-decoration:none;margin:6px 6px 6px 0;cursor:pointer;font-family:inherit}
+details{margin-top:12px}summary{cursor:pointer;color:var(--a);font-weight:600}
+footer{margin-top:30px;color:var(--m);font-size:14px}a{color:var(--a)}
+@media(max-width:480px){h1{font-size:23px}.big b{font-size:21px}}
+@media print{.btns,.cta,footer,.rel,details,#inputs,.buyp{display:none}body{font-size:14px}}
+.card{border:2px solid var(--l);border-radius:12px;padding:10px 14px;margin-top:12px}.card h3{margin:4px 0;color:var(--g);font-size:17px}.card ul{margin:4px 0;padding-left:20px}.card p{margin:6px 0}
+</style></head><body><main>
+<h1>Cookie swap and Christmas baking planner</h1>
+<p class=lead>Say how many people are swapping and pick your cookies. You get how many to bake, how many batches, what to buy in store sizes, how long the oven is busy and a day-by-day plan. Your numbers stay on this device.</p>
+<div id=inputs>
+<p class=q style="margin:0">What are you baking for?</p><div class=ch data-k=mode><button data-v=0>A cookie swap</button><button data-v=1>Just us (tins, gifts, Santa)</button></div>
+<div class=f>
+<div id=sw1><label for=ppl>People in the swap, you too</label><div class=in><input id=ppl type=number inputmode=numeric min=1 value=8></div></div>
+<div id=jb><label for=dz>Dozens you want</label><div class=in><input id=dz type=number inputmode=numeric min=1 value=6></div></div>
+<div><label for=day>Swap or party day</label><div class=in><input id=day type=date></div></div>
+</div>
+<div id=sw2>
+<p class=q style="margin:14px 0 0">Cookies for each person</p><div class=ch data-k=each><button data-v=6>Half a dozen</button><button data-v=12>1 dozen</button><button data-v=24>2 dozen</button></div>
+<p class=q style="margin:0">Extra for the tasting table</p><div class=ch data-k=xtra><button data-v=0>None</button><button data-v=12>1 dozen</button><button data-v=24>2 dozen</button></div>
+</div>
+<p class=q style="margin:0">Cookies (tap one or more, the total is split between them)</p><div class=mc id=kinds></div>
+<p class=q style="margin:0">Baking sheets in the oven at once</p><div class=ch data-k=sh><button data-v=1>1 sheet</button><button data-v=2>2 sheets</button></div>
+</div>
+<div class=big><div><small>Cookies to bake</small><b id=tot></b></div><div><small>Batches</small><b id=bat></b></div><div><small>Oven time</small><b id=ov></b></div></div>
+<p class=tip id=hint></p>
+<h2>Your baking plan</h2>
+<table id=tl></table>
+<h2>Shopping list</h2>
+<table id=buy></table>
+<p class=note>Check the cupboard first: most kitchens already have baking soda, salt and vanilla.</p>
+<h2>Recipe cards (one batch each)</h2>
+<div id=rc></div>
+<div class=btns><button onclick="print()">Print the plan and recipes</button></div>
+<h2 class=buyp>Plan the whole holiday</h2>
+<p class=buyp>Cookies are one line on a long list. The <b>Christmas Gift Planner</b> spreadsheet (Excel and Google Sheets) keeps who you buy for, budget per person, what you bought and what is left in one place.</p>
+<a class=cta href="https://payhip.com/b/j9IsG">See the Gift Planner</a>
+<details><summary>How it is worked out</summary><p class=note>Swap: people times cookies each, plus the tasting table, rounded up to whole batches of each cookie you picked. Everyone usually bakes one dozen per person and takes home the same number, so you bake for yourself too. Oven time is the number of sheet rounds times the bake time plus 2 minutes to swap sheets, with 12 cookies per sheet (9 for big cut-outs). Store sizes: flour about 3.6 cups per pound, white sugar 2.25 cups per pound, packed brown sugar 2.25 cups per pound, powdered sugar 3.75 cups per pound, chocolate chips 2 cups per 12 oz bag, butter 4 sticks per pound. Ovens and scoop sizes differ, so bake one test sheet first.</p></details>
+<p class=rel style="margin-top:24px;font-size:15px">Related: <a href="../christmas-dinner/">Christmas dinner planner</a> &middot; <a href="../gift-budget/">Christmas gift budget</a> &middot; <a href="../christmas-lights/">Christmas lights calculator</a></p>
+<footer>Made by Black. More free tools: <a href="https://blacksgit.github.io/">blacksgit.github.io</a> &middot; <a href="https://patreon.com/123black">patreon.com/123black</a></footer>
+</main>
+<script>
+const $=i=>document.getElementById(i);
+// i: [name, cups flour, sticks butter, cups sugar, cups brown sugar, eggs, extras{}, dozens per batch, F, minutes, chill hours, per sheet, steps]
+const K=[
+['Chocolate chip',2.25,2,0.75,0.75,2,{chips:2},4,375,10,0,12,'Cream soft butter and both sugars, beat in eggs and 2 tsp vanilla. Stir in flour, 1 tsp baking soda and 1 tsp salt, then 2 cups chocolate chips. Scoop tablespoon balls 2 inches apart.'],
+['Sugar cut-outs',3,2,1,0,1,{icing:2},3,350,9,2,9,'Cream butter and sugar, beat in egg and 1 tsp vanilla. Mix in flour, 1.5 tsp baking powder and 1/2 tsp salt. Chill 2 hours, roll 1/4 inch thick, cut and bake until the edges just set. Ice when fully cool.'],
+['Gingerbread',3,1.5,0,0.75,1,{mol:0.5},3,350,9,2,9,'Cream butter and brown sugar, beat in egg and 1/2 cup molasses. Mix in flour, 1 Tbsp ginger, 1 tsp cinnamon, 1/4 tsp cloves and 1 tsp baking soda. Chill 2 hours, roll 1/4 inch thick and cut.'],
+['Snickerdoodles',2.75,2,1.5,0,2,{},4,400,9,0,12,'Cream butter and 1.5 cups sugar, beat in eggs. Mix in flour, 2 tsp cream of tartar, 1 tsp baking soda and 1/4 tsp salt. Roll balls in 2 Tbsp sugar mixed with 2 tsp cinnamon.'],
+['Peanut butter blossoms',1.75,1,0.5,0.5,1,{pb:0.5,kiss:48},4,375,9,0,12,'Cream butter, 1/2 cup peanut butter and both sugars, beat in egg and 1 tsp vanilla. Mix in flour, 1 tsp baking soda and 1/2 tsp salt. Roll balls in sugar, bake, and press a chocolate kiss into each one hot from the oven.'],
+['Shortbread',2,2,0.5,0,0,{},2,325,15,1,12,'Cream butter and 1/2 cup sugar, mix in flour and 1/4 tsp salt until it just holds together. Chill 1 hour, roll 1/2 inch thick, cut small shapes and bake until pale gold at the edges.']];
+const S={mode:0,each:12,xtra:12,sh:1,k:[0]};
+const add=(d,m)=>new Date(d.getTime()+m*60000),pad=n=>String(n).padStart(2,'0');
+const iso=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const wd=d=>d.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'});
+const hm=d=>d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'});
+const day=(base,n,h,m)=>{const d=new Date(base);d.setDate(d.getDate()+n);d.setHours(h,m||0,0,0);return d};
+const pl=(n,w)=>n+' '+w+(n==1?'':/(x|ch)$/.test(w)?'es':'s'),cu=x=>x+(x==1?' cup':' cups'),buy=(n,w,sz)=>'buy '+pl(n,w)+' ('+sz+')';
+function nextSwap(){const t=new Date(),d=new Date(t.getFullYear(),11,1);while(d.getDay()!=6)d.setDate(d.getDate()+1);d.setDate(d.getDate()+7);if(d<t)d.setFullYear(d.getFullYear()+1);return d}
+$('kinds').className='ch';
+$('kinds').innerHTML=K.map((k,i)=>`<button data-i=${i}>${k[0]}</button>`).join('');
+function calc(){
+ const sw=!S.mode;$('sw1').style.display=$('sw2').style.display=sw?'':'none';$('jb').style.display=sw?'none':'';
+ const ppl=Math.max(1,+$('ppl').value||1),want=sw?ppl*S.each+S.xtra:Math.max(1,+$('dz').value||1)*12;
+ const ks=S.k.length?S.k:[0],share=Math.ceil(want/ks.length);
+ let tot=0,bat=0,mins=0,R=0,chill=0,f=0,bu=0,su=0,br=0,eg=0,x={chips:0,icing:0,mol:0,pb:0,kiss:0};const cards=[];
+ ks.forEach(i=>{const k=K[i],n=Math.ceil(share/(k[7]*6))/2;bat+=n;tot+=n*k[7]*12;
+  f+=n*k[1];bu+=n*k[2];su+=n*k[3]+(i==3?n*0.13:0)+(i==4?n*0.25:0);br+=n*k[4];eg+=Math.ceil(n*k[5]);for(const e in k[6])x[e]+=n*k[6][e];
+  const r=Math.ceil(n*k[7]*12/(k[11]*S.sh));mins+=r*(k[9]+2);R+=r;chill=Math.max(chill,k[10]);
+  cards.push(`<div class=card><h3>${k[0]}: make ${n==0.5?'half a batch':pl(n,'batch')}</h3><p class=note>One batch makes about ${k[7]} dozen. ${k[8]}&deg;F for ${k[9]-1}-${k[9]+1} minutes${k[10]?', chill the dough '+k[10]+(k[10]>1?' hours':' hour')+' first':''}. ${k[11]} per sheet.</p><ul><li>${cu(k[1])} flour</li><li>${k[2]} sticks butter (${k[2]/2} cup), softened</li>${k[3]?`<li>${cu(k[3])} sugar</li>`:''}${k[4]?`<li>${cu(k[4])} packed brown sugar</li>`:''}${k[5]?`<li>${pl(k[5],'egg')}</li>`:''}</ul><p>${k[12]}</p></div>`)});
+ $('tot').textContent=tot>=24?Math.round(tot/12*10)/10+' dozen':tot;
+ $('bat').textContent=bat;$('ov').textContent=mins<60?mins+' min':(Math.floor(mins/60)+' h '+pad(mins%60));
+ const d=new Date($('day').value+'T12:00');const ok=!isNaN(d);
+ const bake=ok?day(d,-1,9):null,end=ok?new Date(Math.ceil(add(bake,mins+30*ks.length)/3e5)*3e5):null;
+ $('hint').innerHTML=(sw?`${ppl} people &times; ${S.each} cookies${S.xtra?' + '+S.xtra+' for tasting':''} = ${want} cookies. `:'')+`Batches are rounded up to the nearest half batch, so you get ${tot-want} spare${tot-want==1?'':'s'} to test or snack on.`+(mins>300?' That is a long oven day. Split it over two evenings, or bake the chill doughs first.':'');
+ const T=[];
+ if(ok){T.push([day(d,-5,18),'Shop with the list below. Set butter and eggs out the night before you mix.']);
+  if(chill)T.push([day(d,-2,19),`Make the ${ks.filter(i=>K[i][10]).map(i=>K[i][0].toLowerCase()).join(' and ')} dough. Wrap flat discs in plastic and chill overnight (keeps 3 days).`]);
+  T.push([bake,`Oven on. Bake ${pl(R,'round')} of sheets, ${S.sh==2?'2 at a time, swapping racks halfway':'one at a time on the middle rack'}. Cool sheets between rounds.`]);
+  T.push([end,'Baking done. Cool completely on racks before stacking'+(ks.includes(1)?', then ice the sugar cookies (icing needs 6-8 hours to set hard).':'.')]);
+  if(sw)T.push([day(d,0,10),`Pack ${pl(ppl,'bag')} or tins of ${S.each}${S.xtra?' plus a plate for the table':''}. Print ${pl(ppl,'recipe card')} if your swap shares recipes.`]);
+  T.push([day(d,0,13),'<b>'+(sw?'Cookie swap':'Cookie day')+'.</b> Leftovers keep 1 week in a tin or 3 months frozen.'])}
+ $('tl').innerHTML=ok?T.map(t=>`<tr><td>${wd(t[0])}<br><small>${hm(t[0])}</small></td><td>${t[1]}</td></tr>`).join(''):'<tr><td></td><td>Pick a day above to see the plan.</td></tr>';
+ const lb=(c,per)=>Math.ceil(c/per*10)/10,B=[['All-purpose flour',`${cu(Math.round(f*10)/10)}, ${lb(f,3.6)} lb<br>${buy(Math.ceil(f/18),'bag','5 lb')}`],['Butter',`${Math.ceil(bu)} sticks<br>${buy(Math.ceil(bu/4),'box','1 lb')}`]];
+ if(su)B.push(['White sugar',`${cu(Math.round(su*10)/10)}<br>${buy(Math.ceil(su/9),'bag','4 lb')}`]);
+ if(br)B.push(['Brown sugar',`${cu(Math.round(br*10)/10)} packed<br>${buy(Math.ceil(br/4.5),'bag','2 lb')}`]);
+ if(eg)B.push(['Eggs',`${eg}<br>${'buy '+Math.ceil(eg/12)+' dozen'}`]);
+ if(x.chips)B.push(['Chocolate chips',buy(Math.ceil(x.chips/2),'bag','12 oz')]);
+ if(x.icing)B.push(['Powdered sugar for icing',`${cu(x.icing)}<br>${buy(Math.ceil(x.icing/7.5),'bag','2 lb')} + food coloring`]);
+ if(x.mol)B.push(['Molasses',buy(Math.ceil(x.mol/1.5),'bottle','12 oz')+', plus ground ginger, cinnamon, cloves']);
+ if(x.pb)B.push(['Peanut butter',buy(Math.ceil(x.pb/1.75),'jar','16 oz')]);
+ if(x.kiss)B.push(['Chocolate kisses',`${x.kiss}<br>${buy(Math.ceil(x.kiss/60),'bag','10 oz')}`]);
+ if(ks.includes(3))B.push(['Cream of tartar + cinnamon','1 jar each']);
+ B.push(['Baking soda, salt, vanilla','check the cupboard']);
+ if(sw)B.push(['Bags or tins + labels',`${ppl}${S.xtra?' + 1 plate':''}`]);
+ B.push(['Parchment paper','1 roll']);
+ $('buy').innerHTML=B.map(b=>`<tr><td><label><input type=checkbox>${b[0]}</label></td><td>${b[1]}</td></tr>`).join('');
+ $('rc').innerHTML=cards.join('');
+ try{localStorage.csPlan=JSON.stringify({ppl:$('ppl').value,dz:$('dz').value,day:$('day').value,S})}catch(e){}}
+try{const s=JSON.parse(localStorage.csPlan||'null');if(s){['ppl','dz','day'].forEach(i=>$(i).value=s[i]);Object.assign(S,s.S)}}catch(e){}
+if(!$('day').value)$('day').value=iso(nextSwap());
+document.querySelectorAll('.ch[data-k]').forEach(c=>{c.querySelectorAll('button').forEach(b=>{b.classList.toggle('on',+b.dataset.v==S[c.dataset.k]);
+ b.onclick=()=>{S[c.dataset.k]=+b.dataset.v;c.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x==b));calc()}})});
+const kb=[...$('kinds').querySelectorAll('button')];const kon=()=>kb.forEach(b=>b.classList.toggle('on',S.k.includes(+b.dataset.i)));kon();
+kb.forEach(b=>b.onclick=()=>{const i=+b.dataset.i;S.k=S.k.includes(i)?S.k.filter(v=>v!=i):S.k.concat(i);if(!S.k.length)S.k=[i];kon();calc()});
+['ppl','dz','day'].forEach(i=>$(i).addEventListener('input',calc));calc();
+</script></body></html>
