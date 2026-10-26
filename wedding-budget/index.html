@@ -1,0 +1,63 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>Wedding budget calculator by guest count: what you can spend on each part</title>
+<meta name=description content="Type your wedding budget and guest count. See what you can spend on venue, food per plate, photos, dress, flowers, music and more, and what each guest really costs. Free, no sign-up.">
+<link rel=canonical href="https://blacksgit.github.io/wedding-budget/">
+<style>
+:root{--a:#b0587a;--g:#3a2a33;--m:#7a6f75;--l:#eee4e8;--s:#fbf2f5}
+*{box-sizing:border-box}body{font:17px/1.5 system-ui,Arial,sans-serif;margin:0;color:#2a2228}
+main{max-width:720px;margin:0 auto;padding:18px}h1{font-size:28px;line-height:1.2;color:var(--g);margin:6px 0}
+.lead{color:var(--m);margin:0 0 16px}h2{font-size:19px;color:var(--g);margin:24px 0 8px}
+.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.f label{font-size:14px;color:var(--m);font-weight:600}
+.in{display:flex;align-items:center;border:2px solid var(--l);border-radius:10px;padding:2px 10px;margin-top:4px}.in:focus-within{border-color:var(--a)}
+.in span{font-size:20px;color:var(--m)}.in input{border:0;font-size:24px;width:100%;padding:6px;outline:0;font-weight:700;min-width:0}
+input[type=range]{width:100%;accent-color:var(--a);margin-top:8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}.chips label{border:1px solid var(--l);border-radius:20px;padding:6px 12px;cursor:pointer;font-size:15px}
+.chips input{margin-right:6px;accent-color:var(--a)}.chips label:has(input:checked){border-color:var(--a);background:var(--s)}
+.big{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:18px}.big div{background:var(--s);border-radius:12px;padding:12px 4px;text-align:center}
+.big b{display:block;font-size:24px;color:var(--a)}.big small{color:var(--m);font-size:12px}
+table{width:100%;border-collapse:collapse;margin-top:14px}td{padding:9px 6px;border-bottom:1px solid var(--l)}td:nth-child(2){text-align:right;color:var(--m)}td:last-child{text-align:right;font-weight:700}
+.bar{height:6px;background:var(--a);border-radius:3px;opacity:.55;margin-top:4px}
+.note{color:var(--m);font-size:14px}.cta{display:inline-block;background:var(--a);color:#fff;border-radius:8px;padding:12px 16px;text-decoration:none;margin:6px 0}
+footer{margin-top:30px;color:var(--m);font-size:14px}a{color:var(--a)}
+@media(max-width:480px){h1{font-size:23px}.big b{font-size:19px}}
+</style></head><body><main>
+<h1>Wedding budget by guest count</h1>
+<p class=lead>Type your total and move the guest slider. See what you can spend on each part, what you can pay per plate, and what every extra guest really costs. Your numbers stay on this device.</p>
+<div class=f>
+<div><label for=b>Total budget</label><div class=in><span>$</span><input id=b type=number inputmode=decimal min=0 step=500 value=20000></div></div>
+<div><label for=gs>Guests: <b id=gn></b></label><input id=gs type=range min=10 max=300 step=5 value=100></div>
+</div>
+<h2>Include</h2>
+<div class=chips id=opt></div>
+<div class=big><div><b id=pp></b><small>food + drink per guest</small></div><div><b id=pg></b><small>total per guest</small></div><div><b id=eg></b><small>each extra 10 guests</small></div></div>
+<table id=t></table>
+<p class=note id=hint></p>
+<h2>Plan the rest in one file</h2>
+<p>The <b>Wedding Planner</b> spreadsheet (Excel and Google Sheets) tracks this budget line by line against what you actually pay, plus the guest list with RSVPs and meals, a seating chart, vendors and payment due dates.</p>
+<a class=cta href="https://payhip.com/b/AcNzL">See the Wedding Planner</a>
+<p class=note>How the split works: venue and food scale with guests; photos, music, attire and the rest are mostly fixed. Shares are common US starting points, not rules; move money to what matters to you. A 5% buffer is kept for the surprises every wedding has.</p>
+<footer>Made by Black. More free tools: <a href="https://blacksgit.github.io/">blacksgit.github.io</a> &middot; <a href="https://patreon.com/123black">patreon.com/123black</a></footer>
+</main>
+<script>
+// [name, share of budget at 100 guests, scales with guests, optional]
+const C=[['Venue and rentals',.20,1,0],['Food and drink',.26,1,0],['Photography',.10,0,0],['Videography',.05,0,1],['Attire, hair and makeup',.08,0,0],
+['Flowers and decor',.08,.5,0],['Music / DJ',.07,0,0],['Cake and desserts',.02,1,0],['Planner or coordinator',.05,0,1],['Invitations and paper',.02,1,0],
+['Officiant, license, transport',.03,0,0],['Favors and gifts',.02,1,1],['Buffer for surprises',.05,0,0]];
+const $=id=>document.getElementById(id),m=x=>'$'+Math.round(x).toLocaleString();
+let on=C.map(c=>!c[3]||c[0].startsWith('Videography')?1:0);
+try{const s=JSON.parse(localStorage.wedBudget||'null');if(s){$('b').value=s[0];$('gs').value=s[1];on=s[2]}}catch(e){}
+$('opt').innerHTML=C.map((c,i)=>c[3]?`<label><input type=checkbox data-i=${i} ${on[i]?'checked':''}>${c[0]}</label>`:'').join('');
+function w(c,g){return c[1]*(1+c[2]*(g/100-1))}
+function split(b,g){const ws=C.map((c,i)=>on[i]?w(c,g):0),s=ws.reduce((a,x)=>a+x,0);return ws.map(x=>b*x/s)}
+function calc(){
+ const b=Math.max(0,+$('b').value||0),g=+$('gs').value;$('gn').textContent=g;
+ const a=split(b,g),food=a[1],perG=C.reduce((s,c,i)=>s+(c[2]?a[i]*c[2]:0),0)/g;
+ $('pp').textContent=m(food/g);$('pg').textContent=m(b/g);$('eg').textContent=m(perG*10);
+ const mx=Math.max(...a);
+ $('t').innerHTML=C.map((c,i)=>on[i]?`<tr><td>${c[0]}<div class=bar style="width:${a[i]/mx*100}%"></div></td><td>${Math.round(a[i]/b*100||0)}%</td><td>${m(a[i])}</td></tr>`:'').join('')+`<tr><td><b>Total</b></td><td></td><td>${m(b)}</td></tr>`;
+ $('hint').textContent=food/g<25?`${m(food/g)} a head for food and drink is tight: think brunch, a buffet, food trucks or a dessert-and-drinks reception, or trim the list.`:`Inviting 10 fewer guests would free about ${m(perG*10)} for anything on this list.`;
+ try{localStorage.wedBudget=JSON.stringify([$('b').value,g,on])}catch(e){}}
+document.addEventListener('change',e=>{if(e.target.dataset.i){on[+e.target.dataset.i]=e.target.checked?1:0;calc()}});
+['b','gs'].forEach(i=>$(i).addEventListener('input',calc));calc();
+</script></body></html>
