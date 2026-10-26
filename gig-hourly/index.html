@@ -1,0 +1,56 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>Real hourly pay calculator for DoorDash, Uber, Instacart and other gig drivers</title>
+<meta name=description content="Type one shift: pay, hours and miles. See your real hourly after gas and car wear, your mileage deduction and what to set aside for tax. Free, works on your phone, no sign-up.">
+<link rel=canonical href="https://blacksgit.github.io/gig-hourly/">
+<style>
+:root{--a:#1e9e6a;--g:#1f2a2e;--m:#6b7380;--l:#e2e6e4;--s:#eef8f3}
+*{box-sizing:border-box}body{font:17px/1.5 system-ui,Arial,sans-serif;margin:0;color:#20262e}
+main{max-width:720px;margin:0 auto;padding:18px}h1{font-size:28px;line-height:1.2;color:var(--g);margin:6px 0}
+.lead{color:var(--m);margin:0 0 16px}h2{font-size:19px;color:var(--g);margin:26px 0 8px}
+.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.f label{font-size:14px;color:var(--m);font-weight:600}
+.in{display:flex;align-items:center;border:2px solid var(--l);border-radius:10px;padding:2px 10px;margin-top:4px}.in:focus-within{border-color:var(--a)}
+.in span{font-size:18px;color:var(--m)}.in input{border:0;font-size:22px;width:100%;padding:6px;outline:0;font-weight:700;min-width:0}
+.big{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:18px}.big div{background:var(--s);border-radius:12px;padding:14px;text-align:center}
+.big b{display:block;font-size:30px;color:var(--g)}.big .r b{color:var(--a)}.big small{color:var(--m);font-size:13px}
+table{width:100%;border-collapse:collapse;margin-top:14px}td{padding:9px 6px;border-bottom:1px solid var(--l)}td:last-child{text-align:right;font-weight:700}
+.note{color:var(--m);font-size:14px}.cta{display:inline-block;background:var(--a);color:#fff;border-radius:8px;padding:12px 16px;text-decoration:none;margin:6px 0}
+details{margin-top:12px}summary{cursor:pointer;color:var(--a);font-weight:600}
+footer{margin-top:30px;color:var(--m);font-size:14px}a{color:var(--a)}
+@media(max-width:480px){h1{font-size:23px}.big b{font-size:25px}}
+</style></head><body><main>
+<h1>What did that shift really pay per hour?</h1>
+<p class=lead>The app shows pay per hour online. This shows what is left after gas and wear on your car, and what to put aside for tax. Your numbers stay on this device.</p>
+<div class=f>
+<div><label for=pay>Pay + tips + bonus</label><div class=in><span>$</span><input id=pay type=number inputmode=decimal min=0 value=142></div></div>
+<div><label for=hrs>Hours online</label><div class=in><input id=hrs type=number inputmode=decimal min=0 step=0.25 value=6><span>h</span></div></div>
+<div><label for=mi>Miles driven</label><div class=in><input id=mi type=number inputmode=decimal min=0 value=88><span>mi</span></div></div>
+</div>
+<details><summary>My car and tax settings</summary>
+<div class=f style="margin-top:10px">
+<div><label for=mpg>Miles per gallon</label><div class=in><input id=mpg type=number inputmode=decimal min=1 value=28></div></div>
+<div><label for=gas>Gas price</label><div class=in><span>$</span><input id=gas type=number inputmode=decimal min=0 step=0.05 value=3.20></div></div>
+<div><label for=wear>Wear per mile <small>(tires, oil, repairs, value lost)</small></label><div class=in><span>$</span><input id=wear type=number inputmode=decimal min=0 step=0.01 value=0.20></div></div>
+<div><label for=tax>Set aside for tax</label><div class=in><input id=tax type=number inputmode=decimal min=0 max=60 value=20><span>%</span></div></div>
+</div></details>
+<div class=big><div><small>App hourly</small><b id=gh></b></div><div class=r><small>Real hourly after car costs</small><b id=rh></b></div></div>
+<table id=t></table>
+<p class=note id=hint></p>
+<h2>See it across every shift</h2>
+<p>One good shift does not tell you much. The <b>Gig Driver Tracker</b> (Excel and Google Sheets) logs every shift and app, shows your real hourly per app and per weekday, your mileage deduction and a self-employment tax estimate for the year.</p>
+<a class=cta href="https://payhip.com/b/R9DtS">See the Gig Driver Tracker</a>
+<details><summary>How it is worked out</summary><p class=note>Gas = miles / MPG x gas price. Car wear is what each mile costs you beyond gas; $0.15 to $0.30 is typical for a small used car. Mileage deduction uses the IRS standard rate ($0.725 per business mile for 2026; check each January). The tax set-aside is your % of (pay minus the mileage deduction). Self-employment tax alone is about 14.1% of that. This is a planning helper, not tax advice.</p></details>
+<footer>Made by Black. More free tools: <a href="https://blacksgit.github.io/">blacksgit.github.io</a> &middot; <a href="https://patreon.com/123black">patreon.com/123black</a></footer>
+</main>
+<script>
+const R=0.725,IDS=['pay','hrs','mi','mpg','gas','wear','tax'],$=id=>document.getElementById(id),v=id=>Math.max(0,+$(id).value||0),m=x=>(x<0?'-$':'$')+Math.abs(x).toFixed(2);
+function calc(){
+ const pay=v('pay'),h=v('hrs'),mi=v('mi'),gas=v('mpg')?mi/v('mpg')*v('gas'):0,wear=mi*v('wear'),ded=mi*R,taxable=Math.max(0,pay-ded),tax=taxable*v('tax')/100,real=pay-gas-wear;
+ $('gh').textContent=h?m(pay/h):'-';$('rh').textContent=h?m(real/h):'-';
+ $('t').innerHTML=[['Gas',-gas],['Car wear',-wear],['Left after car costs',real],['Per mile driven (after car costs)',mi?real/mi:0],['Mileage deduction ('+mi+' mi x $'+R+')',ded],['Set aside for tax',-tax],['Yours to spend',real-tax],['Yours to spend per hour',h?(real-tax)/h:0]]
+  .map(r=>`<tr><td>${r[0]}</td><td>${m(r[1])}</td></tr>`).join('');
+ $('hint').textContent=h&&mi?`Car costs took ${Math.round((gas+wear)/pay*100||0)}% of the pay. Your car costs ${m((gas+wear)/mi)} a mile; counting the empty drive back, an offer under ${m((gas+wear)/mi*2)} per mile barely covers the car.`:'';
+ try{localStorage.gigHourly=JSON.stringify(IDS.map(i=>$(i).value))}catch(e){}}
+try{const s=JSON.parse(localStorage.gigHourly||'null');if(s)IDS.forEach((i,k)=>$(i).value=s[k])}catch(e){}
+IDS.forEach(i=>$(i).addEventListener('input',calc));calc();
+</script></body></html>
