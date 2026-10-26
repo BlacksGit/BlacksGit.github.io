@@ -1,0 +1,94 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>Thanksgiving dinner planner: turkey size, thaw date, cooking timeline and how much food</title>
+<meta name=description content="Type how many people are coming and when you eat. Get the turkey size, the day to move it to the fridge, an oven timeline that ends on time and how much of every side to buy. Free, printable, works on your phone.">
+<link rel=canonical href="https://blacksgit.github.io/thanksgiving/">
+<style>
+:root{--a:#b4561f;--g:#3a2416;--m:#75685e;--l:#ece3da;--s:#fbf3ea}
+*{box-sizing:border-box}body{font:17px/1.5 system-ui,Arial,sans-serif;margin:0;color:#2a221c}
+main{max-width:720px;margin:0 auto;padding:18px}h1{font-size:28px;line-height:1.2;color:var(--g);margin:6px 0}
+.lead{color:var(--m);margin:0 0 16px}h2{font-size:19px;color:var(--g);margin:26px 0 8px}
+.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.f label,.q{font-size:14px;color:var(--m);font-weight:600}
+.in{display:flex;align-items:center;border:2px solid var(--l);border-radius:10px;padding:2px 10px;margin-top:4px}.in:focus-within{border-color:var(--a)}
+.in input{border:0;font-size:20px;width:100%;padding:6px;outline:0;font-weight:700;min-width:0;background:none;font-family:inherit}
+.in input[type=date],.in input[type=time]{font-size:17px;padding:6px 0}
+.ch{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 12px}.ch button{border:2px solid var(--l);background:#fff;border-radius:20px;padding:7px 13px;font-size:15px;cursor:pointer;font-family:inherit}
+.ch button.on{border-color:var(--a);background:var(--s);font-weight:700}
+.big{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:6px}.big div{background:var(--s);border-radius:12px;padding:12px;text-align:center}
+.big b{display:block;font-size:26px;color:var(--a);line-height:1.2}.big small{color:var(--m);font-size:13px}
+table{width:100%;border-collapse:collapse;margin-top:8px}td{padding:8px 6px;border-bottom:1px solid var(--l);vertical-align:top}td:first-child{white-space:nowrap;font-weight:700;color:var(--a);width:1%}
+#buy td:first-child{color:inherit;font-weight:400;white-space:normal;width:auto}#buy td:last-child{text-align:right;font-weight:700}
+input[type=checkbox]{width:18px;height:18px;vertical-align:-3px;margin-right:6px;accent-color:var(--a)}
+.note{color:var(--m);font-size:14px}.tip{background:#fff6dc;border-radius:10px;padding:10px 12px;margin-top:12px}
+.btns button,.cta{display:inline-block;border:0;background:var(--a);color:#fff;border-radius:8px;padding:12px 16px;font-size:16px;text-decoration:none;margin:6px 6px 6px 0;cursor:pointer;font-family:inherit}
+details{margin-top:12px}summary{cursor:pointer;color:var(--a);font-weight:600}
+footer{margin-top:30px;color:var(--m);font-size:14px}a{color:var(--a)}
+@media(max-width:480px){h1{font-size:23px}.big b{font-size:21px}}
+@media print{.btns,.cta,footer,.rel,details,#inputs,.buyp{display:none}body{font-size:14px}}
+</style></head><body><main>
+<h1>Thanksgiving dinner planner</h1>
+<p class=lead>Tell it how many are coming and when you sit down to eat. You get the turkey to buy, the day it has to go in the fridge, an oven plan that ends on time and how much of each side to make. Your numbers stay on this device.</p>
+<div id=inputs>
+<div class=f>
+<div><label for=ad>Adults and teens</label><div class=in><input id=ad type=number inputmode=numeric min=0 value=8></div></div>
+<div><label for=kid>Kids under 12</label><div class=in><input id=kid type=number inputmode=numeric min=0 value=3></div></div>
+<div><label for=day>Dinner day</label><div class=in><input id=day type=date></div></div>
+<div><label for=at>Dinner time</label><div class=in><input id=at type=time value="15:00"></div></div>
+</div>
+<p class=q style="margin:14px 0 0">Leftovers</p><div class=ch data-k=left><button data-v=0>None</button><button data-v=1 class=on>Some</button><button data-v=2>Lots</button></div>
+<p class=q style="margin:0">Turkey</p><div class=ch data-k=fresh><button data-v=0 class=on>Frozen</button><button data-v=1>Fresh</button></div>
+<p class=q style="margin:0">Stuffing</p><div class=ch data-k=stuffed><button data-v=0 class=on>Baked in a dish</button><button data-v=1>Inside the bird</button></div>
+</div>
+<div class=big><div><small>Buy a turkey of</small><b id=lb></b></div><div><small id=thl>Move it to the fridge</small><b id=th></b></div><div><small>Turkey goes in at</small><b id=tin></b></div></div>
+<p class="tip" id=hint></p>
+<h2>Your cooking day</h2>
+<table id=tl></table>
+<h2>How much to buy and make</h2>
+<table id=buy></table>
+<div class=btns><button onclick="print()">Print the plan</button></div>
+<h2 class=buyp>Plan the whole week of meals</h2>
+<p class=buyp>Guests staying a few days? The <b>Meal Planner + Grocery List</b> spreadsheet (Excel and Google Sheets) turns the meals you pick into one shopping list sorted by store aisle, minus what you already have.</p>
+<a class=cta href="https://payhip.com/b/GDO0m">See the Meal Planner</a>
+<details><summary>How it is worked out</summary><p class=note>Turkey: about 1.25 lb per adult and 0.6 lb per kid (bone included), plus 0.3 or 0.6 lb per person for some or lots of leftovers. Fridge thawing takes about one day per 4 lb (USDA), plus one day so the bird is fully thawed before cooking. Roast times are for 325&deg;F from the USDA chart; a stuffed bird takes longer. The turkey is done at 165&deg;F in the thickest part of the thigh and the center of any stuffing, so check with a thermometer from the low end of the time range. It rests 30 to 40 minutes, which frees the oven for the sides. Side amounts are per serving, with kids counted as about half a serving.</p></details>
+<p class=rel style="margin-top:24px;font-size:15px">Related: <a href="../recipe-cost/">Recipe cost per serving</a> &middot; <a href="../gift-budget/">Christmas gift budget</a> &middot; <a href="../budget-503020/">50/30/20 check</a></p>
+<footer>Made by Black. More free tools: <a href="https://blacksgit.github.io/">blacksgit.github.io</a> &middot; <a href="https://patreon.com/123black">patreon.com/123black</a></footer>
+</main>
+<script>
+const $=id=>document.getElementById(id),v=id=>Math.max(0,+$(id).value||0),S={left:1,fresh:0,stuffed:0};
+// USDA 325F roast hours [max lb, unstuffed lo, hi, stuffed lo, hi]
+const RT=[[12,2.75,3,3,3.5],[14,3,3.75,3.5,4],[18,3.75,4.25,4,4.25],[20,4.25,4.5,4.25,4.75],[24,4.5,5,4.75,5.25],[99,5,5.5,5.25,6]];
+function thanksgiving(){const y=new Date().getFullYear(),d=new Date(y,10,1);d.setDate(1+(11-d.getDay())%7+21);if(d<new Date(new Date().toDateString()))d.setFullYear(y+1,10,1),d.setDate(1+(11-d.getDay())%7+21);return d}
+const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const wd=d=>d.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'}),hm=d=>d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'});
+const add=(d,min)=>new Date(d.getTime()+min*6e4),q=(x,u,s)=>(Math.ceil(x*s)/s)+' '+u;
+function calc(){
+ const a=v('ad'),k=v('kid'),n=a+k,sv=a+k*0.5;
+ if(!n){$('lb').textContent='-';return}
+ const lb=Math.max(8,Math.ceil(a*1.25+k*0.6+n*[0,0.3,0.6][S.left])),r=RT.find(x=>lb<=x[0]),lo=r[S.stuffed?3:1],hi=r[S.stuffed?4:2];
+ const [Y,M,D]=($('day').value||iso(thanksgiving())).split('-').map(Number),[h,mi]=($('at').value||'15:00').split(':').map(Number),eat=new Date(Y,M-1,D,h,mi);
+ const tin=add(eat,-(hi*60+40+15)),thawDays=Math.ceil(lb/4)+1,thaw=new Date(Y,M-1,D-thawDays);
+ $('lb').textContent=lb+'-'+(lb+2)+' lb';$('tin').textContent=hm(tin);
+ $('thl').textContent=S.fresh?'Pick up the fresh turkey':'Move it to the fridge';$('th').textContent=S.fresh?wd(new Date(Y,M-1,D-2)):wd(thaw);
+ const big=lb>20?' Over 20 lb? Two smaller birds cook faster and more evenly than one giant one.':'';
+ $('hint').innerHTML=S.fresh?`Buy the fresh bird no more than 2 days ahead and keep it in the coldest part of the fridge.${big}`:
+  `<b>Buy the frozen turkey by ${wd(new Date(Y,M-1,D-thawDays-1))}.</b> A ${lb} lb bird needs about ${thawDays} days in the fridge to thaw. Forgot? Thaw it breast-down in cold water, changing the water every 30 minutes: about ${Math.ceil(lb/2)} hours.${big}`;
+ const T=[[add(tin,-30),'Take the turkey out of the fridge, pat dry, season. Heat the oven to 325&deg;F.'],
+  [tin,`Turkey in${S.stuffed?' (stuff it right before it goes in, loosely)':''}. Roast ${lo}-${hi} hours.`],
+  [add(tin,lo*60),'Start checking: 165&deg;F in the thickest part of the thigh'+(S.stuffed?' and the center of the stuffing':'')+'. Tent the breast with foil if it browns too fast.'],
+  [add(eat,-90),'Peel and boil the potatoes. Assemble casseroles and the stuffing dish.'],
+  [add(tin,hi*60),'Turkey out, cover loosely with foil and let it rest. Turn the oven up to 375&deg;F.'],
+  [add(tin,hi*60+5),(S.stuffed?'Scoop out the stuffing. ':'')+'Sides into the oven: '+(S.stuffed?'':'stuffing, ')+'casseroles and sweet potatoes.'],
+  [add(eat,-25),'Make the gravy from the pan drippings. Mash the potatoes. Rolls in the oven.'],
+  [add(eat,-15),'Carve the turkey.'],[eat,'<b>Dinner.</b> Leftovers into the fridge within 2 hours.']].sort((x,y)=>x[0]-y[0]);
+ $('tl').innerHTML=T.map(t=>`<tr><td>${hm(t[0])}</td><td>${t[1]}</td></tr>`).join('');
+ const B=[['Turkey',lb+'-'+(lb+2)+' lb'],['Potatoes for mashing',q(sv*0.5,'lb',1)],['Bread for stuffing',q(sv/8,'loaves (1 lb)',2)],['Gravy',q(sv/3,'cups',1)],
+  ['Cranberry sauce',q(sv/8,'cans (14 oz)',1)],['Green beans',q(sv*0.25,'lb',2)],['Sweet potatoes',q(sv*0.4,'lb',1)],['Dinner rolls',Math.ceil(a*2+k)+' rolls'],
+  ['Pies (8 slices each)',Math.ceil(sv*1.2/8)+' pies'],['Butter',q(n/10,'lb',2)],['Ice',Math.ceil(n/6)+' bags']];
+ $('buy').innerHTML=B.map(b=>`<tr><td><label><input type=checkbox>${b[0]}</label></td><td>${b[1]}</td></tr>`).join('');
+ try{localStorage.tgPlan=JSON.stringify({ad:$('ad').value,kid:$('kid').value,day:$('day').value,at:$('at').value,S})}catch(e){}}
+try{const s=JSON.parse(localStorage.tgPlan||'null');if(s){['ad','kid','day','at'].forEach(i=>$(i).value=s[i]);Object.assign(S,s.S)}}catch(e){}
+if(!$('day').value)$('day').value=iso(thanksgiving());
+document.querySelectorAll('.ch').forEach(c=>{c.querySelectorAll('button').forEach(b=>{b.classList.toggle('on',+b.dataset.v==S[c.dataset.k]);
+ b.onclick=()=>{S[c.dataset.k]=+b.dataset.v;c.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x==b));calc()}})});
+['ad','kid','day','at'].forEach(i=>$(i).addEventListener('input',calc));calc();
+</script></body></html>
