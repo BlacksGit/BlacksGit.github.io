@@ -1,0 +1,66 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>True cost of owning a car calculator: per month and per mile</title>
+<meta name=description content="Gas is only part of it. Type your miles, MPG, insurance, payment and car value. See what your car really costs per month, per mile and per trip, including repairs and the value it loses each year. Free, works on your phone.">
+<link rel=canonical href="https://blacksgit.github.io/car-cost/">
+<style>
+:root{--a:#d0592b;--g:#2b2420;--m:#756d68;--l:#ebe4e0;--s:#fcf2ed}
+*{box-sizing:border-box}body{font:17px/1.5 system-ui,Arial,sans-serif;margin:0;color:#27211e}
+main{max-width:720px;margin:0 auto;padding:18px}h1{font-size:28px;line-height:1.2;color:var(--g);margin:6px 0}
+.lead{color:var(--m);margin:0 0 16px}h2{font-size:19px;color:var(--g);margin:22px 0 8px}
+.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}.f>div{display:flex;flex-direction:column;justify-content:flex-end}
+.f label{font-size:14px;color:var(--m);font-weight:600}
+.in{display:flex;align-items:center;border:2px solid var(--l);border-radius:10px;padding:2px 10px;margin-top:4px;background:#fff}.in:focus-within{border-color:var(--a)}
+.in select{font-size:17px}.in span{font-size:16px;color:var(--m);white-space:nowrap}.in input,.in select{border:0;font-size:20px;width:100%;padding:6px;outline:0;font-weight:700;min-width:0;background:none}
+.big{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:18px}.big div{background:var(--s);border-radius:12px;padding:12px 4px;text-align:center}
+.big b{display:block;font-size:26px;color:var(--a)}.big small{color:var(--m);font-size:12px}
+.row{margin-top:10px}.row div:first-child{display:flex;justify-content:space-between;font-size:15px}.row b{white-space:nowrap}
+.bar{height:10px;border-radius:5px;background:var(--a);opacity:.7;margin-top:3px}
+#tip{margin-top:16px;padding:12px;border-radius:10px;background:#fff8e6}
+.note{color:var(--m);font-size:14px}.cta{display:inline-block;background:var(--a);color:#fff;border-radius:8px;padding:12px 16px;text-decoration:none;margin:6px 0}
+details{margin-top:12px}summary{cursor:pointer;color:var(--a);font-weight:600}
+footer{margin-top:30px;color:var(--m);font-size:14px}a{color:var(--a)}
+@media(max-width:480px){h1{font-size:23px}.big b{font-size:21px}}
+</style></head><body><main>
+<h1>What does my car really cost?</h1>
+<p class=lead>Gas is the part you notice. Add insurance, repairs, the payment and the value the car loses every year, and the real number is often three times the gas bill or more. Your numbers stay on this device.</p>
+<div class=f>
+<div><label for=mi>Miles per year</label><div class=in><input id=mi type=number inputmode=decimal min=0 step=500 value=12000></div></div>
+<div><label for=mpg>MPG</label><div class=in><input id=mpg type=number inputmode=decimal min=1 value=28></div></div>
+<div><label for=gas>Gas price</label><div class=in><span>$</span><input id=gas type=number inputmode=decimal min=0 step=0.05 value=3.20></div></div>
+<div><label for=ins>Insurance / month</label><div class=in><span>$</span><input id=ins type=number inputmode=decimal min=0 step=5 value=150></div></div>
+<div><label for=pay>Car payment / month</label><div class=in><span>$</span><input id=pay type=number inputmode=decimal min=0 step=10 value=0></div></div>
+<div><label for=val>Car is worth now</label><div class=in><span>$</span><input id=val type=number inputmode=decimal min=0 step=500 value=14000></div></div>
+<div><label for=age>Car age</label><div class=in><select id=age><option value=0>0 to 3 years</option><option value=1 selected>4 to 7 years</option><option value=2>8 to 12 years</option><option value=3>13+ years</option></select></div></div>
+</div>
+<details><summary>Other costs (typical amounts filled in)</summary>
+<div class=f style="margin-top:10px">
+<div><label for=rep>Maintenance + repairs / year</label><div class=in><span>$</span><input id=rep type=number inputmode=decimal min=0 step=50 value=1000></div></div>
+<div><label for=reg>Registration, inspection / year</label><div class=in><span>$</span><input id=reg type=number inputmode=decimal min=0 step=10 value=150></div></div>
+<div><label for=park>Parking, tolls, washes / month</label><div class=in><span>$</span><input id=park type=number inputmode=decimal min=0 step=5 value=20></div></div>
+<div><label for=tire>Tires (set) price</label><div class=in><span>$</span><input id=tire type=number inputmode=decimal min=0 step=25 value=650></div></div>
+</div></details>
+<div class=big><div><b id=pm></b><small>per month</small></div><div><b id=pmi></b><small>per mile</small></div><div><b id=py></b><small>per year</small></div></div>
+<div id=rows></div>
+<div id=tip></div>
+<h2>Track every cost in one place</h2>
+<p>The <b>Car Maintenance Log and Expense Tracker</b> (printable PDF) has a service schedule, a log for each service and repair, a fuel and MPG log and a yearly cost summary that ends in your cost per mile.</p>
+<a class=cta href="https://payhip.com/b/K9M8O">See the Car Maintenance Log</a>
+<details><summary>How it is worked out</summary><p class=note>Gas = miles / MPG x gas price. Value lost per year is a share of what the car is worth now: about 15% for a car up to 3 years old, 12% at 4 to 7, 10% at 8 to 12 and 7% after that. Tires last about 50,000 miles, so a set is spread over those miles. Maintenance and repairs default to about $1,000 a year for a mid-age car; raise it for an older car. The car payment is counted in full here; the interest part is the real cost, the rest pays down the loan. A planning estimate.</p></details>
+<footer>Made by Black. More free tools: <a href="https://blacksgit.github.io/">blacksgit.github.io</a> &middot; <a href="https://patreon.com/123black">patreon.com/123black</a></footer>
+</main>
+<script>
+const IDS=['mi','mpg','gas','ins','pay','val','age','rep','reg','park','tire'],DEP=[.15,.12,.10,.07],REP=[500,1000,1500,2000];
+const $=id=>document.getElementById(id),v=id=>Math.max(0,+$(id).value||0),m=x=>'$'+Math.round(x).toLocaleString(),c=x=>x<1?Math.round(x*100)+'¢':'$'+x.toFixed(2);
+function calc(){
+ const mi=v('mi'),y=[['Gas',mi/Math.max(1,v('mpg'))*v('gas')],['Value lost',v('val')*DEP[+$('age').value]],['Insurance',v('ins')*12],['Car payment',v('pay')*12],
+  ['Maintenance and repairs',v('rep')],['Tires',v('tire')*mi/50000],['Registration and inspection',v('reg')],['Parking, tolls, washes',v('park')*12]].filter(r=>r[1]>0).sort((a,b)=>b[1]-a[1]);
+ const yr=y.reduce((s,r)=>s+r[1],0),gas=(y.find(r=>r[0]=='Gas')||[0,0])[1],mx=y.length?y[0][1]:1;
+ $('pm').textContent=m(yr/12);$('pmi').textContent=mi?c(yr/mi):'-';$('py').textContent=m(yr);
+ $('rows').innerHTML=y.map(r=>`<div class=row><div><span>${r[0]}</span><b>${m(r[1]/12)}/mo</b></div><div class=bar style="width:${r[1]/mx*100}%"></div></div>`).join('');
+ const run=mi?(gas+v('tire')*mi/50000+v('rep')*.5)/mi:0;
+ $('tip').innerHTML=mi?`<b>Gas is ${Math.round(gas/yr*100)}% of what this car costs.</b> A 20-mile round trip costs about ${c(run*20)} in gas and wear, or ${c(yr/mi*20)} counting everything. Each 1,000 miles you skip saves about ${m(run*1000)}.`:'Add the miles you drive.';
+ try{localStorage.carCost=JSON.stringify(IDS.map(i=>$(i).value))}catch(e){}}
+try{const s=JSON.parse(localStorage.carCost||'null');if(s)IDS.forEach((i,k)=>$(i).value=s[k])}catch(e){}
+$('age').addEventListener('change',()=>{$('rep').value=REP[+$('age').value];calc()});
+IDS.forEach(i=>$(i).addEventListener('input',calc));calc();
+</script></body></html>
