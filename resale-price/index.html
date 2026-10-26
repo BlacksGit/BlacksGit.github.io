@@ -1,0 +1,65 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>What should I list it for? Resale price calculator for eBay, Poshmark, Mercari, Depop and more</title>
+<meta name=description content="Type what you paid and the profit you want. See the list price for eBay, Poshmark, Mercari, Depop, Facebook Marketplace, Whatnot and Etsy after fees, side by side. Free, no sign-up.">
+<link rel=canonical href="https://blacksgit.github.io/resale-price/">
+<style>
+:root{--a:#7a4fd1;--g:#2b2f36;--m:#6b7380;--l:#e6e3ec;--s:#f5f1fc}
+*{box-sizing:border-box}body{font:17px/1.5 system-ui,Arial,sans-serif;margin:0;color:#20262e}
+main{max-width:720px;margin:0 auto;padding:18px}h1{font-size:28px;line-height:1.2;color:var(--g);margin:6px 0}
+.lead{color:var(--m);margin:0 0 16px}h2{font-size:19px;color:var(--g);margin:26px 0 8px}
+.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.f label{font-size:14px;color:var(--m);font-weight:600}
+.money{display:flex;align-items:center;border:2px solid var(--l);border-radius:10px;padding:2px 10px;margin-top:4px}.money:focus-within{border-color:var(--a)}
+.money span{font-size:22px;color:var(--m)}.money input{border:0;font-size:24px;width:100%;padding:6px;outline:0;font-weight:700;min-width:0}
+table{width:100%;border-collapse:collapse;margin-top:16px}td,th{padding:10px 8px;border-bottom:1px solid var(--l);text-align:right}
+th{background:var(--g);color:#fff;font-size:14px}td:first-child,th:first-child{text-align:left}
+td.p{font-size:21px;font-weight:800;color:var(--a)}tr.best td{background:var(--s)}tr.best td:first-child:after{content:" lowest";font-size:11px;color:var(--a);font-weight:700;margin-left:6px;text-transform:uppercase}
+.neg{color:#c8414b;font-weight:700}.note{color:var(--m);font-size:14px}
+.cta{display:inline-block;background:var(--a);color:#fff;border-radius:8px;padding:12px 16px;text-decoration:none;margin:6px 0}
+footer{margin-top:30px;color:var(--m);font-size:14px}a{color:var(--a)}
+details{margin-top:14px}summary{cursor:pointer;color:var(--a);font-weight:600}
+@media(max-width:480px){h1{font-size:23px}td,th{padding:8px 4px;font-size:15px}td.p{font-size:18px}}
+</style></head><body><main>
+<h1>What should I list it for?</h1>
+<p class=lead>Type what you paid and the profit you want. Every platform's list price after its fees shows up side by side. Your numbers stay on this device.</p>
+<div class=f>
+<div><label for=paid>I paid</label><div class=money><span>$</span><input id=paid type=number inputmode=decimal min=0 step=1 value=8></div></div>
+<div><label for=want>Profit I want</label><div class=money><span>$</span><input id=want type=number inputmode=decimal min=0 step=1 value=20></div></div>
+<div><label for=ship>Shipping I pay <small>(0 if buyer pays)</small></label><div class=money><span>$</span><input id=ship type=number inputmode=decimal min=0 step=0.5 value=0></div></div>
+</div>
+<table id=t1></table>
+<h2>Already have a price in mind?</h2>
+<div class=f><div><label for=price>If it sells for</label><div class=money><span>$</span><input id=price type=number inputmode=decimal min=0 step=1 placeholder="e.g. 35"></div></div></div>
+<table id=t2></table>
+<details><summary>Fees used (US, 2026)</summary><p class=note>
+eBay: 13.6% of the total (item + shipping charged) + $0.40 per order, most categories.<br>
+Poshmark: 20%, or a flat $2.95 when the sale is under $15.<br>
+Mercari: 10% selling fee + 2.9% + $0.50 payment processing.<br>
+Depop (US): 3.3% + $0.45 payment processing.<br>
+Facebook Marketplace: 10% on shipped orders, $0.80 minimum. Local pickup is free.<br>
+Whatnot: 8% + 2.9% + $0.30.<br>
+Etsy: 6.5% transaction + 3% + $0.25 processing + $0.20 listing.<br>
+Fees change and some categories differ. Check your platform before you rely on a number.</p></details>
+<h2>Track every flip</h2>
+<p>The <b>Reseller Profit Tracker</b> (Excel and Google Sheets) logs each item from buy to sold, does these fees for you, adds mileage and expenses for tax time, and shows your real ROI by source, category and platform.</p>
+<a class=cta href="https://payhip.com/b/8pbyk">See the Reseller Profit Tracker</a>
+<footer>Made by Black. More free tools: <a href="https://blacksgit.github.io/">blacksgit.github.io</a> &middot; <a href="https://patreon.com/123black">patreon.com/123black</a></footer>
+</main>
+<script>
+// [name, % of sale, fixed per order, flat fee instead, when sale under, minimum fee]
+const P=[['eBay',.136,.40,0,0,0],['Poshmark',.20,0,2.95,15,0],['Mercari',.129,.50,0,0,0],['Depop',.033,.45,0,0,0],
+['Facebook (shipped)',.10,0,0,0,.80],['Whatnot',.109,.30,0,0,0],['Etsy',.095,.45,0,0,0],['Local cash',0,0,0,0,0]];
+const $=id=>document.getElementById(id),m=v=>(v<0?'-$':'$')+Math.abs(v).toFixed(2),n=id=>Math.max(0,+$(id).value||0);
+function fee(p,x){if(p[3]&&x<p[4])return p[3];return Math.max(p[5],x*p[1]+p[2])}
+function listAt(p,need){let x=Math.ceil((need+p[2])/(1-p[1]));if(p[3]&&need+p[3]<p[4])x=Math.ceil(need+p[3]);while(x-fee(p,x)<need)x++;return x}
+function calc(){
+ const paid=n('paid'),want=n('want'),ship=n('ship'),need=paid+want+ship;
+ const rows=P.map(p=>{const x=listAt(p,need),f=fee(p,x);return[p[0],x,f,x-f-ship-paid]});
+ const min=Math.min(...rows.slice(0,7).map(r=>r[1]));
+ $('t1').innerHTML='<tr><th>Platform</th><th>List at</th><th>Fees</th><th>Profit</th></tr>'+rows.map(r=>`<tr class="${r[1]==min&&r[0]!='Local cash'?'best':''}"><td>${r[0]}</td><td class=p>$${r[1]}</td><td>${m(r[2])}</td><td>${m(r[3])}</td></tr>`).join('');
+ const pr=+$('price').value||0;
+ $('t2').innerHTML=pr?'<tr><th>Platform</th><th>Fees</th><th>You keep</th><th>Profit</th></tr>'+P.map(p=>{const f=fee(p,pr),k=pr-f,pf=k-ship-paid;return`<tr><td>${p[0]}</td><td>${m(f)}</td><td>${m(k)}</td><td class="${pf<0?'neg':''}">${m(pf)}</td></tr>`}).join(''):'';
+ try{localStorage.resale=JSON.stringify([paid,want,ship])}catch(e){}}
+try{const s=JSON.parse(localStorage.resale||'null');if(s){$('paid').value=s[0];$('want').value=s[1];$('ship').value=s[2]}}catch(e){}
+['paid','want','ship','price'].forEach(id=>$(id).addEventListener('input',calc));calc();
+</script></body></html>
