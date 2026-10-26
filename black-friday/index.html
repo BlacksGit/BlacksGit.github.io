@@ -1,0 +1,89 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>Black Friday deal checker: is it really a deal? Plus a budget list</title>
+<meta name=description content="Type the sale price and what the item usually sells for. See what you really save after coupons, cash back, shipping and tax, whether the "was" price is inflated, and keep a Black Friday list that tracks your budget. Free, works on your phone.">
+<link rel=canonical href="https://blacksgit.github.io/black-friday/">
+<style>
+:root{--a:#b3262e;--g:#1d1d1f;--m:#5f6b63;--l:#e2e8e4;--s:#f2f8f4}
+*{box-sizing:border-box}body{font:17px/1.5 system-ui,Arial,sans-serif;margin:0;color:#2a221c}
+main{max-width:720px;margin:0 auto;padding:18px}h1{font-size:28px;line-height:1.2;color:var(--g);margin:6px 0}
+.lead{color:var(--m);margin:0 0 16px}h2{font-size:19px;color:var(--g);margin:26px 0 8px}
+.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.f label,.q{font-size:14px;color:var(--m);font-weight:600}
+.in{display:flex;align-items:center;border:2px solid var(--l);border-radius:10px;padding:2px 10px;margin-top:4px}.in:focus-within{border-color:var(--a)}
+.in input{border:0;font-size:20px;width:100%;padding:6px;outline:0;font-weight:700;min-width:0;background:none;font-family:inherit}
+.in input[type=date],.in input[type=time]{font-size:17px;padding:6px 0}
+.ch{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 12px}.ch button{border:2px solid var(--l);background:#fff;border-radius:20px;padding:7px 13px;font-size:15px;cursor:pointer;font-family:inherit}
+.ch button.on{border-color:var(--a);background:var(--s);font-weight:700}
+.big{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:6px}.big div{background:var(--s);border-radius:12px;padding:12px;text-align:center}
+.big b{display:block;font-size:26px;color:var(--a);line-height:1.2}.big small{color:var(--m);font-size:13px}
+table{width:100%;border-collapse:collapse;margin-top:8px}td{padding:8px 6px;border-bottom:1px solid var(--l);vertical-align:top}td:first-child{white-space:nowrap;font-weight:700;color:var(--a);width:1%}
+#buy td:first-child,#rc td:first-child{color:inherit;font-weight:400;white-space:normal;width:auto}#buy td:last-child{text-align:right;font-weight:700}
+input[type=checkbox]{width:18px;height:18px;vertical-align:-3px;margin-right:6px;accent-color:var(--a)}
+.note{color:var(--m);font-size:14px}.tip{background:#fff6dc;border-radius:10px;padding:10px 12px;margin-top:12px}
+.btns button,.cta{display:inline-block;border:0;background:var(--a);color:#fff;border-radius:8px;padding:12px 16px;font-size:16px;text-decoration:none;margin:6px 6px 6px 0;cursor:pointer;font-family:inherit}
+details{margin-top:12px}summary{cursor:pointer;color:var(--a);font-weight:600}
+footer{margin-top:30px;color:var(--m);font-size:14px}a{color:var(--a)}
+@media(max-width:480px){h1{font-size:23px}.big b{font-size:21px}}
+@media print{.btns,.cta,footer,.rel,details,#inputs,.buyp{display:none}body{font-size:14px}}
+.card{border:2px solid var(--l);border-radius:12px;padding:10px 14px;margin-top:12px}.card h3{margin:4px 0;color:var(--g);font-size:17px}.card ul{margin:4px 0;padding-left:20px}.card p{margin:6px 0}
+.verd{font-size:20px;font-weight:700;border-radius:12px;padding:12px 14px;margin-top:12px}.good{background:#e3f4e8;color:#14532d}.meh{background:#fff6dc;color:#7a4a00}.bad{background:#fde8e8;color:#8f1d1d}
+#lst td:first-child{white-space:normal;color:inherit;font-weight:600;width:auto}#lst td:last-child{text-align:right;white-space:nowrap}.x{border:0;background:none;color:var(--m);font-size:18px;cursor:pointer}
+</style></head><body><main>
+<h1>Black Friday deal checker</h1>
+<p class=lead>Stores compare the sale to a "was" price nobody paid. Type what the item usually sells for instead and see your real saving after coupons, cash back, shipping and tax. Add the deals you buy to a list that keeps your budget in check. Your list stays on this device.</p>
+<div id=inputs>
+<div class=f>
+<div><label for=nm>Item</label><div class=in><input id=nm type=text maxlength=40 placeholder="TV, air fryer..."></div></div>
+<div><label for=sp>Sale price ($)</label><div class=in><input id=sp type=number inputmode=decimal min=0 step=0.01 value=199></div></div>
+<div><label for=wp>Store's "was" price ($)</label><div class=in><input id=wp type=number inputmode=decimal min=0 step=0.01 value=349></div></div>
+<div><label for=up>Usual price most weeks ($)</label><div class=in><input id=up type=number inputmode=decimal min=0 step=0.01 value=249></div></div>
+</div>
+<p class=note>Usual price: what it sold for most of the last few months. Check a price tracker such as camelcamelcamel (Amazon) or Keepa, or other stores. Not sure? Leave it the same as the "was" price.</p>
+<div class=f>
+<div><label for=cp>Extra coupon (% off)</label><div class=in><input id=cp type=number inputmode=decimal min=0 max=90 value=0></div></div>
+<div><label for=cb>Cash back (%)</label><div class=in><input id=cb type=number inputmode=decimal min=0 max=50 value=0></div></div>
+<div><label for=sh>Shipping ($)</label><div class=in><input id=sh type=number inputmode=decimal min=0 step=0.01 value=0></div></div>
+<div><label for=tx>Sales tax (%)</label><div class=in><input id=tx type=number inputmode=decimal min=0 max=15 step=0.01 value=7></div></div>
+</div>
+</div>
+<div class=big><div><small>You really pay</small><b id=pay></b></div><div><small>Real saving</small><b id=sav></b></div><div><small>Store says</small><b id=say></b></div></div>
+<div class=verd id=verd></div>
+<p class=tip id=hint></p>
+<div class=btns><button onclick="addIt()">Add to my list</button></div>
+<h2>My Black Friday list</h2>
+<div class=f><div><label for=bud>Total budget ($)</label><div class=in><input id=bud type=number inputmode=decimal min=0 value=500></div></div></div>
+<table id=lst></table>
+<p class=tip id=lt></p>
+<div class=btns><button onclick="print()">Print the list</button></div>
+<h2 class=buyp>Keep every gift on budget</h2>
+<p class=buyp>Buying gifts this weekend? The <b>Christmas Gift Planner</b> spreadsheet (Excel and Google Sheets) tracks budget per person, what you bought, deal savings and late-delivery dates.</p>
+<a class=cta href="https://payhip.com/b/j9IsG">See the Gift Planner</a>
+<details><summary>How it is worked out</summary><p class=note>You pay: sale price minus the coupon, plus shipping, plus tax on the item (most states tax the price after the coupon), minus cash back on the price before tax. Real saving: the usual price with the same tax and shipping, minus what you pay. "Store says" is the discount from the "was" price. A great deal saves at least 20% against the usual price, an OK deal 8-20%; under that it is a normal price with a sale sticker.</p></details>
+<p class=rel style="margin-top:24px;font-size:15px">Related: <a href="../gift-budget/">Christmas gift budget</a> &middot; <a href="../resale-price/">Resale price calculator</a> &middot; <a href="../christmas-tree/">Christmas tree size calculator</a></p>
+<footer>Made by Black. More free tools: <a href="https://blacksgit.github.io/">blacksgit.github.io</a> &middot; <a href="https://patreon.com/123black">patreon.com/123black</a></footer>
+</main>
+<script>
+const $=i=>document.getElementById(i),v=i=>Math.max(0,+$(i).value||0),m=x=>'$'+x.toFixed(2).replace(/\.00$/,'');
+const esc=t=>t.replace(/[<>&]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;'})[c]);
+let L=[],cur={};
+function calc(){
+ const sp=v('sp'),wp=v('wp'),up=v('up')||wp,cp=Math.min(90,v('cp'))/100,cb=Math.min(50,v('cb'))/100,sh=v('sh'),tx=v('tx')/100;
+ const net=sp*(1-cp),pay=net*(1+tx)+sh-net*cb,usual=up*(1+tx)+sh,sav=usual-pay,pct=usual?sav/usual*100:0,said=wp?(1-sp/wp)*100:0;
+ $('pay').textContent=m(pay);$('sav').textContent=(sav<0?'-':'')+m(Math.abs(sav));$('say').textContent=Math.round(said)+'% off';
+ const g=pct>=20?['good','Real deal: '+Math.round(pct)+'% under the usual price.']:pct>=8?['meh','OK deal: '+Math.round(pct)+'% under the usual price. Buy it if you needed it anyway.']:['bad',sav<0?'Not a deal: you pay more than the usual price.':'Barely a deal: '+Math.round(pct)+'% under the usual price.'];
+ $('verd').className='verd '+g[0];$('verd').textContent=g[1];
+ const h=[];if(wp>up&&up)h.push(`The "was" price is ${m(wp-up)} above what it usually sells for, so the ${Math.round(said)}% off on the sticker is really ${Math.round((1-sp/up)*100)}%.`);
+ if(cb)h.push(`Cash back pays out later, usually in 1-3 months.`);if(sh&&sp>35)h.push('Many stores ship free over $35, check before paying shipping.');
+ $('hint').innerHTML=h.join(' ')||'Tip: deals that end "tonight" often come back on Cyber Monday.';$('hint').style.display=h.length?'':'none';
+ cur={n:$('nm').value.trim()||'Item',pay:Math.round(pay*100)/100,sav:Math.round(sav*100)/100};save()}
+function addIt(){L.push(cur);$('nm').value='';drawList();calc()}
+function drawList(){
+ const t=L.reduce((a,x)=>a+x.pay,0),s=L.reduce((a,x)=>a+x.sav,0),b=v('bud');
+ $('lst').innerHTML=L.length?L.map((x,i)=>`<tr><td>${esc(x.n)}</td><td>${m(x.pay)}<br><small class=note>saves ${m(x.sav)}</small></td><td><button class=x data-i=${i} aria-label="Remove">&times;</button></td></tr>`).join(''):'<tr><td class=note>Nothing yet. Check a deal above and tap Add to my list.</td></tr>';
+ $('lt').innerHTML=L.length?`Spent <b>${m(t)}</b> of ${m(b)}: ${t>b?'<b>'+m(t-b)+' over budget</b>.':m(b-t)+' left.'} Real savings so far: <b>${m(s)}</b>.`:'';$('lt').style.display=L.length?'':'none';
+ document.querySelectorAll('.x').forEach(x=>x.onclick=()=>{L.splice(+x.dataset.i,1);drawList();save()});save()}
+function save(){try{localStorage.bfPlan=JSON.stringify({L,bud:$('bud').value,tx:$('tx').value})}catch(e){}}
+try{const s=JSON.parse(localStorage.bfPlan||'null');if(s){L=s.L||[];$('bud').value=s.bud||500;$('tx').value=s.tx||7}}catch(e){}
+document.querySelectorAll('#inputs input').forEach(i=>i.addEventListener('input',calc));$('bud').addEventListener('input',drawList);
+calc();drawList();
+</script></body></html>
