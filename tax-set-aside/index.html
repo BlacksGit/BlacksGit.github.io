@@ -1,0 +1,64 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>How much of each payment to set aside for taxes (self-employed, 2026)</title>
+<meta name=description content="Freelancer, gig worker or side hustler? Type a payment you just got and see how much to move to savings for federal, self-employment and state tax, plus the next quarterly due date. Free, 2026 rates.">
+<link rel=canonical href="https://blacksgit.github.io/tax-set-aside/">
+<style>
+:root{--a:#2f6fed;--g:#1f2733;--m:#6b7380;--l:#e3e6ec;--s:#eef3fe}
+*{box-sizing:border-box}body{font:17px/1.5 system-ui,Arial,sans-serif;margin:0;color:#20262e}
+main{max-width:720px;margin:0 auto;padding:18px}h1{font-size:28px;line-height:1.2;color:var(--g);margin:6px 0}
+.lead{color:var(--m);margin:0 0 16px}h2{font-size:19px;color:var(--g);margin:24px 0 8px}
+.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.f label{font-size:14px;color:var(--m);font-weight:600}
+.in{display:flex;align-items:center;border:2px solid var(--l);border-radius:10px;padding:2px 10px;margin-top:4px;background:#fff}.in:focus-within{border-color:var(--a)}
+.in span{font-size:18px;color:var(--m)}.in input,.in select{border:0;font-size:21px;width:100%;padding:6px;outline:0;font-weight:700;min-width:0;background:none}
+.hero .in input{font-size:30px}
+.big{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:18px}.big div{background:var(--s);border-radius:12px;padding:14px;text-align:center}
+.big b{display:block;font-size:30px;color:var(--g)}.big .r b{color:var(--a)}.big small{color:var(--m);font-size:13px}
+table{width:100%;border-collapse:collapse;margin-top:14px}td{padding:9px 6px;border-bottom:1px solid var(--l)}td:last-child{text-align:right;font-weight:700}
+.due{margin-top:14px;padding:12px;border-radius:10px;background:#fff8e6}
+.note{color:var(--m);font-size:14px}.cta{display:inline-block;background:var(--a);color:#fff;border-radius:8px;padding:12px 16px;text-decoration:none;margin:6px 0}
+details{margin-top:12px}summary{cursor:pointer;color:var(--a);font-weight:600}
+footer{margin-top:30px;color:var(--m);font-size:14px}a{color:var(--a)}
+@media(max-width:480px){h1{font-size:23px}.big b{font-size:25px}}
+</style></head><body><main>
+<h1>I just got paid. How much do I put aside for taxes?</h1>
+<p class=lead>For freelancers, gig workers and side hustlers in the US. Type the payment. Move the amount on the right to savings and tax time stops being scary.</p>
+<div class="f hero"><div><label for=pay>Payment I just got</label><div class=in><span>$</span><input id=pay type=number inputmode=decimal min=0 value=1200></div></div></div>
+<h2>About your year</h2>
+<div class=f>
+<div><label for=yr>Profit this year (guess)</label><div class=in><span>$</span><input id=yr type=number inputmode=decimal min=0 step=1000 value=45000></div></div>
+<div><label for=exp>Costs on this payment</label><div class=in><input id=exp type=number inputmode=decimal min=0 max=100 value=10><span>%</span></div></div>
+<div><label for=fs>Filing status</label><div class=in><select id=fs><option value=s>Single</option><option value=m>Married filing jointly</option><option value=h>Head of household</option></select></div></div>
+<div><label for=st>State tax (0 if none)</label><div class=in><input id=st type=number inputmode=decimal min=0 max=15 step=0.5 value=4><span>%</span></div></div>
+</div>
+<div class=big><div><small>Keep</small><b id=keep></b></div><div class=r><small>Set aside for tax</small><b id=aside></b></div></div>
+<table id=t></table>
+<div class=due id=due></div>
+<p class=note>An estimate, not tax advice. A W-2 job, a spouse's income, credits or big deductions change the answer; a tax preparer can fine-tune it.</p>
+<h2>Track it all year</h2>
+<p>The <b>Self-Employed Tax Tracker</b> (Excel and Google Sheets) logs income and expenses with Schedule C line labels, a mileage log, quarterly estimates and a year-end summary you can hand to whoever does your taxes.</p>
+<a class=cta href="https://payhip.com/b/9ZU7G">See the Self-Employed Tax Tracker</a>
+<details><summary>How it is worked out</summary><p class=note>Profit on this payment = payment minus your business-cost %. Self-employment tax = 92.35% of profit x 15.3% (Social Security part stops at $184,500 of earnings in 2026). Federal income tax is figured on your whole expected year: profit minus half of SE tax, minus the 2026 standard deduction ($16,100 single, $32,200 married jointly, $24,150 head of household), minus the 20% qualified business income deduction, run through the 2026 brackets. That gives your average rate, which is applied to this payment. State tax is your % of profit.</p></details>
+<footer>Made by Black. More free tools: <a href="https://blacksgit.github.io/">blacksgit.github.io</a> &middot; <a href="https://patreon.com/123black">patreon.com/123black</a></footer>
+</main>
+<script>
+const STD={s:16100,m:32200,h:24150},B={s:[[12400,.10],[50400,.12],[105700,.22],[201775,.24],[256225,.32],[640600,.35],[1/0,.37]],
+m:[[24800,.10],[100800,.12],[211400,.22],[403550,.24],[512450,.32],[768700,.35],[1/0,.37]],h:[[17700,.10],[67450,.12],[105700,.22],[201750,.24],[256200,.32],[640600,.35],[1/0,.37]]};
+const IDS=['pay','yr','exp','fs','st'],$=id=>document.getElementById(id),v=id=>Math.max(0,+$(id).value||0),m=x=>'$'+Math.round(x).toLocaleString();
+function inc(t,fs){let tax=0,lo=0;for(const[hi,r]of B[fs]){if(t>lo)tax+=(Math.min(t,hi)-lo)*r;lo=hi}return tax}
+function se(p){const base=p*.9235;return Math.min(base,184500)*.124+base*.029}
+function calc(){
+ const fs=$('fs').value,yp=v('yr'),pay=v('pay'),prof=pay*(1-Math.min(100,v('exp'))/100);
+ const seY=se(yp),agi=Math.max(0,yp-seY/2),pre=Math.max(0,agi-STD[fs]),qbi=Math.min(.2*agi,.2*pre),fed=inc(Math.max(0,pre-qbi),fs);
+ const fr=yp?fed/yp:0,sr=yp?seY/yp:.1413,str=v('st')/100;
+ const f=prof*fr,s=prof*sr,stt=prof*str,all=f+s+stt;
+ $('aside').textContent=m(all);$('keep').textContent=m(pay-all);
+ $('t').innerHTML=[['Profit on this payment',prof],['Self-employment tax ('+(sr*100).toFixed(1)+'%)',s],['Federal income tax ('+(fr*100).toFixed(1)+'% average)',f],['State tax ('+(str*100).toFixed(1)+'%)',stt],['Set aside ('+(pay?all/pay*100:0).toFixed(0)+'% of the payment)',all]]
+  .map(r=>`<tr><td>${r[0]}</td><td>${m(r[1])}</td></tr>`).join('');
+ const now=new Date(),y=now.getFullYear(),dl=[[y,0,15,'Q4 of last year'],[y,3,15,'Q1'],[y,5,15,'Q2'],[y,8,15,'Q3'],[y+1,0,15,'Q4']].map(d=>[new Date(d[0],d[1],d[2],23,59),d[3]]).find(d=>d[0]>=now);
+ const days=Math.ceil((dl[0]-now)/864e5),yearTax=seY+fed+yp*str;
+ $('due').innerHTML=`<b>Next quarterly payment: ${dl[0].toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}</b> (${dl[1]}, ${days} days). On ${m(yp)} profit your whole-year tax is about ${m(yearTax)}, so roughly ${m(yearTax/4)} each quarter. Pay at irs.gov/payments (Direct Pay is free).`;
+ try{localStorage.taxAside=JSON.stringify(IDS.slice(1).map(i=>$(i).value))}catch(e){}}
+try{const s=JSON.parse(localStorage.taxAside||'null');if(s)IDS.slice(1).forEach((i,k)=>$(i).value=s[k])}catch(e){}
+IDS.forEach(i=>$(i).addEventListener('input',calc));calc();
+</script></body></html>
