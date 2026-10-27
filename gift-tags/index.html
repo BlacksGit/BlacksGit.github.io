@@ -1,0 +1,67 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>Printable Christmas gift tags with names: free To/From tag maker</title>
+<meta name=description content="Free Christmas gift tag maker. Type the names once, pick From (Santa, Mom and Dad, or anyone), and print 12 colorful To/From tags per page. Santa tags use a different style so kids can't match the handwriting. No sign-up.">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Christmas gift tag maker", "url": "https://blacksgit.github.io/gift-tags/", "description": "Free Christmas gift tag maker. Type the names once, pick From (Santa, Mom and Dad, or anyone), and print 12 colorful To/From tags per page. Santa tags use a different style so kids can't match the handwriting. No sign-up.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Person", "name": "Black"}}</script>
+<link rel=canonical href="https://blacksgit.github.io/gift-tags/">
+<style>
+:root{--a:#b3262e;--g:#14532d;--m:#5f6b63;--l:#e2e8e4;--s:#f2f8f4}
+*{box-sizing:border-box}body{font:17px/1.5 system-ui,Arial,sans-serif;margin:0;color:#2a221c}
+main{max-width:720px;margin:0 auto;padding:18px}h1{font-size:28px;line-height:1.2;color:var(--g);margin:6px 0}
+.lead{color:var(--m);margin:0 0 16px}h2{font-size:19px;color:var(--g);margin:26px 0 8px}
+.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.f label,.q{font-size:14px;color:var(--m);font-weight:600}
+.in{display:flex;align-items:center;border:2px solid var(--l);border-radius:10px;padding:2px 10px;margin-top:4px}.in:focus-within{border-color:var(--a)}
+.in input,.in select{border:0;font-size:18px;width:100%;padding:6px;outline:0;min-width:0;background:none;font-family:inherit}
+.ch{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.ch button{border:2px solid var(--l);background:#fff;border-radius:20px;padding:6px 12px;font-size:15px;cursor:pointer;font-family:inherit;color:inherit}
+.ch button.on{border-color:var(--g);background:var(--s);font-weight:600}
+.btns button,.cta{display:inline-block;border:0;background:var(--a);color:#fff;border-radius:8px;padding:12px 16px;font-size:16px;text-decoration:none;margin:6px 6px 6px 0;cursor:pointer;font-family:inherit}
+.o{background:#fff!important;color:var(--a)!important;border:2px solid var(--a)!important}
+.note{color:var(--m);font-size:14px}
+details{margin-top:12px}summary{cursor:pointer;color:var(--a);font-weight:600}
+footer{margin-top:30px;color:var(--m);font-size:14px}a{color:var(--a)}
+textarea{width:100%;border:2px solid var(--l);border-radius:10px;padding:10px;font:16px/1.4 inherit;font-family:inherit;min-height:90px}textarea:focus{border-color:var(--a);outline:0}
+.tags{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin:14px 0}
+.tag{border-radius:12px;padding:12px 10px;text-align:center;color:#fff;position:relative;min-height:120px;display:flex;flex-direction:column;justify-content:center;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.tag:before{content:"";position:absolute;top:8px;left:50%;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:#fff;border:2px solid rgba(0,0,0,.15)}
+.tag i{font-style:normal;font-size:30px;line-height:1.2;margin-top:8px}.tag small{font-size:12px;opacity:.9;letter-spacing:.08em;text-transform:uppercase}.tag b{font-size:19px;line-height:1.15;word-break:break-word}
+.t0{background:#b3262e}.t1{background:#14532d}.t2{background:#1e5b8f}.t3{background:#8a5a14}
+.sn{background:repeating-linear-gradient(-45deg,#b3262e 0 10px,#c9373f 10px 20px)}.sn b{font:28px "Segoe Script","Brush Script MT",cursive}
+.seo h3{font-size:17px;margin:14px 0 2px}.seo p,.seo li{font-size:15px}.seo li{margin:0 0 6px}
+@media print{@page{margin:.4in}#app>*:not(.tags),footer{display:none!important}main{padding:0;max-width:none}
+.tags{grid-template-columns:repeat(3,1fr);grid-auto-rows:2.35in;gap:.12in;margin:0}.tag{min-height:0;border:1px dashed #999}.tag b{font-size:24px}.tag i{font-size:40px}}
+</style></head><body><main>
+<div id=app>
+<h1>Christmas gift tag maker</h1>
+<p class=lead>Type the names once and print a full sheet of To/From tags. Santa's tags get their own style, so the kids won't spot your handwriting.</p>
+<label class=q for=to>Gifts go to (one name per line)</label>
+<textarea id=to placeholder="Ava
+Leo
+Grandma Rose"></textarea>
+<div class=f style="margin-top:10px">
+<div><label for=fr>From</label><div class=in><select id=fr><option>Santa<option>Mom and Dad<option>Mom<option>Dad<option>Grandma and Grandpa<option>The Elf<option value="">(type below)</select></div></div>
+<div><label for=fo>Or type who it's from</label><div class=in><input id=fo placeholder="Aunt Mia" maxlength=30></div></div>
+<div><label for=n>Tags per name</label><div class=in><select id=n><option>1<option selected>2<option>3<option>4<option>6</select></div></div>
+</div>
+<div class=btns><button onclick="print()">Print tags</button></div>
+<p class=note>12 tags per page. Cut them out, punch the dot and tie with ribbon, or tape them flat. Your names stay on this device.</p>
+<div class=tags id=tg></div>
+<section class=seo><h2>Ideas for Santa gift tags</h2><ul><li>Use a different wrapping paper for Santa's gifts that the kids have never seen.</li><li>Print Santa tags here so the writing doesn't match yours.</li><li>Add the "From the Elf" tag to a small gift on December 1 to start the season.</li><li>Keep one roll of tape and the tags hidden with the gifts, not in the kitchen drawer.</li></ul></section>
+<p>The <b>Christmas Kids Bundle</b> (printable PDF, $7.99) has a Santa letter kit, an Elf arrival kit with 36 idea cards and a cookie swap party kit.</p>
+<a class=cta href="https://payhip.com/b/nUito">See the Kids Bundle</a>
+<p class=rel style="margin-top:24px;font-size:15px">Related: <a href="../santa-letter/">Letter from Santa</a> &middot; <a href="../wish-list/">Christmas wish list</a> &middot; <a href="../card-list/">Christmas card list</a> &middot; <a href="../gift-hunt/">Christmas scavenger hunt</a> &middot; <a href="../gift-budget/">Christmas gift budget</a></p>
+</div>
+<footer>Made by Black. More free tools: <a href="https://blacksgit.github.io/">blacksgit.github.io</a> &middot; <a href="https://patreon.com/123black">patreon.com/123black</a></footer>
+</main>
+<script>
+const $=i=>document.getElementById(i);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const E=['&#127876;','&#127873;','&#11088;','&#9924;','&#127877;','&#10052;','&#129420;','&#128276;'];
+function draw(){const to=$('to').value.split('\n').map(x=>x.trim()).filter(x=>x),fr=$('fo').value.trim()||$('fr').value,n=+$('n').value,san=/^santa$/i.test(fr);
+ const L=(to.length?to:['Ava','Leo']).flatMap(x=>Array(n).fill(x));
+ while(L.length%12)L.push(L[L.length%(to.length*n||2)]);
+ $('tg').innerHTML=L.map((t,i)=>`<div class="tag ${san?'sn':'t'+(i%4)}"><i>${E[i%E.length]}</i><small>To</small><b>${esc(t)}</b><small style="margin-top:6px">From</small><b>${esc(fr||'Me')}</b></div>`).join('');
+ try{localStorage.giftTags=JSON.stringify({to:$('to').value,fr:$('fr').value,fo:$('fo').value,n:$('n').value})}catch(e){}}
+try{const s=JSON.parse(localStorage.giftTags||'null');if(s)['to','fr','fo','n'].forEach(k=>{if(s[k]!=null)$(k).value=s[k]})}catch(e){}
+document.querySelectorAll('input,select,textarea').forEach(e=>e.addEventListener('input',draw));draw();
+</script></body></html>
