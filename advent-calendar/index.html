@@ -1,0 +1,152 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>Advent activity calendar maker: a family activity for every day to Christmas</title>
+<meta name=description content="Free advent activity calendar planner. Pick your kids' ages, free-only or not, quick weeknights and bigger weekends, and get one family Christmas activity for each day until Christmas Eve. Swap any day, then print a calendar and cut-out daily cards. No sign-up.">
+<link rel=canonical href="https://blacksgit.github.io/advent-calendar/">
+<style>
+:root{--a:#b3262e;--g:#14532d;--m:#5f6b63;--l:#e2e8e4;--s:#f2f8f4}
+*{box-sizing:border-box}body{font:17px/1.5 system-ui,Arial,sans-serif;margin:0;color:#2a221c}
+main{max-width:720px;margin:0 auto;padding:18px}h1{font-size:28px;line-height:1.2;color:var(--g);margin:6px 0}
+.lead{color:var(--m);margin:0 0 16px}h2{font-size:19px;color:var(--g);margin:26px 0 8px}
+.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.f label,.q{font-size:14px;color:var(--m);font-weight:600}
+.in{display:flex;align-items:center;border:2px solid var(--l);border-radius:10px;padding:2px 10px;margin-top:4px}
+.in select{border:0;font-size:18px;width:100%;padding:6px;outline:0;background:none;font-family:inherit}
+.ch{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.ch button{border:2px solid var(--l);background:#fff;border-radius:20px;padding:6px 12px;font-size:15px;cursor:pointer;font-family:inherit;color:inherit}
+.ch button.on{border-color:var(--g);background:var(--s);font-weight:600}
+.btns button,.cta,.sb{display:inline-block;border:0;background:var(--a);color:#fff;border-radius:8px;padding:12px 16px;font-size:16px;text-decoration:none;margin:6px 6px 6px 0;cursor:pointer;font-family:inherit}
+.sb{padding:6px 10px;font-size:14px;margin:0;background:#fff;color:var(--a);border:2px solid var(--a)}
+.o{background:#fff!important;color:var(--a)!important;border:2px solid var(--a)!important}
+.dy{border:2px solid var(--l);border-radius:12px;padding:8px 12px;margin:8px 0;display:grid;grid-template-columns:30px 54px 1fr auto;gap:10px;align-items:center}
+.dy.dn{opacity:.5}.dy input{width:22px;height:22px}.dy .d{text-align:center;line-height:1.1;color:var(--g);font-weight:700}.dy .d small{display:block;color:var(--m);font-weight:400;font-size:12px}
+.dy p{margin:0}.dy b{display:block}.dy small{color:var(--m)}.dy .we{display:block;color:var(--a);font-size:12px;font-weight:700}.dy small{line-height:1.4}
+.note{color:var(--m);font-size:14px}.tip{background:#fff6dc;border-radius:10px;padding:10px 12px;margin-top:12px}
+details{margin-top:12px}summary{cursor:pointer;color:var(--a);font-weight:600}
+footer{margin-top:30px;color:var(--m);font-size:14px}a{color:var(--a)}
+.pc{display:none}
+@media(max-width:480px){h1{font-size:23px}.dy{grid-template-columns:26px 46px 1fr}.dy .sb{grid-column:3;justify-self:start}}
+@media print{@page{margin:.4in}#app>*:not(.pc),footer{display:none!important}.pc{display:block!important}main{padding:0;max-width:none}
+.pc *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.cal{page-break-after:always}.cal{border:6px solid transparent;border-image:repeating-linear-gradient(-45deg,var(--a) 0 10px,#fff 10px 20px) 6;padding:18px}.cal h1{text-align:center;font-size:34px;color:var(--a);margin:0 0 14px}
+.cal table{width:100%;border-collapse:collapse;table-layout:fixed}.cal th{background:var(--g);color:#fff;font-size:13px;padding:5px}
+.cal td{border:1.5px solid var(--g);height:1.55in;vertical-align:top;padding:5px 6px;font-size:13px;line-height:1.2}
+.cal td i{font-style:normal;font-weight:700;color:var(--a);font-size:14px;display:block}.cal td span{font-size:32px;margin:4px 0;display:block;text-align:center}.cal td.x{background:#f4f4f4}
+.cards{display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:2.35in;page-break-after:always}
+.cd{border:1px dashed #999;padding:12px 16px;display:flex;flex-direction:column;justify-content:center;text-align:center;position:relative}
+.cd:before{content:"";position:absolute;top:0;left:0;right:0;height:10px;background:repeating-linear-gradient(-45deg,var(--a) 0 8px,#fff 8px 16px)}
+.cd .n{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--g);font-weight:700}.cd .e{font-size:40px;line-height:1.2}
+.cd b{font-size:19px;color:var(--a)}.cd p{margin:4px 0 0;font-size:14px}}
+</style></head><body><main>
+<div id=app>
+<h1>Advent activity calendar maker</h1>
+<p class=lead>One small family Christmas activity for every day until Christmas Eve. Quick ones on school nights, bigger ones on weekends. Swap any day you don't like, tick them off as you go, and print a calendar plus cut-out cards for your advent boxes or envelopes.</p>
+<div class=f>
+<div><label for=st>Countdown</label><div class=in><select id=st></select></div></div>
+<div><label for=dw>Weeknights</label><div class=in><select id=dw><option value=q>Quick ones only (15-30 min)<option value=a>Anything</select></div></div>
+</div>
+<p class=q style="margin:14px 0 0">Kids in the house</p><div class=ch id=ag></div>
+<p class=q style="margin:10px 0 0">Options</p><div class=ch id=op></div>
+<div class=btns><button onclick="make()">Make my calendar</button></div>
+<p class=tip id=hint style="display:none"></p>
+<div id=res style="display:none">
+<h2>Your advent calendar</h2>
+<p class=note>Tick a day when you've done it. Swap gives you a different idea that fits the same day.</p>
+<div id=list></div>
+<p class=note id=sh></p>
+<div class=btns><button onclick="print()">Print calendar + daily cards</button><button class=o onclick="make()">Shuffle all</button></div>
+</div>
+<details><summary>Tips</summary><p class=note>Put each daily card in a numbered envelope, a paper bag or an advent box, and let the kids open one each morning so they know what's happening that day. The first day is decorating the tree and Christmas Eve is Santa night if you keep those turned on. The shopping list shows what to buy ahead. Your calendar is saved on this device only.</p></details>
+<h2>Make December extra special</h2>
+<p>The <b>Christmas Kids Bundle</b> (printable PDF, $7.99) has a letter to Santa kit with a reply from Santa, an Elf arrival kit with 36 idea cards and a cookie swap party kit.</p>
+<a class=cta href="https://payhip.com/b/nUito">See the Kids Bundle</a> <a class=cta href="https://payhip.com/b/tPQTg" style="background:#fff;color:var(--a);border:2px solid var(--a);padding:10px 14px">Elf Kit: $3.99</a>
+<p class=rel style="margin-top:24px;font-size:15px">Related: <a href="../elf-planner/">Elf on the Shelf planner</a> &middot; <a href="../gift-hunt/">Christmas gift scavenger hunt</a> &middot; <a href="../christmas-bingo/">Christmas bingo cards</a> &middot; <a href="../cookie-swap/">Cookie swap planner</a></p>
+<div class=pc id=pc></div>
+</div>
+<footer>Made by Black. More free tools: <a href="https://blacksgit.github.io/">blacksgit.github.io</a> &middot; <a href="https://patreon.com/123black">patreon.com/123black</a></footer>
+</main>
+<script>
+const $=i=>document.getElementById(i);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+// title, emoji, how, costs money, long (weekend) activity, ages bitmask 1 little 2 big 4 teen, tag (f faith, o outside), buy
+const A=[
+['Write letters to Santa','💌','Write or draw a letter to Santa with a wish list, then mail it.',0,0,3,'','envelopes, stamps'],
+['Paper snowflakes','❄️','Fold paper, cut shapes, open them up and tape them on the windows.',0,0,7,''],
+['Christmas lights drive','🚗','Pajamas on, hot cocoa in travel mugs, drive around and vote for the best house.',0,1,7,'','cocoa'],
+['Bake Christmas cookies','🍪','Bake and decorate a batch together. Save a few for Santa.',1,1,7,'','cookie mix, sprinkles, icing'],
+['Hot cocoa bar','☕','Set out cocoa with marshmallows, sprinkles and candy canes to stir.',1,0,7,'','cocoa, marshmallows, candy canes'],
+['Christmas movie night','🎬','Blankets, popcorn and a holiday movie everyone picks together.',0,1,7,'','popcorn'],
+['Gingerbread house','🏠','Build and decorate a gingerbread house (a kit, or graham crackers and icing).',1,1,7,'','gingerbread kit or graham crackers + icing'],
+['Story by flashlight','🔦','Turn the lights off and read a Christmas book by flashlight.',0,0,3,''],
+['Paper chain countdown','🔗','Make a paper chain with one link for each day left. Tear one off every night.',0,0,3,''],
+['Toy give-away','🧸','Pick toys you have outgrown to donate to kids who need them.',0,0,7,''],
+['Treats for a neighbor','🎁','Bring cookies or a card to a neighbor and wish them Merry Christmas.',0,0,7,''],
+['Blanket fort','⛺','Build a blanket fort by the tree and read or play inside it.',0,0,3,''],
+['Christmas dance party','🎶','Put on Christmas songs and dance. Freeze dance counts!',0,0,7,''],
+['Salt-dough ornaments','⭐','Mix 2 cups flour, 1 cup salt, 3/4 cup water. Cut shapes, bake at 250°F for 2 hours, paint the next day.',0,1,3,'','flour, salt, paint'],
+['Cards for family','✉️','Make homemade Christmas cards for grandparents and cousins.',0,0,7,'','card stock'],
+['Snow day','⛄','Go sledding, build a snowman or have a snowball fight. No snow? A winter walk with cocoa.',0,1,7,'o'],
+['Pajamas and pancakes','🥞','Breakfast for dinner in Christmas pajamas.',0,0,7,'','pancake mix'],
+['Reindeer food','🦌','Mix oats with colored sugar (no glitter, it hurts birds) to sprinkle out on Christmas Eve.',0,0,3,'','oats, colored sugar'],
+['Wrapping party','🎀','Wrap presents together with music on. Little ones do the tape and stickers.',0,0,7,'','wrapping paper, tape'],
+['Handprint reindeer','🖐️','Paint a hand brown, press it upside down: the fingers are antlers. Add a red nose.',0,0,1,'','paint'],
+['Puzzle night','🧩','Start a Christmas jigsaw puzzle on the table and keep going all week.',1,1,6,'','jigsaw puzzle'],
+['Board games by the tree','🎲','Play board games with only the tree lights on.',0,1,7,''],
+['Visit Santa','🎅','Visit Santa at a store, a mall or a local event. Bring the wish list!',1,1,3,''],
+['Ice skating','⛸️','Go ice skating at a local rink or a frozen pond that is safe.',1,1,6,'o'],
+['Popcorn garland','🍿','Thread popcorn and cranberries on string for the tree or for the birds outside.',0,1,6,'','popcorn, cranberries, thread'],
+['Christmas bingo','🔔','Play Christmas bingo with prizes. Print free cards at blacksgit.github.io/christmas-bingo',0,0,7,''],
+['Gift treasure hunt','🗺️','Hide a small gift and follow clue cards to find it. Free clue maker at blacksgit.github.io/gift-hunt',0,1,3,'','a small gift'],
+['Decorate a door','🚪','Turn a bedroom door into a present, a snowman or a gingerbread man with paper and tape.',0,0,3,'','paper, tape'],
+['Carol call','📞','Video call grandparents or friends and sing them a Christmas carol.',0,0,7,''],
+['Birthday cake for Jesus','🎂','Bake a simple cake and sing Happy Birthday to Jesus.',1,1,7,'f','cake mix'],
+['Set up the nativity','🌟','Set up the nativity scene and talk about who each figure is.',0,0,7,'f'],
+['Read the Christmas story','📖','Read the Christmas story from Luke 2 together.',0,0,7,'f'],
+['Christmas service','⛪','Go to a Christmas church service or a carol service.',0,1,7,'f'],
+['Bird feeders','🌲','Spread peanut butter on pinecones, roll in birdseed and hang them outside.',1,1,3,'o','peanut butter, birdseed'],
+['Family photo','📸','Take a family photo in Santa hats or matching sweaters.',0,0,7,''],
+['Trivia night','❓','Christmas trivia, kids against grown-ups. Loser makes the cocoa.',0,0,6,''],
+['Thankful jar','🫙','Everyone writes 3 things they are thankful for and puts them in a jar to read on Christmas Day.',0,0,7,''],
+['Kindness day','💛','Everyone does 3 kind things today and shares them at dinner.',0,0,7,''],
+['Food bank drop-off','🥫','Pick canned food together and drop it off at a food bank.',1,0,7,'','canned food'],
+['Thank the helpers','📬','Leave a thank-you note and a treat for the mail carrier or trash collectors.',0,0,7,''],
+['Ugly sweater day','🧶','Make an ugly sweater with felt, pom-poms and tape on an old shirt.',0,0,7,'','felt, pom-poms'],
+['Christmas karaoke','🎤','Sing Christmas songs karaoke style. Hairbrush microphones are fine.',0,0,6,''],
+['Jar snow globe','🔮','Glue a small toy to a jar lid, fill with water, a drop of glycerin and glitter, seal tight.',1,1,6,'','jar, glycerin, small toy'],
+['Christmas market or tree farm','🎄','Visit a Christmas market, a tree farm or a light show.',1,1,7,'o'],
+['Color Christmas pictures','🖍️','Color or paint Christmas pictures and hang them up as decorations.',0,0,3,''],
+['Make a Christmas playlist','🎧','Everyone adds 3 songs to a family Christmas playlist for the car.',0,0,6,'']];
+const TREE=['Decorate the tree','🎄','Put up the tree and decorate it together. Everyone hangs their favorite ornament.',0,1,7,''];
+const EVE=['Santa night','🎅','New pajamas, track Santa\'s sleigh, leave cookies and milk for Santa and carrots for the reindeer.',0,0,7,'','cookies, milk, carrots'];
+const AG=[[1,'Little (0-5)'],[2,'Kids (6-11)'],[4,'Teens']],OP=[['free','Free things only'],['tree','Day 1: decorate the tree'],['eve','Christmas Eve: Santa night'],['f','Faith activities'],['o','Outdoor activities']];
+let ag=3,op=new Set(['tree','eve','o']),D=null;
+const yr=(()=>{const t=new Date();return t.getMonth()==11&&t.getDate()>24?t.getFullYear()+1:t.getFullYear()})();
+const adv=(()=>{const c=new Date(yr,11,25),d=new Date(c);d.setDate(25-((c.getDay()||7))-21);return d})();
+const ST=[['d1','December 1 to 24',new Date(yr,11,1)],['adv','First Sunday of Advent to Dec 24',adv],['d13','The last 12 days (Dec 13 to 24)',new Date(yr,11,13)]];
+function chips(){$('ag').innerHTML=AG.map(a=>`<button class="${ag&a[0]?'on':''}" onclick="ag^=${a[0]};if(!ag)ag=${a[0]};chips();save()">${a[1]}</button>`).join('');
+ $('op').innerHTML=OP.map(o=>`<button class="${op.has(o[0])?'on':''}" onclick="op.has('${o[0]}')?op.delete('${o[0]}'):op.add('${o[0]}');chips();save()">${o[1]}</button>`).join('')}
+const days=()=>{const s=ST.find(x=>x[0]==$('st').value)[2],o=[];for(let d=new Date(s);d<=new Date(yr,11,24);d.setDate(d.getDate()+1))o.push(new Date(d));return o};
+const we=d=>d.getDay()==0||d.getDay()==6;
+const fits=(a,d)=>(a[5]&ag)&&!(op.has('free')&&a[3])&&!(a[6]=='f'&&!op.has('f'))&&!(a[6]=='o'&&!op.has('o'))&&(we(d)||$('dw').value=='a'||!a[4]);
+// these only make sense early in December (mail time, countdown chain, decorations)
+const EARLY=new Set(['Write letters to Santa','Paper chain countdown','Salt-dough ornaments','Decorate a door','Cards for family','Visit Santa','Popcorn garland','Set up the nativity']);
+function pick(d,used,late){let c=A.filter(a=>fits(a,d)&&!used.has(a[0])&&!(late&&EARLY.has(a[0])));if(we(d)&&c.some(a=>a[4]))c=c.filter(a=>a[4]||Math.random()<.3);return c.length?c[Math.random()*c.length|0]:null}
+function make(){const ds=days(),used=new Set();D=ds.map((d,i)=>{let a=i==0&&op.has('tree')?TREE:i==ds.length-1&&op.has('eve')?EVE:null;if(!a)a=pick(d,used,i>ds.length*.45);if(a)used.add(a[0]);return{t:d.getTime(),a:a&&a[0],x:0}});
+ const miss=D.filter(x=>!x.a).length,h=$('hint');h.style.display=miss?'':'none';h.textContent=miss?`${miss} day${miss>1?'s are':' is'} left empty: turn off "Free things only" or add an age group for more ideas.`:'';save();show()}
+const act=n=>n==TREE[0]?TREE:n==EVE[0]?EVE:A.find(a=>a[0]==n);
+function swap(i){const d=new Date(D[i].t),used=new Set(D.map(x=>x.a)),a=pick(d,used,i>D.length*.45);if(!a){alert('No other ideas fit this day. Try turning on more options.');return}D[i].a=a[0];D[i].x=0;save();show()}
+const fd=(d,o)=>d.toLocaleDateString(undefined,o);
+function show(){if(!D)return;$('res').style.display='';
+ $('list').innerHTML=D.map((x,i)=>{const d=new Date(x.t),a=act(x.a);return `<div class="dy${x.x?' dn':''}"><input type=checkbox ${x.x?'checked':''} onchange="D[${i}].x=this.checked?1:0;save();show()" aria-label=Done><div class=d>${fd(d,{day:'numeric'})}<small>${fd(d,{weekday:'short'})}</small></div><p>${a?`<b>${a[1]} ${esc(a[0])}</b><small>${esc(a[2])}</small>`:'<small>No idea fits. Change options above.</small>'}${we(d)?'<span class=we>Weekend</span>':''}</p>${a&&a!=TREE&&a!=EVE?`<button class=sb onclick="swap(${i})">Swap</button>`:'<span></span>'}</div>`}).join('');
+ const buy=[...new Set(D.map(x=>act(x.a)).filter(a=>a&&a[7]).flatMap(a=>a[7].split(', ')))];
+ $('sh').innerHTML=buy.length?'<b>Shopping list:</b> '+esc(buy.join(', ')):'';
+ const f=new Date(D[0].t),l=new Date(D[D.length-1].t),c=new Date(f);c.setDate(c.getDate()-c.getDay());let rows='';
+ while(c<=l){rows+='<tr>';for(let k=0;k<7;k++){const x=D.find(y=>y.t==c.getTime()),a=x&&act(x.a);rows+=x?`<td><i>${c.getDate()}</i>${a?`<span>${a[1]}</span>${esc(a[0])}`:''}</td>`:'<td class=x></td>';c.setDate(c.getDate()+1)}rows+='</tr>'}
+ const card=(x,i)=>{const a=act(x.a);return a?`<div class=cd><div class=n>Day ${i+1} &middot; ${fd(new Date(x.t),{month:'short',day:'numeric'})}</div><div class=e>${a[1]}</div><b>${esc(a[0])}</b><p>${esc(a[2])}</p></div>`:'<div class=cd></div>'};
+ let cards='';for(let i=0;i<D.length;i+=8)cards+=`<div class=cards>${D.slice(i,i+8).map((x,j)=>card(x,i+j)).join('')}</div>`;
+ $('pc').innerHTML=`<div class=cal><h1>Our Christmas Countdown ${yr}</h1><table><tr>${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d=>`<th>${d}</th>`).join('')}</tr>${rows}</table></div>`+cards}
+function save(){try{localStorage.advCal=JSON.stringify({st:$('st').value,dw:$('dw').value,ag,op:[...op],D})}catch(e){}}
+$('st').innerHTML=ST.map(s=>`<option value=${s[0]}>${s[1]}</option>`).join('');
+try{const s=JSON.parse(localStorage.advCal||'null');if(s){$('st').value=s.st||'d1';$('dw').value=s.dw||'q';ag=s.ag||ag;op=new Set(s.op||op);D=s.D&&s.D.length&&new Date(s.D[0].t).getFullYear()==yr?s.D:null}}catch(e){}
+['st','dw'].forEach(i=>$(i).addEventListener('change',()=>{save();if(D)make()}));
+chips();show();
+</script></body></html>
