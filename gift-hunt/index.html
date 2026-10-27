@@ -1,0 +1,139 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>Christmas scavenger hunt clue maker: free printable clue cards for kids</title>
+<meta name=description content="Free Christmas gift scavenger hunt maker. Tick the spots in your home, pick picture clues for little kids, rhymes for readers or riddles for big kids, and print clue cards plus a hide list that tells you where each card goes. No sign-up.">
+<link rel=canonical href="https://blacksgit.github.io/gift-hunt/">
+<style>
+:root{--a:#b3262e;--g:#14532d;--m:#5f6b63;--l:#e2e8e4;--s:#f2f8f4}
+*{box-sizing:border-box}body{font:17px/1.5 system-ui,Arial,sans-serif;margin:0;color:#2a221c}
+main{max-width:720px;margin:0 auto;padding:18px}h1{font-size:28px;line-height:1.2;color:var(--g);margin:6px 0}
+.lead{color:var(--m);margin:0 0 16px}h2{font-size:19px;color:var(--g);margin:26px 0 8px}
+.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.f label,.q{font-size:14px;color:var(--m);font-weight:600}
+.in{display:flex;align-items:center;border:2px solid var(--l);border-radius:10px;padding:2px 10px;margin-top:4px}.in:focus-within{border-color:var(--a)}
+.in input,.in select{border:0;font-size:18px;width:100%;padding:6px;outline:0;min-width:0;background:none;font-family:inherit}
+.ch{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.ch button{border:2px solid var(--l);background:#fff;border-radius:20px;padding:6px 12px;font-size:15px;cursor:pointer;font-family:inherit;color:inherit}
+.ch button.on{border-color:var(--g);background:var(--s);font-weight:600}
+.lv button{border-radius:10px;text-align:left;padding:8px 12px}.lv button small{display:block;color:var(--m);font-weight:400}
+.btns button,.cta,.sb{display:inline-block;border:0;background:var(--a);color:#fff;border-radius:8px;padding:12px 16px;font-size:16px;text-decoration:none;margin:6px 6px 6px 0;cursor:pointer;font-family:inherit}
+.sb{padding:6px 10px;font-size:14px;margin:0;background:#fff;color:var(--a);border:2px solid var(--a)}
+.o{background:#fff!important;color:var(--a)!important;border:2px solid var(--a)!important}
+.cl{border:2px solid var(--l);border-radius:12px;padding:10px 12px;margin:8px 0;display:grid;grid-template-columns:44px 1fr auto;gap:10px;align-items:center}
+.cl .e{font-size:34px;text-align:center}.cl p{margin:0}.cl small{color:var(--m);display:block}
+.note{color:var(--m);font-size:14px}.tip{background:#fff6dc;border-radius:10px;padding:10px 12px;margin-top:12px}.err{background:#fde8e8}
+details{margin-top:12px}summary{cursor:pointer;color:var(--a);font-weight:600}
+footer{margin-top:30px;color:var(--m);font-size:14px}a{color:var(--a)}
+.pc{display:none}
+@media(max-width:480px){h1{font-size:23px}.cl{grid-template-columns:36px 1fr}.cl .sb{grid-column:2;justify-self:start}}
+@media print{@page{margin:.4in}#app>*:not(.pc),footer{display:none!important}.pc{display:block!important}main{padding:0;max-width:none}
+.pg{display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:4.85in;gap:.2in;page-break-after:always}
+.cd{border:3px solid var(--g);border-radius:16px;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:.35in .25in .3in;
+ -webkit-print-color-adjust:exact;print-color-adjust:exact}
+.cd:before{content:"";position:absolute;top:0;left:0;right:0;height:.18in;background:repeating-linear-gradient(-45deg,var(--a) 0 10px,#fff 10px 20px)}
+.cd:after{content:"\2744";position:absolute;right:12px;top:22px;font-size:26px;color:#c9dfe9}
+.cd .n{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--g);font-weight:700}
+.cd .k{font-size:15px;color:var(--a);font-weight:700;margin:2px 0 6px}
+.cd .e{font-size:64px;line-height:1.1;margin:4px 0}.cd.big .e{font-size:120px}
+.cd .t{font-size:19px;line-height:1.35}.cd .s{font-size:15px;margin-top:8px;font-style:italic;color:var(--m)}
+.cd .h{position:absolute;bottom:6px;left:0;right:0;font-size:10px;color:#999}
+.hl{page-break-before:always}.hl h1{font-size:24px}.hl table{width:100%;border-collapse:collapse;font-size:16px}.hl td{border-bottom:1px solid #ccc;padding:9px 6px}.hl td:first-child{width:28px;font-size:20px}}
+</style></head><body><main>
+<div id=app>
+<h1>Christmas gift scavenger hunt maker</h1>
+<p class=lead>Turn one present into a treasure hunt. Tick the spots you have at home, pick the clue style, and print the cards. You also get a hide list that tells you exactly where each card goes, so nothing gets mixed up.</p>
+<div class=f>
+<div><label for=kid>Kid's name</label><div class=in><input id=kid placeholder="Mia" maxlength=30></div></div>
+<div><label for=num>How many clues</label><div class=in><select id=num></select></div></div>
+<div><label for=frm>Signed by</label><div class=in><select id=frm><option>Santa<option>The Elf<option>Rudolph<option>Mom and Dad<option>(no signature)</select></div></div>
+</div>
+<p class=q style="margin:16px 0 0">Clue style</p>
+<div class="ch lv" id=lv></div>
+<p class=q style="margin:14px 0 0">Where can clues hide? Tap to turn spots on or off</p>
+<div class=ch id=sp></div>
+<div class=f style="margin-top:10px"><div><label for=gift>Where the present hides</label><div class=in><select id=gift></select></div></div></div>
+<div class=btns><button onclick="make()">Make my hunt</button></div>
+<p class=tip id=hint style="display:none"></p>
+<div id=res style="display:none">
+<h2>Your hunt</h2>
+<p class=note>Card 1 goes straight to <span class=kn>your kid</span>. Every other card hides at the spot the clue before it points to. Tap Swap to change a spot.</p>
+<div id=list></div>
+<div class=btns><button onclick="print()">Print clue cards + hide list</button><button class=o onclick="make()">Shuffle all</button></div>
+<p class=note>Prints 4 cards per page, then a hide list for you. Cut along the borders. Color printing looks best but black and white works.</p>
+</div>
+<details><summary>Tips for a smooth hunt</summary><p class=note>Hide the cards after the kids are in bed, using the hide list in order. Little kids: walk with them and read the card out loud, the big picture is the real clue. Readers and big kids can go on their own. Skip anything hot or high up. For siblings, make one hunt per kid with different spots, or let them solve the same hunt as a team. Your choices are saved on this device only.</p></details>
+<h2>More Christmas fun to print</h2>
+<p>The <b>Christmas Kids Bundle</b> (printable PDF, $7.99) has a Santa letter kit, an Elf arrival kit with 36 idea cards and a cookie swap party kit: 30 pages for the whole season.</p>
+<a class=cta href="https://payhip.com/b/nUito">See the Kids Bundle</a> <a class=cta href="https://payhip.com/b/T0Bxg" style="background:#fff;color:var(--a);border:2px solid var(--a);padding:10px 14px">Santa Letter Kit: $2.99</a>
+<p class=rel style="margin-top:24px;font-size:15px">Related: <a href="../elf-planner/">Elf on the Shelf planner</a> &middot; <a href="../secret-santa/">Secret Santa name drawer</a> &middot; <a href="../gift-budget/">Christmas gift budget</a> &middot; <a href="../cookie-swap/">Cookie swap planner</a> &middot; <a href="../christmas-tree/">Christmas tree size</a></p>
+<div class=pc id=pc></div>
+</div>
+<footer>Made by Black. More free tools: <a href="https://blacksgit.github.io/">blacksgit.github.io</a> &middot; <a href="https://patreon.com/123black">patreon.com/123black</a></footer>
+</main>
+<script>
+const $=i=>document.getElementById(i);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+// id, label, emoji, "in/on/under" phrase, rhyme, riddle, on by default
+const S=[
+['tree','Christmas tree','🎄','under the Christmas tree',"I'm green and I sparkle with lights all aglow. Look under my branches, down low, down low!","I wear lights and shiny balls, but I'm not going to a party. Search my branches.",1],
+['fridge','fridge','🥛','in the fridge',"Where the milk stays cold and the leftovers sit, open the door: your next clue is in it!","I hum all day, I light up when you open me, and I keep the milk cold.",1],
+['freezer','freezer','🧊','in the freezer',"Brrr, it's chilly where the ice cream lives. Grab the clue that the cold spot gives!","I'm colder than the North Pole and full of frozen treats.",1],
+['washer','washing machine','🧺','in the washing machine',"Where dirty clothes spin round and round, your next clue is waiting to be found!","I spin and splash but never get dizzy. Clothes go in dirty and come out clean.",1],
+['tub','bathtub','🛁','in the bathtub',"Splish and splash, where the bubbles go. Peek inside: it's dry, you know!","I hold lots of water, but you sit in me instead of drinking from me.",1],
+['bed','bed','🛏️','under the bed',"Before you sleep, you climb up here. Look underneath: the clue is near!","I have a head but never think, and feet but never walk. You visit me every night.",1],
+['pillow','pillow','💤','under your pillow',"Soft and fluffy, under your head. Look beneath it, there on your bed!","Every night I hold your head and keep your dreams company.",0],
+['books','bookshelf','📚','on the bookshelf',"Stories and pictures, page after page. The next clue waits where the books are on stage!","We have spines but no bones, and lots of stories but no floors.",1],
+['couch','couch','🛋️','in the couch cushions',"Where the family sits for a movie night, dig in the cushions, look left and right!","I have arms but can't hug, and a back but can't stand up. Dig into my cushions.",1],
+['shoes','shoes','👟','in your shoes',"Left and right, they go on your feet. Check inside the pair you wear down the street!","We always come in pairs, and we have tongues but never talk.",1],
+['stocking','stocking','🧦','in your stocking',"Hung up with care for Christmas Eve, reach in the stocking, the clue's up its sleeve!","I'm a giant sock that nobody wears. Someone with a beard fills me once a year.",1],
+['door','front door mat','🚪','under the front door mat',"You go out through me and come back in. Look under the mat and let the search begin!","I have a knob but no nose, and people knock on me before they come in.",1],
+['toys','toy box','🧸','in the toy box',"Teddies and blocks and cars that zoom: look in the place where the toys have room!","I'm a chest with no heart, full of things that love to play.",1],
+['mirror','mirror','🪞','by the mirror',"Who's that smiling and looking at you? Check by the mirror for your next clue!","When you wave at me, I wave back, but I'm not your friend down the street.",1],
+['closet','coat closet','🧥','in the coat closet',"Coats and jackets hang in a row. Open the closet, in you go!","I'm full of hangers but there's not a single plane inside.",1],
+['cereal','cereal box','🥣','in the cereal box',"Crunchy and sweet, a breakfast treat: look in the box of the cereal you eat!","Shake me in the morning and I pour out breakfast.",1],
+['tooth','toothbrush cup','🪥','by your toothbrush',"Brush, brush, brush, the bristles go. Look by the sink: the next clue's there, you know!","I have bristles but I'm not a hedgehog, and I visit your teeth twice a day.",1],
+['cookies','cookie jar','🍪','in the cookie jar',"Cookies for Santa and cookies for you: peek in the jar for the very next clue!","I'm a jar that never stays full for long, because somebody keeps sneaking treats.",0],
+['tv','TV','📺','by the TV',"Shows and cartoons on my screen appear. Look near the TV: your clue is here!","I have a screen and a remote, and I tell stories without any pages.",1],
+['window','window','🪟','by a window',"Look through the glass at the sky so wide. Your clue is waiting by the window side!","I'm made of glass, I let the light in, and you can see the whole world through me.",0],
+['stairs','stairs','🪜','on the stairs',"Up and down, step after step: check the stairs, don't skip a step!","I go up and down all day, but I never move.",0],
+['lamp','lamp','💡','under a lamp',"Click me on when the room gets dark: check by the lamp for the next clue's spark!","I wear a shade but I'm not a tree, and I light up the room.",0],
+['plant','plant','🪴','by a plant',"Green leaves growing in a pot of dirt: look by the plant, it won't get hurt!","I drink water, love sunshine and never leave my pot.",0],
+['bag','backpack','🎒','in your backpack',"You take me to school with your books and a snack: unzip the zipper of your backpack!","I ride on your back to school and carry all your stuff.",0],
+['pet','pet bed','🐾','in the pet bed',"Where our furry friend curls up to snore, look in their bed: there's a clue for sure!","It's a cozy bed for someone with four legs and a tail.",0],
+['mail','mailbox','📬','in the mailbox',"Letters and cards come here every day. Open it up: your clue's on its way!","I eat letters every day but I'm never hungry.",0],
+['car','car','🚗','in the car',"Vroom vroom, but we're not going far: look inside the family car!","I have four wheels and two headlight eyes, and I drive you to school.",0]];
+const L=[['pic','Little kids (3-5)','Big picture clues, read out loud'],['rhy','Readers (6-8)','Short rhyming clues'],['rid','Big kids (9+)','Riddles that never say the spot']];
+let on=new Set(S.filter(s=>s[6]).map(s=>s[0])),lv='rhy',H=null;
+const sp=id=>S.find(s=>s[0]==id);
+function chips(){
+ $('lv').innerHTML=L.map(l=>`<button class="${l[0]==lv?'on':''}" onclick="lv='${l[0]}';chips();show();save()">${l[1]}<small>${l[2]}</small></button>`).join('');
+ $('sp').innerHTML=S.map(s=>`<button class="${on.has(s[0])?'on':''}" onclick="tog('${s[0]}')">${s[2]} ${s[1]}</button>`).join('');
+ const g=$('gift').value;$('gift').innerHTML=S.map(s=>`<option value=${s[0]}>${s[3][0].toUpperCase()+s[3].slice(1)}</option>`).join('');$('gift').value=g||'tree'}
+function tog(id){on.has(id)?on.delete(id):on.add(id);chips();if(H&&!H.every(i=>on.has(i)||i==$('gift').value))H=null,$('res').style.display='none';save()}
+const kid=()=>$('kid').value.trim();
+function pool(){const g=$('gift').value;return [...on].filter(i=>i!=g)}
+function make(){const h=$('hint'),p=pool(),n=+$('num').value;h.style.display='';h.classList.remove('err');
+ if(p.length<n-1){h.classList.add('err');h.textContent=`Turn on ${n-1-p.length} more spot${n-1-p.length>1?'s':''} or pick fewer clues. ${n} clues need ${n-1} hiding spots plus the present spot.`;return}
+ for(let i=p.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[p[i],p[j]]=[p[j],p[i]]}
+ H=p.slice(0,n-1);h.textContent=`Done! ${n} clue cards, ending ${sp($('gift').value)[3]}.`;save();show()}
+function swap(k){const used=new Set([...H,$('gift').value]),f=pool().filter(i=>!used.has(i));
+ if(!f.length){alert('No spare spots left. Turn on more spots above.');return}H[k]=f[Math.random()*f.length|0];save();show()}
+// card k (0-based) points to spot k; the last card points to the present
+function cards(){const g=$('gift').value,t=[...H,g];return t.map((id,k)=>({id,k,at:k?sp(t[k-1])[3]:'',last:k==t.length-1}))}
+function txt(c){const s=sp(c.id);
+ if(lv=='pic')return c.last?`Your present is ${s[3]}!`:`Look ${s[3]}!`;
+ return (c.last?(lv=='rid'?'Last clue! Your present is waiting here. ':'Last one! Your present is here: '):'')+(lv=='rhy'?s[4]:s[5])}
+function show(){if(!H)return;$('res').style.display='';const k=kid()||'your kid';document.querySelectorAll('.kn').forEach(e=>e.textContent=k);
+ const C=cards(),fr=$('frm').value;
+ $('list').innerHTML=C.map(c=>{const s=sp(c.id);return `<div class=cl><div class=e>${s[2]}</div><p><small>Card ${c.k+1}: ${c.k?'hide it '+esc(c.at):'hand it to '+esc(k)}</small>${esc(txt(c))}${c.last?'<small><b>The present goes '+esc(s[3])+'</b></small>':''}</p>${c.last?'':`<button class=sb onclick="swap(${c.k})">Swap</button>`}</div>`}).join('');
+ const card=c=>{const s=sp(c.id);return `<div class="cd${lv=='pic'?' big':''}"><div class=n>Christmas treasure hunt &middot; ${c.last?'last clue':'clue '+(c.k+1)+' of '+C.length}</div>${kid()?`<div class=k>For ${esc(kid())}</div>`:''}${lv=='rid'?'':`<div class=e>${s[2]}</div>`}<div class=t>${esc(txt(c))}</div>${fr[0]!='('?`<div class=s>Love, ${esc(fr)}</div>`:''}<div class=h>${c.k?'Hide '+esc(c.at):'Hand this one to '+esc(k)}</div></div>`};
+ let p='';for(let i=0;i<C.length;i+=4)p+=`<div class=pg>${C.slice(i,i+4).map(card).join('')}</div>`;
+ $('pc').innerHTML=p+`<div class=hl><h1>Hide list${kid()?' for '+esc(kid())+"'s hunt":''}</h1><table>${C.map(c=>`<tr><td>&#9744;</td><td>Card ${c.k+1}: ${c.k?'hide it '+esc(c.at):'hand it to '+esc(k)+' to start'}</td></tr>`).join('')}<tr><td>&#9744;</td><td><b>The present: ${esc(sp($('gift').value)[3])}</b></td></tr></table></div>`}
+function save(){try{localStorage.giftHunt=JSON.stringify({kid:$('kid').value,num:$('num').value,frm:$('frm').value,gift:$('gift').value,lv,on:[...on],H})}catch(e){}}
+$('num').innerHTML=[3,4,5,6,7,8,9,10,12].map(n=>`<option${n==6?' selected':''}>${n}</option>`).join('');
+chips();
+try{const s=JSON.parse(localStorage.giftHunt||'null');if(s){['kid','num','frm'].forEach(i=>{if(s[i])$(i).value=s[i]});lv=s.lv||lv;on=new Set(s.on||on);chips();if(s.gift)$('gift').value=s.gift;H=s.H&&s.H.every(sp)?s.H:null}}catch(e){}
+['kid','frm'].forEach(i=>$(i).addEventListener('input',()=>{save();show()}));
+$('num').addEventListener('change',()=>{save();if(H)make()});
+$('gift').addEventListener('change',()=>{if(H&&H.includes($('gift').value))make();else{save();show()}});
+show();
+</script></body></html>
