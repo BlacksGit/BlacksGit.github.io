@@ -24,7 +24,9 @@ input[type=checkbox]{width:18px;height:18px;vertical-align:-3px;margin-right:6px
 details{margin-top:12px}summary{cursor:pointer;color:var(--a);font-weight:600}
 footer{margin-top:30px;color:var(--m);font-size:14px}a{color:var(--a)}
 @media(max-width:480px){h1{font-size:23px}.big b{font-size:21px}}
-@media print{.btns,.cta,footer,.rel,details,#inputs,.buyp{display:none}body{font-size:14px}}
+@media print{.btns,.cta,footer,.rel,details,#inputs,.buyp,.seo{display:none}body{font-size:14px}}
+.seo h3{font-size:17px;margin:14px 0 2px}.seo p,.seo li{font-size:15px}.seo li{margin:0 0 6px}
+.tt{width:100%;border-collapse:collapse;font-size:15px}.tt th,.tt td{text-align:left;padding:6px 4px;border-bottom:1px solid #ddd}
 </style></head><body><main>
 <h1>Christmas lights calculator</h1>
 <p class=lead>Pick your tree and what you want lit outside. You get how many light strands to buy, how many outlets you need so nothing trips, and what it all costs to run for the season. Your numbers stay on this device.</p>
@@ -38,6 +40,7 @@ footer{margin-top:30px;color:var(--m);font-size:14px}a{color:var(--a)}
 <div><label for=win>Windows to outline</label><div class=in><input id=win type=number inputmode=numeric min=0 value=2></div></div>
 </div>
 <p class=q style="margin:14px 0 0">Roofline style</p><div class=ch data-k=rs><button data-v=0>Big bulbs (C9)</button><button data-v=1>Mini lights</button><button data-v=2>Icicle lights</button></div>
+<section class=seo><h2>How many lights for a Christmas tree?</h2><p class=note>Mini lights per foot of tree height: about 50 for a soft glow, 100 classic, 180 really bright. Strands of 100.</p><table class=tt><tr><th>Tree</th><th>Soft glow</th><th>Classic</th><th>Really bright</th></tr><tr><td>4 ft</td><td>200 (2 strands)</td><td>400 (4 strands)</td><td>720 (8 strands)</td></tr><tr><td>6 ft</td><td>300 (3 strands)</td><td>600 (6 strands)</td><td>1080 (11 strands)</td></tr><tr><td>7.5 ft</td><td>375 (4 strands)</td><td>750 (8 strands)</td><td>1350 (14 strands)</td></tr><tr><td>9 ft</td><td>450 (5 strands)</td><td>900 (9 strands)</td><td>1620 (17 strands)</td></tr><tr><td>12 ft</td><td>600 (6 strands)</td><td>1200 (12 strands)</td><td>2160 (22 strands)</td></tr></table><h2>What do Christmas lights cost to run?</h2><p class=note>6 hours a night for 40 nights at $0.17 per kWh.</p><table class=tt><tr><th>Lights</th><th>LED</th><th>Old incandescent</th></tr><tr><td>100 mini lights</td><td>$0.29</td><td>$1.63</td></tr><tr><td>500 mini lights</td><td>$1.43</td><td>$8.16</td></tr><tr><td>25 C9 bulbs</td><td>$0.61</td><td>$7.14</td></tr><tr><td>1,000 mini lights</td><td>$2.86</td><td>$16.32</td></tr></table></section>
 <details><summary>Hours, days and power price</summary><div class=f style="margin-top:8px">
 <div><label for=hrs>Hours on each night</label><div class=in><input id=hrs type=number inputmode=decimal min=0 value=6></div></div>
 <div><label for=days>Days up</label><div class=in><input id=days type=number inputmode=numeric min=0 value=40></div></div>
