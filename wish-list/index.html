@@ -1,0 +1,94 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>Christmas wish list maker: free, share a link with family, no sign-up</title>
+<meta name=description content="Make a Christmas wish list in two minutes and send it to family as a link or print it. Add details, store links and sizes, heart the ones you really want. Free, no sign-up, no app, nothing stored online.">
+<link rel=canonical href="https://blacksgit.github.io/wish-list/">
+<style>
+:root{--a:#b3262e;--g:#14532d;--m:#5f6b63;--l:#e2e8e4;--s:#f2f8f4}
+*{box-sizing:border-box}body{font:17px/1.5 system-ui,Arial,sans-serif;margin:0;color:#2a221c}
+main{max-width:720px;margin:0 auto;padding:18px}h1{font-size:28px;line-height:1.2;color:var(--g);margin:6px 0}
+.lead{color:var(--m);margin:0 0 16px}h2{font-size:19px;color:var(--g);margin:26px 0 8px}
+.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.f label,.q{font-size:14px;color:var(--m);font-weight:600}
+.in{display:flex;align-items:center;border:2px solid var(--l);border-radius:10px;padding:2px 10px;margin-top:4px}.in:focus-within{border-color:var(--a)}
+.in input,.in select{border:0;font-size:18px;width:100%;padding:6px;outline:0;min-width:0;background:none;font-family:inherit}
+.ch{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.it{display:grid;grid-template-columns:28px 1fr 44px 36px;gap:6px;align-items:center;margin:6px 0}
+.btns button,.cta{display:inline-block;border:0;background:var(--a);color:#fff;border-radius:8px;padding:12px 16px;font-size:16px;text-decoration:none;margin:6px 6px 6px 0;cursor:pointer;font-family:inherit}
+.o{background:#fff!important;color:var(--a)!important;border:2px solid var(--a)!important}
+.note{color:var(--m);font-size:14px}
+details{margin-top:12px}summary{cursor:pointer;color:var(--a);font-weight:600}
+footer{margin-top:30px;color:var(--m);font-size:14px}a{color:var(--a)}
+.it .n{color:var(--m);font-weight:700;text-align:center}.it .in{margin:0}.it .in input{font-size:17px}
+.it .d{grid-column:2/4}
+.hb{border:2px solid var(--l);background:#fff;border-radius:10px;height:42px;font-size:20px;cursor:pointer;color:#bbb}.hb.on{color:var(--a);border-color:var(--a);background:#fff4f4}
+.x{border:0;background:none;font-size:22px;color:var(--m);cursor:pointer;height:42px}
+.sz{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.vw{border:3px solid var(--g);border-radius:16px;padding:18px 20px;margin:12px 0;background:#fffdf6}
+.vw h2{margin:0 0 4px;font-size:24px;color:var(--a)}.vw ol{padding-left:24px;margin:10px 0}.vw li{margin:0 0 10px;font-size:18px}.vw li small{display:block;color:var(--m);font-size:15px;word-break:break-word}
+.vw .h{color:var(--a)}.vw .s{font-size:15px;color:var(--m);border-top:1px dashed var(--l);padding-top:8px}
+.tip{background:#fff6dc;border-radius:10px;padding:10px 12px;margin-top:12px}
+.seo h3{font-size:17px;margin:14px 0 2px}.seo p,.seo li{font-size:15px}.seo li{margin:0 0 6px}
+@media(max-width:480px){h1{font-size:23px}.it{grid-template-columns:22px 1fr 40px 28px}}
+@media print{@page{margin:.5in}#app>*:not(#vw),footer{display:none!important}main{padding:0;max-width:none}
+.vw{border:0;border-top:.25in solid transparent;border-image:repeating-linear-gradient(-45deg,var(--a) 0 12px,#fff 12px 24px) 20;padding:.3in .2in;font-size:20px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.vw h2{font-size:34px}.vw li{font-size:21px;margin-bottom:16px}.vw li small{font-size:15px}}
+</style></head><body><main>
+<div id=app>
+<div id=ed>
+<h1>Christmas wish list maker</h1>
+<p class=lead>Write your list, heart the ones you really want, and send it to family as a link or print it. No sign-up, and nothing is stored online: the whole list lives inside the link.</p>
+<div class=f>
+<div><label for=nm>Whose list?</label><div class=in><input id=nm placeholder="Ava" maxlength=30></div></div>
+</div>
+<p class=q style="margin:14px 0 0">Wishes <span style="font-weight:400">(tap the heart for the ones you really want)</span></p>
+<div id=ls></div>
+<div class=btns><button class=o onclick="add()">+ Add a wish</button></div>
+<details><summary>Sizes and favorites (optional)</summary><div class=sz style="margin-top:8px">
+<div><label class=q for=s1>Shirt</label><div class=in><input id=s1 placeholder="Kids M" maxlength=20></div></div>
+<div><label class=q for=s2>Pants</label><div class=in><input id=s2 placeholder="8" maxlength=20></div></div>
+<div><label class=q for=s3>Shoes</label><div class=in><input id=s3 placeholder="2Y" maxlength=20></div></div>
+<div><label class=q for=s4>Favorite colors</label><div class=in><input id=s4 placeholder="purple, teal" maxlength=40></div></div>
+</div></details>
+<div class=btns style="margin-top:14px"><button onclick="share()">Send to family</button><button class=o onclick="print()">Print</button></div>
+<p class=tip id=hint style="display:none"></p>
+</div>
+<div id=vw class=vw></div>
+<div id=vb class=btns style="display:none"><button onclick="print()">Print this list</button><a class="cta o" href="./">Make your own list</a></div>
+<details><summary>How it works</summary><p class=note>Your list is saved on this device as you type. "Send to family" makes a link that holds the whole list, so there is no account and nothing on a server. Change the list later? Send the new link. Links to stores show up as tappable links for whoever opens the list.</p></details>
+<section class=seo><h2>Christmas wish list ideas by age</h2>
+<h3>Ages 3 to 5</h3><p>Magnetic tiles, play kitchen food, a balance bike, dress-up costumes, a kids' camera, picture books, a doctor kit.</p>
+<h3>Ages 6 to 8</h3><p>LEGO sets, a scooter, art kits, a first board game night (Uno, Sushi Go), a kids' walkie-talkie set, a science kit.</p>
+<h3>Ages 9 to 12</h3><p>A book series box set, a craft or slime kit, a mini 3D pen, a Nerf blaster, a sketchbook and markers, a strategy board game.</p>
+<h3>Teens and grown-ups</h3><p>Headphones, a cozy hoodie, a gift card for a favorite shop, concert or movie tickets, a cookbook, an experience day.</p></section>
+<h2>More Christmas fun</h2>
+<p>The <b>Christmas Kids Bundle</b> (printable PDF, $7.99) has a letter to Santa with a wish list page, an Elf arrival kit and a cookie swap party kit: 30 pages for the whole season.</p>
+<a class=cta href="https://payhip.com/b/nUito">See the Kids Bundle</a>
+<p class=rel style="margin-top:24px;font-size:15px">Related: <a href="../santa-letter/">Letter from Santa</a> &middot; <a href="../secret-santa/">Secret Santa name drawer</a> &middot; <a href="../gift-budget/">Christmas gift budget</a> &middot; <a href="../black-friday/">Black Friday deal checker</a> &middot; <a href="../gift-hunt/">Christmas scavenger hunt</a></p>
+</div>
+<footer>Made by Black. More free tools: <a href="https://blacksgit.github.io/">blacksgit.github.io</a> &middot; <a href="https://patreon.com/123black">patreon.com/123black</a></footer>
+</main>
+<script>
+const $=i=>document.getElementById(i);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const SZ=[['s1','Shirt'],['s2','Pants'],['s3','Shoes'],['s4','Favorite colors']];
+let L=[];
+function enc(o){const b=new TextEncoder().encode(JSON.stringify(o));let s='';b.forEach(x=>s+=String.fromCharCode(x));return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
+function dec(t){const s=atob(t.replace(/-/g,'+').replace(/_/g,'/'));return JSON.parse(new TextDecoder().decode(Uint8Array.from(s,c=>c.charCodeAt(0))))}
+function rows(){$('ls').innerHTML=L.map((w,i)=>`<div class=it><span class=n>${i+1}</span><div class=in><input value="${esc(w[0])}" placeholder="${['A red scooter','Art set','Book: Dog Man 12'][i]||'Another wish'}" maxlength=60 oninput="L[${i}][0]=this.value;upd()"></div><button class="hb${w[2]?' on':''}" aria-label="Really want" onclick="L[${i}][2]=L[${i}][2]?0:1;rows();upd()">&#10084;</button><button class=x aria-label=Remove onclick="L.splice(${i},1);if(!L.length)L.push(['','',0]);rows();upd()">&times;</button><span></span><div class="in d"><input value="${esc(w[1])}" placeholder="Details, size or store link (optional)" maxlength=200 oninput="L[${i}][1]=this.value;upd()"></div></div>`).join('')}
+function add(){L.push(['','',0]);rows();const a=$('ls').querySelectorAll('.it');a[a.length-1].querySelector('input').focus()}
+function data(){return {n:$('nm').value.trim(),l:L.filter(w=>w[0].trim()).map(w=>[w[0].trim(),w[1].trim(),w[2]]),s:SZ.map(z=>$(z[0]).value.trim())}}
+const link=t=>/^https?:\/\/\S+$/i.test(t)?`<a href="${esc(t)}" target=_blank rel="noopener nofollow">${esc(t.replace(/^https?:\/\/(www\.)?/i,'').slice(0,50))}</a>`:esc(t);
+function view(d){const sz=SZ.map((z,i)=>d.s&&d.s[i]?`${z[1]}: <b>${esc(d.s[i])}</b>`:'').filter(x=>x);
+ $('vw').innerHTML=`<h2>&#127876; ${d.n?esc(d.n)+"'s":'My'} Christmas wish list</h2>${d.l.length?`<ol>${d.l.map(w=>`<li>${esc(w[0])}${w[2]?' <span class=h title="Really want">&#10084;</span>':''}${w[1]?`<small>${link(w[1])}</small>`:''}</li>`).join('')}</ol>`:'<p class=note>Add your first wish above.</p>'}${d.l.some(w=>w[2])?'<p class=note>&#10084; = really, really want</p>':''}${sz.length?`<p class=s>${sz.join(' &middot; ')}</p>`:''}`}
+function upd(){const d=data();view(d);try{localStorage.wishList=JSON.stringify({n:d.n,L,s:d.s})}catch(e){}}
+async function share(){const d=data(),h=$('hint');h.style.display='';
+ if(!d.l.length){h.textContent='Add at least one wish first.';return}
+ const u=location.origin+location.pathname+'#l='+enc(d),t=(d.n?d.n+"'s":'My')+' Christmas wish list';
+ if(navigator.share){try{await navigator.share({title:t,url:u});h.textContent='Sent! Change the list later? Send the new link.';return}catch(e){if(e.name=='AbortError')return}}
+ try{await navigator.clipboard.writeText(u);h.innerHTML='Link copied. Paste it into a text or email to family.'}catch(e){h.innerHTML=`Copy this link: <input value="${esc(u)}" style="width:100%" onclick="this.select()">`}}
+let m=location.hash.match(/^#l=([\w-]+)/);
+if(m){try{const d=dec(m[1]);$('ed').style.display='none';$('vb').style.display='';view(d);document.title=(d.n?d.n+"'s":'A')+' Christmas wish list'}catch(e){m=null}}
+if(!m){try{const s=JSON.parse(localStorage.wishList||'null');if(s){$('nm').value=s.n||'';L=s.L||[];SZ.forEach((z,i)=>$(z[0]).value=(s.s||[])[i]||'')}}catch(e){}
+ while(L.length<3)L.push(['','',0]);rows();upd();
+ $('nm').addEventListener('input',upd);SZ.forEach(z=>$(z[0]).addEventListener('input',upd))}
+</script></body></html>
