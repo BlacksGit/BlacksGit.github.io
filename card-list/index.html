@@ -1,0 +1,94 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>Christmas card list and address labels: free tracker, prints Avery 5160</title>
+<meta name=description content="Free Christmas card list: paste or type your addresses, tick who you sent to and who sent one back, and print return and address labels on Avery 5160 sheets. Saved on your device, no sign-up.">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Christmas card list and address labels", "url": "https://blacksgit.github.io/card-list/", "description": "Free Christmas card list: paste or type your addresses, tick who you sent to and who sent one back, and print return and address labels on Avery 5160 sheets. Saved on your device, no sign-up.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Person", "name": "Black"}}</script>
+<link rel=canonical href="https://blacksgit.github.io/card-list/">
+<style>
+:root{--a:#b3262e;--g:#14532d;--m:#5f6b63;--l:#e2e8e4;--s:#f2f8f4}
+*{box-sizing:border-box}body{font:17px/1.5 system-ui,Arial,sans-serif;margin:0;color:#2a221c}
+main{max-width:720px;margin:0 auto;padding:18px}h1{font-size:28px;line-height:1.2;color:var(--g);margin:6px 0}
+.lead{color:var(--m);margin:0 0 16px}h2{font-size:19px;color:var(--g);margin:26px 0 8px}
+.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.f label,.q{font-size:14px;color:var(--m);font-weight:600}
+.in{display:flex;align-items:center;border:2px solid var(--l);border-radius:10px;padding:2px 10px;margin-top:4px}.in:focus-within{border-color:var(--a)}
+.in input,.in select{border:0;font-size:18px;width:100%;padding:6px;outline:0;min-width:0;background:none;font-family:inherit}
+.ch{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.btns button,.cta{display:inline-block;border:0;background:var(--a);color:#fff;border-radius:8px;padding:12px 16px;font-size:16px;text-decoration:none;margin:6px 6px 6px 0;cursor:pointer;font-family:inherit}
+.o{background:#fff!important;color:var(--a)!important;border:2px solid var(--a)!important}
+.note{color:var(--m);font-size:14px}
+details{margin-top:12px}summary{cursor:pointer;color:var(--a);font-weight:600}
+textarea{width:100%;border:2px solid var(--l);border-radius:10px;padding:10px;font:16px/1.4 inherit;font-family:inherit;min-height:110px}textarea:focus{border-color:var(--a);outline:0}
+.big{display:flex;gap:10px;margin:14px 0}.big div{flex:1;background:var(--s);border-radius:10px;padding:8px 10px;text-align:center}.big small{display:block;color:var(--m);font-size:13px}.big b{font-size:24px;color:var(--g)}
+.r{display:grid;grid-template-columns:1fr auto auto auto;gap:6px;align-items:center;border-bottom:1px solid var(--l);padding:8px 0}
+.r p{margin:0;font-size:15px;white-space:pre-line}.r p b{font-size:16px}.r.na p{color:#b05}
+.tg{border:2px solid var(--l);background:#fff;border-radius:16px;padding:4px 9px;font-size:13px;cursor:pointer;font-family:inherit;color:var(--m)}.tg.on{border-color:var(--g);background:var(--s);color:var(--g);font-weight:700}
+.x{border:0;background:none;font-size:20px;color:var(--m);cursor:pointer}
+.lb{display:none}
+.seo h3{font-size:17px;margin:14px 0 2px}.seo p,.seo li{font-size:15px}.seo li{margin:0 0 6px}
+@media(max-width:480px){h1{font-size:23px}.r{grid-template-columns:auto auto 1fr}.r p{grid-column:1/-1}.r .x{justify-self:end}.tg{padding:6px 14px;font-size:14px}}
+@media print{@page{size:letter;margin:0}body{margin:0}main{padding:0;max-width:none}#app,footer{display:none!important}
+.lb{display:grid!important;grid-template-columns:2.625in 2.625in 2.625in;column-gap:.125in;grid-auto-rows:1in;padding:.5in .1875in 0;page-break-after:always}
+.lb div{padding:.08in .15in;font:11pt/1.25 Arial,sans-serif;display:flex;flex-direction:column;justify-content:center;overflow:hidden;white-space:pre-line}.lb div b{font-size:11.5pt}}
+</style></head><body><main>
+<div id=app>
+<h1>Christmas card list and address labels</h1>
+<p class=lead>Keep one list year after year. Tick who you sent a card to and who sent one back, then print address labels on standard Avery 5160 sheets (30 per page). Saved on this device, no sign-up.</p>
+<label class=q for=pa>Add addresses: one per block, blank line between people</label>
+<textarea id=pa placeholder="The Garcia Family
+1234 Maple St
+Denver, CO 80203
+
+Grandma Rose
+55 Pine Ave Apt 2
+Austin, TX 78701"></textarea>
+<div class=btns><button onclick="addAll()">Add to my list</button></div>
+<div class=big><div><small>On list</small><b id=c1>0</b></div><div><small>Sent</small><b id=c2>0</b></div><div><small>Got one back</small><b id=c3>0</b></div></div>
+<div id=ls></div>
+<div class=f style="margin-top:14px">
+<div style="grid-column:1/-1"><label for=rt>Your return address (optional, for return labels)</label><textarea id=rt style="min-height:76px" placeholder="The Lee Family
+88 Oak Ct
+Boise, ID 83702"></textarea></div>
+</div>
+<p class=q style="margin:12px 0 0">Print</p>
+<div class=ch id=pm><button data-v=all class=on>Everyone</button><button data-v=un>Not sent yet</button><button data-v=ret>Return labels (30)</button></div>
+<div class=btns><button onclick="print()">Print labels</button><button class=o onclick="nextYear()">Start next year</button></div>
+<p class=note>Print at 100% (not "fit to page") on Avery 5160, 8160 or any 30-per-sheet 1" x 2-5/8" label. Try one sheet on plain paper first and hold it to the light. "Start next year" keeps everyone and clears the ticks; people you sent to but who didn't send back get a small note.</p>
+<details><summary>Christmas card tips</summary><p class=note>Mail by December 10 in the US so cards land before the 20th; overseas by early December. A card is a 1-ounce letter, one Forever stamp each, unless it is square or extra thick. Order photo cards by late November so they arrive in time. Keep a "moved" note on anyone whose card came back.</p></details>
+<section class=seo><h2>How to address a Christmas card</h2><ol>
+<li><b>A family:</b> The Garcia Family (no apostrophe), or Mr. and Mrs. Garcia.</li>
+<li><b>A couple with different last names:</b> Sam Lee and Alex Garcia, on one line.</li>
+<li><b>A family name ending in s, x, z, ch or sh:</b> The Joneses, The Foxes, The Churches.</li>
+<li><b>Apartment:</b> on the street line after the number: 55 Pine Ave Apt 2.</li>
+<li><b>Last line:</b> City, ST ZIP, with the two-letter state code.</li></ol></section>
+<h2>Make Christmas easier</h2>
+<p>The <b>Christmas Kids Bundle</b> (printable PDF, $7.99) has a Santa letter kit, an Elf arrival kit with 36 idea cards and a cookie swap party kit: 30 pages for the whole season.</p>
+<a class=cta href="https://payhip.com/b/nUito">See the Kids Bundle</a>
+<p class=rel style="margin-top:24px;font-size:15px">Related: <a href="../wish-list/">Christmas wish list</a> &middot; <a href="../gift-budget/">Christmas gift budget</a> &middot; <a href="../secret-santa/">Secret Santa name drawer</a> &middot; <a href="../santa-letter/">Letter from Santa</a> &middot; <a href="../christmas-dinner/">Christmas dinner planner</a></p>
+</div>
+<div class=lb id=lb></div>
+<footer>Made by Black. More free tools: <a href="https://blacksgit.github.io/">blacksgit.github.io</a> &middot; <a href="https://patreon.com/123black">patreon.com/123black</a></footer>
+</main>
+<script>
+const $=i=>document.getElementById(i);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+// each person: [address text, sent, got back, note]
+let P=[],pm='all';
+function load(){try{const s=JSON.parse(localStorage.cardList||'null');if(s){P=s.P||[];$('rt').value=s.rt||'';pm=s.pm||'all'}}catch(e){}}
+function save(){try{localStorage.cardList=JSON.stringify({P,rt:$('rt').value,pm})}catch(e){}}
+function addAll(){const b=$('pa').value.split(/\n\s*\n/).map(x=>x.split('\n').map(l=>l.trim()).filter(l=>l).join('\n')).filter(x=>x);
+ const have=new Set(P.map(p=>p[0].toLowerCase()));b.forEach(x=>{if(!have.has(x.toLowerCase()))P.push([x,0,0,''])});
+ P.sort((a,b)=>a[0].localeCompare(b[0],undefined,{numeric:true}));$('pa').value='';draw()}
+function tg(i,k){P[i][k]=P[i][k]?0:1;draw()}
+function del(i){if(confirm('Remove '+P[i][0].split('\n')[0]+'?')){P.splice(i,1);draw()}}
+function nextYear(){if(!confirm('Clear the ticks for a new year? Everyone stays on the list.'))return;P.forEach(p=>{p[3]=p[1]&&!p[2]?'Sent last year, none back':'';p[1]=p[2]=0});draw()}
+function draw(){
+ $('c1').textContent=P.length;$('c2').textContent=P.filter(p=>p[1]).length;$('c3').textContent=P.filter(p=>p[2]).length;
+ $('ls').innerHTML=P.length?P.map((p,i)=>{const l=p[0].split('\n');return `<div class="r${p[3]?' na':''}"><p><b>${esc(l[0])}</b>${l.length>1?'\n'+esc(l.slice(1).join(', ')):''}${p[3]?'\n<small>'+esc(p[3])+'</small>':''}</p><button class="tg${p[1]?' on':''}" onclick="tg(${i},1)">Sent</button><button class="tg${p[2]?' on':''}" onclick="tg(${i},2)">Got one</button><button class=x aria-label=Remove onclick="del(${i})">&times;</button></div>`}).join(''):'<p class=note>Your list is empty. Paste or type addresses above.</p>';
+ document.querySelectorAll('#pm button').forEach(b=>b.classList.toggle('on',b.dataset.v==pm));
+ const rt=$('rt').value.trim(),L=pm=='ret'?Array(30).fill(rt):P.filter(p=>pm=='all'||!p[1]).map(p=>p[0]);
+ let h='';for(let i=0;i<L.length;i+=30)h+=`<div class=lb>${L.slice(i,i+30).map(a=>{const l=a.split('\n');return `<div><b>${esc(l[0])}</b>${esc(l.slice(1).join('\n'))}</div>`}).join('')}</div>`;
+ $('lb').outerHTML=`<div id=lb>${h}</div>`;save()}
+document.querySelectorAll('#pm button').forEach(b=>b.onclick=()=>{pm=b.dataset.v;draw()});
+$('rt').addEventListener('input',draw);
+load();draw();
+</script></body></html>
