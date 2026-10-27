@@ -45,7 +45,7 @@ Grandma Rose"></textarea>
 <div><label for=n>Tags per name</label><div class=in><select id=n><option>1<option selected>2<option>3<option>4<option>6</select></div></div>
 </div>
 <div class=btns><button onclick="print()">Print tags</button></div>
-<p class=note>12 tags per page. Cut them out, punch the dot and tie with ribbon, or tape them flat. Your names stay on this device.</p>
+<p class=note>12 tags per page. Spare spots print with a blank To line for handwriting. Cut them out, punch the dot and tie with ribbon, or tape them flat. Your names stay on this device.</p>
 <div class=tags id=tg></div>
 <section class=seo><h2>Ideas for Santa gift tags</h2><ul><li>Use a different wrapping paper for Santa's gifts that the kids have never seen.</li><li>Print Santa tags here so the writing doesn't match yours.</li><li>Add the "From the Elf" tag to a small gift on December 1 to start the season.</li><li>Keep one roll of tape and the tags hidden with the gifts, not in the kitchen drawer.</li></ul></section>
 <p>The <b>Christmas Kids Bundle</b> (printable PDF, $7.99) has a Santa letter kit, an Elf arrival kit with 36 idea cards and a cookie swap party kit.</p>
@@ -60,8 +60,8 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 const E=['&#127876;','&#127873;','&#11088;','&#9924;','&#127877;','&#10052;','&#129420;','&#128276;'];
 function draw(){const to=$('to').value.split('\n').map(x=>x.trim()).filter(x=>x),fr=$('fo').value.trim()||$('fr').value,n=+$('n').value,san=/^santa$/i.test(fr);
  const L=(to.length?to:['Ava','Leo']).flatMap(x=>Array(n).fill(x));
- while(L.length%12)L.push(L[L.length%(to.length*n||2)]);
- $('tg').innerHTML=L.map((t,i)=>`<div class="tag ${san?'sn':'t'+(i%4)}"><i>${E[i%E.length]}</i><small>To</small><b>${esc(t)}</b><small style="margin-top:6px">From</small><b>${esc(fr||'Me')}</b></div>`).join('');
+ while(L.length%12)L.push('');
+ $('tg').innerHTML=L.map((t,i)=>`<div class="tag ${san?'sn':'t'+(i%4)}"><i>${E[i%E.length]}</i><small>To</small><b>${t?esc(t):'&nbsp;'}</b><small style="margin-top:6px">From</small><b>${esc(fr||'Me')}</b></div>`).join('');
  try{localStorage.giftTags=JSON.stringify({to:$('to').value,fr:$('fr').value,fo:$('fo').value,n:$('n').value})}catch(e){}}
 try{const s=JSON.parse(localStorage.giftTags||'null');if(s)['to','fr','fo','n'].forEach(k=>{if(s[k]!=null)$(k).value=s[k]})}catch(e){}
 document.querySelectorAll('input,select,textarea').forEach(e=>e.addEventListener('input',draw));draw();
